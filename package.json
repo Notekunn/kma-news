@@ -4,6 +4,11 @@
 	"license": "MIT",
 	"private": true,
 	"workspaces": [
-		"frontend"
-	]
+		"frontend",
+		"backend"
+	],
+	"scripts": {
+		"frontend": "yarn workspace frontend",
+		"backend": "yarn workspace backend"
+	}
 }
