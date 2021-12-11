@@ -6,10 +6,12 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "start": "nodemon src/index.ts"
+    "start": "nodemon src/index.ts",
+    "migrate": "prisma db push --skip-generate"
   },
   "devDependencies": {
     "nodemon": "^2.0.15",
+    "prisma": "^3.6.0",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.3"
   }
