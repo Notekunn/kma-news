@@ -1,6 +1,6 @@
 FROM node:16-slim as base
 
-WORKDIR /home/app/node
+WORKDIR /home/node/app
 
 COPY ["package.json", "./"]
 

@@ -10,13 +10,15 @@ services:
     environment:
       NODE_ENV: development
       PORT: 9999
+    stdin_open: true
+    tty: true
     expose:
       - 9999
     volumes:
-      - ./backend/src:/home/node/app/src
-      - ./nodemon.json:/home/node/app/nodemon.json
+      - "./backend/src:/home/node/app/src"
     ports:
       - 9999:9999
+      - 9229:9229
     networks:
       - app-network
     command: ["yarn", "start"]

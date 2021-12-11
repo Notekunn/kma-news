@@ -1,1 +1,1 @@
-console.log('Build complete 1!')
+console.log('Build complete!')
