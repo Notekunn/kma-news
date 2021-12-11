@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  backend:
+    image: backend
+    build:
+      context: backend
+      dockerfile: ./Dockerfile
+      target: base
+    environment:
+      NODE_ENV: development
+      PORT: 9999
+    expose:
+      - 9999
+    volumes:
+      - ./backend/src:/home/node/app/src
+      - ./nodemon.json:/home/node/app/nodemon.json
+    ports:
+      - 9999:9999
+    networks:
+      - app-network
+    command: ["yarn", "start"]
+
+volumes:
+  appdata:
+
+networks:
+  app-network:
+    driver: bridge
+  

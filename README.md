@@ -11,3 +11,15 @@ yarn frontend start
 ```bash
 yarn backend start
 ```
+
+- Add package dependencies
+
+```bash
+yarn <frontend|backend> add <package>
+```
+
+- Chạy dev docker
+
+```bash
+docker-compose up --build backend
+```
