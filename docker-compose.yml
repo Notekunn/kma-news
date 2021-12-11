@@ -10,8 +10,8 @@ services:
     environment:
       NODE_ENV: development
       PORT: 9999
-    stdin_open: true
-    tty: true
+    depends_on:
+      - database
     expose:
       - 9999
     volumes:
@@ -22,6 +22,19 @@ services:
     networks:
       - app-network
     command: ["yarn", "start"]
+  database:
+    image: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=app
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      - appdata:/data/db
+    ports:
+      - 27017:27017
+    restart: always
+    networks:
+      - app-network
 
 volumes:
   appdata:
