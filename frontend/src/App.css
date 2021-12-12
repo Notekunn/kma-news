@@ -1,1 +1,118 @@
+.header-top,.container-main,.footer-main{
+    margin: 0 auto;
+}
+.header-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 66px;
+}
+.header-top-left{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.logo-main span{
+    font-weight: 700;
+    font-size: 30px;
+    color: #f15d30;
+}
+.logo-main img{
+    height: 22px;
+}
+.logo-description{
+    font-size: 12px;
+    font-weight: 100;
+    color: #6c757d;
+}
+.header-input{
+    width: 400px;
+    height: 40px;
+    align-items: center;
+    display: flex;
+    border: 1px solid #e9ecef;
+    border-radius: 2px;
+    margin-left: 70px;
+}
+.header-input input{
+    padding: 0 0px 0px 10px;
+    outline: none;
+    border: none;
+    color: #2fa1b3;
+    width: 100%;
+}
+.header-input:hover{
+    border:1px solid #2fa1b3;
+}
+.icon-search{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 30px;
+}
+.icon-search,.logo:hover{
+    cursor: pointer;
+}
+.header-top-right :hover{
+    cursor: pointer;
+}
+.header-body{
+    height: 40px;
+    background-color: #2fa1b3;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.header-navbar{
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.header-navbar-list{
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.header-navbar-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    padding: 0px 12px;
+    border-left: 1px solid hsla(0,0%,100%,.2);
+    color: #fff;
+    height: 100%;
+}
+.header-navbar-item:last-child{
+    border-right: 1px solid hsla(0,0%,100%,.2);
+}
+.header-navbar-item:hover{
+    cursor: pointer;
+}
+.drop-menu{
+    position: absolute;
+    background-color: #e9ecef;
+    right: 0;
+    left: 0;
+    top: 40px;
+}
+.drop-menu-list{
+    display: flex;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+.drop-menu-item{
+    width: 20%;
+    margin-bottom: 10px;
+}
+.menu-item{
 
+}
+/* container */
