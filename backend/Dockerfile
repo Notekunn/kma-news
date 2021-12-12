@@ -3,11 +3,13 @@ FROM node:16-slim as base
 WORKDIR /home/node/app
 
 COPY ["package.json", "./"]
-RUN  apt-get -qy update && apt-get -qy install openssl && yarn install
+RUN  \
+    # apt-get -qy update && apt-get -qy install openssl && \
+    yarn install
 
-COPY prisma/schema.prisma .
+# COPY prisma/schema.prisma .
 
-RUN npx prisma generate
+# RUN npx prisma generate
 
 COPY . .
 

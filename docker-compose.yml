@@ -22,7 +22,7 @@ services:
       - 9229:9229
     networks:
       - app-network
-    command: ["yarn", "start"]
+    command: [ "yarn", "start" ]
   db:
     image: mongo
     environment:
@@ -40,17 +40,17 @@ services:
     image: backend:latest
     depends_on:
       - db
-    command: ["yarn", "migrate"]    
+    command: [ "yarn", "migrate" ]
     environment:
       DATABASE_URL: mongodb://admin:admin@db:27017/app?authSource=admin
     networks:
       - app-network
-    # profiles:
-    #   - donotstart
+    profiles:
+      - donotstart
 volumes:
   appdata:
 
+    null
 networks:
   app-network:
     driver: bridge
-  
