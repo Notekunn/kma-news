@@ -1,56 +1,56 @@
 version: '3.4'
 
 services:
-  backend:
-    image: backend
-    build:
-      context: backend
-      dockerfile: ./Dockerfile
-      target: base
-    environment:
-      NODE_ENV: development
-      PORT: 9999
-      DATABASE_URL: mongodb://admin:admin@db:27017/app?authSource=admin
-    depends_on:
-      - db
-    expose:
-      - 9999
-    volumes:
-      - ./backend/src:/home/node/app/src
-    ports:
-      - 9999:9999
-      - 9229:9229
-    networks:
-      - app-network
-    command: [ "yarn", "start" ]
-  db:
-    image: mongo
-    environment:
-      - MONGO_INITDB_DATABASE=app
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=admin
-    volumes:
-      - appdata:/data/db
-    ports:
-      - 27017:27017
-    restart: always
-    networks:
-      - app-network
-  migration:
-    image: backend:latest
-    depends_on:
-      - db
-    command: [ "yarn", "migrate" ]
-    environment:
-      DATABASE_URL: mongodb://admin:admin@db:27017/app?authSource=admin
-    networks:
-      - app-network
-    profiles:
-      - donotstart
+    backend:
+        image: backend
+        build:
+            context: backend
+            dockerfile: ./Dockerfile
+            target: base
+        environment:
+            NODE_ENV: development
+            PORT: 9999
+            DATABASE_URL: mongodb://admin:admin@db:27017/app?authSource=admin
+        depends_on:
+            - db
+        expose:
+            - 9999
+        volumes:
+            - ./backend/src:/home/node/app/src
+        ports:
+            - 9999:9999
+            - 9229:9229
+        networks:
+            - app-network
+        command: [ "yarn", "start" ]
+    db:
+        image: mongo
+        environment:
+            - MONGO_INITDB_DATABASE=app
+            - MONGO_INITDB_ROOT_USERNAME=admin
+            - MONGO_INITDB_ROOT_PASSWORD=admin
+        volumes:
+            - appdata:/data/db
+        ports:
+            - 27017:27017
+        restart: always
+        networks:
+            - app-network
+    seed:
+        image: backend:latest
+        depends_on:
+            - db
+        command: [ "yarn", "seed" ]
+        volumes:
+            - ./backend/src:/home/node/app/src
+        environment:
+            DATABASE_URL: mongodb://admin:admin@db:27017/app?authSource=admin
+        networks:
+            - app-network
+        profiles:
+            - donotstart
 volumes:
-  appdata:
-
-    null
+    appdata: null
 networks:
-  app-network:
-    driver: bridge
+    app-network:
+        driver: bridge

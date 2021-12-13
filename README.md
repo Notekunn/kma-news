@@ -21,5 +21,11 @@ yarn <frontend|backend> add <package>
 - Chạy dev docker
 
 ```bash
-docker-compose up --build backend
+docker compose up --build backend
+```
+
+- Seed data
+
+```bash
+docker compose run seed
 ```
