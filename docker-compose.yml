@@ -49,6 +49,17 @@ services:
             - app-network
         profiles:
             - donotstart
+    crontab:
+        image: crontab
+        build:
+            context: crawler
+            dockerfile: ./Dockerfile
+            target: base
+        volumes:
+            - ./crawler/crontab:/etc/cron.d/crawl-cron
+        networks:
+            - app-network
+
 volumes:
     appdata: null
 networks:
