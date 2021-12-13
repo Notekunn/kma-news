@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from '@/components/Header'
-import Container from '@/components/Container'
-import Footer from '@/components/Footer'
+import Header from './components/Header/index'
+import Container from './components/Container/index'
+import Footer from './components/Footer/index'
 import './App.css'
 import './gird.css'
 function App() {
