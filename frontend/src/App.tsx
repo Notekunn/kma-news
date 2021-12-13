@@ -1,17 +1,17 @@
-import React from 'react';
-import Header from './components/Header/Header';
-import Container from './components/Container/Container';
-import Footer from './components/Footer/Footer';
-import './App.css';
-import './gird.css';
+import React from 'react'
+import Header from '@/components/Header'
+import Container from '@/components/Container'
+import Footer from '@/components/Footer'
+import './App.css'
+import './gird.css'
 function App() {
   return (
     <div className="App">
-        <Header />
-        <Container />
-        <Footer />
+      <Header />
+      <Container />
+      <Footer />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
