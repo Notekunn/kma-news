@@ -1,7 +1,9 @@
 import React from 'react'
 import { AiOutlineUser, AiOutlineMenu } from 'react-icons/ai'
 import { BsSearch } from 'react-icons/bs'
+import { useState } from 'react'
 const Header = () => {
+  const [active,setActive] = useState(false);
   return (
     <div className="header">
       <div className="col-9 header-top">
@@ -37,12 +39,12 @@ const Header = () => {
             <li className="header-navbar-item">Năng lượng tích cực</li>
             <li className="header-navbar-item">Khám phá Việt Nam</li>
             <li className="header-navbar-item">Khám phá thế giới</li>
-            <li className="header-navbar-item">
+            <li className="header-navbar-item" onClick={()=>setActive(!active)}>
               <AiOutlineMenu />
             </li>
           </ul>
         </div>
-        <div className="drop-menu">
+        <div className={active ? "drop-menu-active":"drop-menu"}>
           <ul className="col-9 drop-menu-list">
             <li className="drop-menu-item">
               <div className="menu-item-title">Thế Giới</div>
