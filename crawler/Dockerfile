@@ -10,7 +10,7 @@ RUN yarn install
 
 COPY . .
 
-RUN yarn build
+# RUN yarn build
 
 COPY crontab /etc/cron.d/crawl-cron
 

@@ -51,17 +51,38 @@ services:
             - donotstart
     crontab:
         image: crontab
+        depends_on:
+            - db
+            - cache
         build:
             context: crawler
             dockerfile: ./Dockerfile
             target: base
+        environment:
+            REDIS_PORT: 6379
         volumes:
+            - ./crawler/src:/home/node/app/src
             - ./crawler/crontab:/etc/cron.d/crawl-cron
+        command: [ "yarn", "dev" ]
         networks:
             - app-network
+            - cache-network
+    cache:
+        image: redis:5-alpine
+        volumes:
+            - appcache:/data
+        networks:
+            - cache-network
+            - app-network
+        restart: unless-stopped
+        ports:
+            - 6379:6379
 
 volumes:
     appdata: null
+    appcache: null
 networks:
     app-network:
+        driver: bridge
+    cache-network:
         driver: bridge
