@@ -188,7 +188,8 @@
     transform: scale(1.1);
 }
 .title-top{
-    font-size: 30px;
+    font-size: 28px;
+    line-height: 36px;
 }
 .news-source{
     display: flex;
@@ -292,8 +293,12 @@
 /* content-right */
 .list-news-right .item-news-navbar:first-child{
     border-top: none;
-    margin-top: 0;
-    padding-top: 0;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+.list-news-right .item-news-navbar{
+    margin-top: 5px;
+    padding-top: 5px;
 }
 .list-news-right .img-news-navbar {
     height: 60px;
@@ -302,4 +307,55 @@
     margin-left: 10px;
     font-size: 16px;
     line-height: 22px;
+}
+/* slider */
+.slider{
+    margin: auto;
+    position: relative;
+    width: 100%;
+    background: #f7f8fa url(https://baomoi-static.zadn.vn/web/styles/img/pls-bg-1.png) calc(50% - 60px) top/600px auto no-repeat;
+    border: 1px solid #eee;
+    padding: 8px 15px ;
+}
+.title-slider{
+    font-size: 11px;
+    color: #212529;
+    font-weight: 600;
+}
+.slide-track{
+    display: grid;
+    overflow: hidden;
+    padding: 5px 0px;
+}
+.list-slide{
+    display: flex;
+    animation: scroll 20s linear infinite;
+}
+
+@keyframes scroll {
+    0%{
+        transform: translateX(0);
+    }
+    100%{
+        transform: translateX(calc(-72px * 16)); 
+    }
+}
+.slide{
+    height: 46px;
+    width: 72px;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem ;
+    border: 1px solid #fff;
+    margin: 0 5px;
+    box-shadow: 0 0 1px rgb(0 0 0 / 68%);
+    background-color: #fff;
+    cursor: pointer;
+}
+.list-slide:hover{
+    animation-play-state:paused ;
+}
+.slide img{
+    width: 100%;
+    object-fit: cover;
 }
