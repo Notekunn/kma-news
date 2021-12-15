@@ -71,6 +71,10 @@
 .icon-search,.logo:hover{
     cursor: pointer;
 }
+.icon-search:hover{
+    color: #2fa1b3;
+    font-size: 20px;
+}
 .header-top-right :hover{
     cursor: pointer;
 }
@@ -410,7 +414,7 @@ table{
     font-size: 17px;
 }
 .figure-covid table tbody tr:first-child td:first-child {
-    /* text-transform: uppercase; */
+    text-transform: uppercase;
 }
 .figure-covid table tbody tr td:first-child {
     text-transform: capitalize;
@@ -475,7 +479,7 @@ table{
 .item-select{
     padding: 3px 10px;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 400;
 }
 .item-select:hover{
     cursor: pointer;

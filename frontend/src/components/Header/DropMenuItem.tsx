@@ -17,8 +17,8 @@ export const DropMenuItem: React.FC<DropMenuItemProps> = React.memo(({ title, su
     <li className="drop-menu-item">
       <div className="menu-item-title">{title}</div>
       <ul className="drop-menu-sub-list">
-        {subItems.map((e) => (
-          <DropMenuSubItem>{e.title}</DropMenuSubItem>
+        {subItems.map((e,index) => (
+          <DropMenuSubItem key={index}>{e.title}</DropMenuSubItem>
         ))}
       </ul>
     </li>

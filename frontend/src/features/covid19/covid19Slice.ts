@@ -23,7 +23,7 @@ type LocationField =
 type LocationData = Record<LocationField, number>
 type APIResponse =
   | Record<'total' | 'today', Record<'internal' | 'world', LocationReport>> &
-      Record<'locations', LocationReport[]>
+  Record<'locations', LocationReport[]>
 
 type Covid19StateData = Record<'internal' | 'world', LocationData> &
   Record<'locations', Array<LocationData & Record<'name', string>>>

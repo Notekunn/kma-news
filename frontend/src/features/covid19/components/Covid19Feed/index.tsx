@@ -43,8 +43,8 @@ export const Covid19Feed = () => {
                 <td>{numberFormat.format(data?.internal.cases || 0)}</td>
                 <td>{numberFormat.format(data?.internal.death || 0)}</td>
               </tr>
-              {data?.locations.slice(0, showFull ? undefined : 10).map((e) => (
-                <tr>
+              {data?.locations.slice(0, showFull ? undefined : 10).map((e,index) => (
+                <tr key={index}>
                   <td>{e.name}</td>
                   <td>{numberFormat.format(e.cases || 0)}</td>
                   <td>{numberFormat.format(e.death || 0)}</td>
