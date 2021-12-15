@@ -2,8 +2,9 @@ import React from 'react'
 import { AiOutlineUser, AiOutlineMenu } from 'react-icons/ai'
 import { BsSearch } from 'react-icons/bs'
 import { useState } from 'react'
+import { DropMenuItem } from './DropMenuItem'
 const Header = () => {
-  const [active,setActive] = useState(false);
+  const [active, setActive] = useState(false)
   return (
     <div className="header">
       <div className="col-9 header-top">
@@ -39,27 +40,22 @@ const Header = () => {
             <li className="header-navbar-item">Năng lượng tích cực</li>
             <li className="header-navbar-item">Khám phá Việt Nam</li>
             <li className="header-navbar-item">Khám phá thế giới</li>
-            <li className="header-navbar-item" onClick={()=>setActive(!active)}>
+            <li className="header-navbar-item" onClick={() => setActive(!active)}>
               <AiOutlineMenu />
             </li>
           </ul>
         </div>
-        <div className={active ? "drop-menu-active":"drop-menu"}>
+        <div className={active ? 'drop-menu-active' : 'drop-menu'}>
           <ul className="col-9 drop-menu-list">
-            <li className="drop-menu-item">
-              <div className="menu-item-title">Thế Giới</div>
-              <ul className="drop-menu-sub-list">
-                <li className="menu-sub-item"></li>
-              </ul>
-            </li>
-            <li className="drop-menu-item">
-              <div className="menu-item-title">XÃ HỘI</div>
-              <ul className="drop-menu-sub-list">
-                <li className="menu-sub-item">Thời sự</li>
-                <li className="menu-sub-item">Giao thông</li>
-                <li className="menu-sub-item">Môi trường - Khí hậu</li>
-              </ul>
-            </li>
+            <DropMenuItem title="Thế giới" subItems={[]} />
+            <DropMenuItem
+              title="Xã hội"
+              subItems={[
+                { title: 'Thời sự' },
+                { title: 'Giao thông' },
+                { title: 'Môi trường - Khí hậu' },
+              ]}
+            />
             <li className="drop-menu-item">
               <div className="menu-item-title">VĂN HÓA</div>
               <ul className="drop-menu-sub-list">
