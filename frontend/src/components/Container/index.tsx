@@ -1,5 +1,7 @@
 import React from 'react'
-
+import { BsFlagFill } from "react-icons/bs"
+import { FaUserInjured, FaUsersSlash } from "react-icons/fa"
+import { FiMapPin } from "react-icons/fi"
 const Container = () => {
     return (
         <div className='container'>
@@ -251,6 +253,106 @@ const Container = () => {
                                             <img src="https://photo-baomoi.zadn.vn/7d6e42019f42761c2f53.png" alt="" />
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="section">
+                            <div className="space"></div>
+                        </div>
+                        <div className="section">
+                            <div className="HCM">
+                                <div className="img-news-HCM">
+                                    <img src="https://baomoi-static.zadn.vn/events/banner_hcm_02-min.png" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="section">
+                            <div className="news-covid">
+                                <div className="time-news-covid">
+                                    Cập nhật: 14/12/2021 - 18:21
+                                </div>
+                                <div className="figure-covid">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th><BsFlagFill color='#ff5a5a' size="28px" /></th>
+                                                <th><FaUserInjured color='#ff5a5a' size="28px" /></th>
+                                                <th><FaUsersSlash color='#ff5a5a' size="28px" /></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr className='odd'>
+                                                <td>WORLD</td>
+                                                <td>271,213,566</td>
+                                                <td>819,315</td>
+                                            </tr>
+                                            <tr>
+                                                <td>USA</td>
+                                                <td>51,018,282</td>
+                                                <td>5,331,805</td>
+                                            </tr>
+                                            <tr className='odd'>
+                                                <td>India</td>
+                                                <td>34,703,644</td>
+                                                <td>475,888</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Brazil</td>
+                                                <td>22,191,949</td>
+                                                <td>616,980</td>
+                                            </tr>
+                                            <tr>
+                                                <td>UK</td>
+                                                <td>10,873,468</td>
+                                                <td>146,477</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Russia</td>
+                                                <td>10,074,797</td>
+                                                <td>291,749</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Turkey</td>
+                                                <td>9,058,975</td>
+                                                <td>79,322</td>
+                                            </tr>
+                                            <tr>
+                                                <td>France</td>
+                                                <td>8,270,728</td>
+                                                <td>120,431</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Germany</td>
+                                                <td>6,559,716</td>
+                                                <td>106,591</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Iran</td>
+                                                <td>6,160,303</td>
+                                                <td>130,831</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Argentina</td>
+                                                <td>5,361,967</td>
+                                                <td>116,792</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <a href="/">XEM THÊM</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="section">
+                            <div className="location">
+                                <div className="location-head">
+                                    <FiMapPin />
+                                    <h3>ĐỊA PHƯƠNG</h3>
+                                </div>
+                                <div className="location-input">
+
+                                </div>
+                                <div className="location-result">
+
                                 </div>
                             </div>
                         </div>

@@ -359,3 +359,81 @@
     width: 100%;
     object-fit: cover;
 }
+.space{
+    height: 630px;
+}
+.img-news-HCM{
+    width: 100%;
+    padding: 15px 15px 8px;
+    background-color: #f7f7f7;
+}
+.img-news-HCM img{
+    object-fit: cover;
+    width: 100%;
+    cursor: pointer;
+}
+.news-covid{
+    background: #fff url(https://baomoi-static.zadn.vn/web/styles/img/covid-sidebar-bg-6.png) top/420px 115px no-repeat;
+    padding: 43px 0 0;
+    border: 1px solid #e9ecef;
+}
+.time-news-covid{
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+}
+thead tr{
+    padding: 0 10px;
+    text-align: center;
+}
+.figure-covid{
+    padding: 10px 0px;
+    display: flex;
+    flex-direction: column;
+}
+table{
+    border-collapse: collapse;
+}
+.figure-covid table{
+    width: 100%;
+    font-weight: 600;
+}
+.figure-covid table tbody td{
+    padding: 9px 10px;
+    white-space: nowrap;
+    text-align: right;
+}
+.figure-covid table tbody td :first-child{
+    font-size: 17px;
+}
+.figure-covid table tbody tr:first-child td:first-child {
+    text-transform: uppercase;
+}
+.figure-covid table tbody tr td:first-child {
+    text-transform: capitalize;
+    text-align: left;
+}
+.figure-covid table tbody tr:nth-child(odd){
+    background-color: rgba(47,161,179,.1);
+}
+.figure-covid table tbody tr:first-child{
+    background-color: #fff8e2;
+}
+.figure-covid a{
+    text-decoration: none;
+    font-size: 12px;
+    margin-top: 12px;
+    text-align: right;
+    padding-right: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #000;
+}
+.figure-covid table tbody tr:hover{
+    background-color: rgba(47,161,179,.3);
+    cursor: pointer;
+}
+.figure-covid table tbody tr :nth-child(3){
+    color: red;
+}
