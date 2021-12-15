@@ -149,7 +149,7 @@
     text-transform: uppercase;
 }
 .menu-sub-item{
-    padding:5px;
+    padding:10px 5px;
     font-size: 13px;
     color: #495057;
     font-weight: 600;
@@ -410,7 +410,7 @@ table{
     font-size: 17px;
 }
 .figure-covid table tbody tr:first-child td:first-child {
-    /* text-transform: uppercase; */
+    text-transform: uppercase;
 }
 .figure-covid table tbody tr td:first-child {
     text-transform: capitalize;
