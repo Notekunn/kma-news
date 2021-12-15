@@ -2,7 +2,10 @@ import React from 'react'
 import { BsFlagFill } from "react-icons/bs"
 import { FaUserInjured, FaUsersSlash } from "react-icons/fa"
 import { FiMapPin } from "react-icons/fi"
+import { RiArrowDropDownLine } from "react-icons/ri";
+import { useState } from 'react';
 const Container = () => {
+    const [activeSelect, setActiveSelect] = useState(false);
     return (
         <div className='container'>
             <div className="col-9 container-main">
@@ -344,16 +347,153 @@ const Container = () => {
                         </div>
                         <div className="section">
                             <div className="location">
-                                <div className="location-head">
+                                <div className="location-head" >
                                     <FiMapPin />
                                     <h3>ĐỊA PHƯƠNG</h3>
                                 </div>
-                                <div className="location-input">
-
+                                <div className="location-select">
+                                    <div className="name-select" onClick={() => setActiveSelect(!activeSelect)}>
+                                        Bển tre
+                                        <RiArrowDropDownLine />
+                                    </div>
+                                    <div className={!activeSelect ? "option-select" : "option-select active-select"}>
+                                        <ul className="list-select">
+                                            <li className="item-select">An Giang</li>
+                                            <li className="item-select">BR-VT</li>
+                                            <li className="item-select">Bắc Giang</li>
+                                            <li className="item-select">Bắc Cạn</li>
+                                            <li className="item-select">Bạc Liêu</li>
+                                            <li className="item-select">Bắc Ninh</li>
+                                            <li className="item-select">Bến Tre</li>
+                                            <li className="item-select">Bình Dương</li>
+                                            <li className="item-select">Bình Định</li>
+                                            <li className="item-select">Bình Phước</li>
+                                            <li className="item-select">Bình Thuận</li>
+                                            <li className="item-select">Cà Mau</li>
+                                            <li className="item-select">Cần Thơ</li>
+                                            <li className="item-select">Cao Bằng</li>
+                                            <li className="item-select">Đà Nẵng</li>
+                                            <li className="item-select">Đăk Lăk</li>
+                                            <li className="item-select">Đồng Nai</li>
+                                            <li className="item-select">Đồng Tháp</li>
+                                            <li className="item-select">Gia Lai</li>
+                                            <li className="item-select">Hà Giang</li>
+                                            <li className="item-select">Hà Nam</li>
+                                            <li className="item-select">Hà Nội</li>
+                                            <li className="item-select">Hà Tĩnh</li>
+                                            <li className="item-select">Hải Dương</li>
+                                            <li className="item-select">Hải Phòng</li>
+                                            <li className="item-select">Hòa Bình</li>
+                                            <li className="item-select">Hưng yên</li>
+                                            <li className="item-select">Kiên Giang</li>
+                                            <li className="item-select">Kon Tum</li>
+                                            <li className="item-select">Khánh Hòa</li>
+                                            <li className="item-select">Lai Châu</li>
+                                            <li className="item-select">Lạng Sơn</li>
+                                            <li className="item-select">Lào Cai</li>
+                                            <li className="item-select">Lâm Đồng</li>
+                                            <li className="item-select">Long AN</li>
+                                            <li className="item-select">Nam Định</li>
+                                            <li className="item-select">Ninh Bình</li>
+                                            <li className="item-select">Ninh Thuận</li>
+                                            <li className="item-select">Nghệ An</li>
+                                            <li className="item-select">Phú Thọ</li>
+                                            <li className="item-select">Phú Yên</li>
+                                            <li className="item-select">Quảng Bình</li>
+                                            <li className="item-select">Quảng Nam</li>
+                                            <li className="item-select">Quảng Ninh</li>
+                                            <li className="item-select">Quảng Ngãi</li>
+                                            <li className="item-select">Quảng Trị</li>
+                                            <li className="item-select">Sóc Trăng</li>
+                                            <li className="item-select">Sơn La</li>
+                                            <li className="item-select">Tây Ninh</li>
+                                            <li className="item-select">Tiền Giang</li>
+                                            <li className="item-select">TP.HCM</li>
+                                            <li className="item-select">TT Huế</li>
+                                            <li className="item-select">Tuyên Quang</li>
+                                            <li className="item-select">Thái Bình</li>
+                                            <li className="item-select">Thái Nguyên</li>
+                                            <li className="item-select">Thanh Hóa</li>
+                                            <li className="item-select">Trà Vinh</li>
+                                            <li className="item-select">Vĩnh Long</li>
+                                            <li className="item-select">Vĩnh Phúc</li>
+                                            <li className="item-select">Yên Bái</li>
+                                            <li className="item-select">Đăk Nông</li>
+                                            <li className="item-select">Hậu Giang</li>
+                                            <li className="item-select">Điện Biên</li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div className="location-result">
-
+                                    <div className="list-news-right">
+                                        <div className="item-news-navbar">
+                                            <div className="img-news-navbar">
+                                                <img src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg" alt="" />
+                                            </div>
+                                            <div className="description-item-news">
+                                                <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+                                                <div className="news-source">
+                                                    <img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
+                                                    <span className='news-time'>2 giờ</span>
+                                                    <span className='number-news-orther'>60 liên quan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="item-news-navbar">
+                                            <div className="img-news-navbar">
+                                                <img src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg" alt="" />
+                                            </div>
+                                            <div className="description-item-news">
+                                                <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+                                                <div className="news-source">
+                                                    <img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
+                                                    <span className='news-time'>2 giờ</span>
+                                                    <span className='number-news-orther'>60 liên quan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="item-news-navbar">
+                                            <div className="img-news-navbar">
+                                                <img src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg" alt="" />
+                                            </div>
+                                            <div className="description-item-news">
+                                                <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+                                                <div className="news-source">
+                                                    <img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
+                                                    <span className='news-time'>2 giờ</span>
+                                                    <span className='number-news-orther'>60 liên quan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="item-news-navbar">
+                                            <div className="img-news-navbar">
+                                                <img src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg" alt="" />
+                                            </div>
+                                            <div className="description-item-news">
+                                                <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+                                                <div className="news-source">
+                                                    <img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
+                                                    <span className='news-time'>2 giờ</span>
+                                                    <span className='number-news-orther'>60 liên quan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="item-news-navbar">
+                                            <div className="img-news-navbar">
+                                                <img src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg" alt="" />
+                                            </div>
+                                            <div className="description-item-news">
+                                                <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+                                                <div className="news-source">
+                                                    <img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
+                                                    <span className='news-time'>2 giờ</span>
+                                                    <span className='number-news-orther'>60 liên quan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                <a href="/">Xem thêm</a>
                             </div>
                         </div>
                     </div>

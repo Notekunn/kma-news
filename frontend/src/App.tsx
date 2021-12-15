@@ -4,6 +4,7 @@ import Container from './components/Container/index'
 import Footer from './components/Footer/index'
 import './App.css'
 import './gird.css'
+import './index.css'
 function App() {
   return (
     <div className="App">
