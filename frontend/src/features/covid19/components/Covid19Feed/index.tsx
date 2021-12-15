@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsFlagFill } from 'react-icons/bs'
 import { FaUserInjured, FaUsersSlash } from 'react-icons/fa'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { fetchCovid19Data, selectData, selectLoading } from '@/features/covid19/covid19Slice'
+import { fetchCovid19Data, selectData } from '@/features/covid19/covid19Slice'
 
 const numberFormat = new Intl.NumberFormat('en-EN')
 export const Covid19Feed = () => {
   const dispatch = useAppDispatch()
   const data = useAppSelector(selectData)
-  const loading = useAppSelector(selectLoading)
+  const [showFull, setShowFull] = useState(false)
   useEffect(() => {
     dispatch(fetchCovid19Data())
     return () => {}
@@ -43,7 +43,7 @@ export const Covid19Feed = () => {
                 <td>{numberFormat.format(data?.internal.cases || 0)}</td>
                 <td>{numberFormat.format(data?.internal.death || 0)}</td>
               </tr>
-              {data?.locations.map((e) => (
+              {data?.locations.slice(0, showFull ? undefined : 10).map((e) => (
                 <tr>
                   <td>{e.name}</td>
                   <td>{numberFormat.format(e.cases || 0)}</td>
@@ -52,7 +52,15 @@ export const Covid19Feed = () => {
               ))}
             </tbody>
           </table>
-          <a href="/">XEM THÊM</a>
+          <a
+            href="/#"
+            onClick={(e) => {
+              e.preventDefault()
+              setShowFull(!showFull)
+            }}
+          >
+            {showFull ? 'ẨN BỚT' : 'XEM THÊM'}
+          </a>
         </div>
       </div>
     </div>

@@ -1,7 +1,5 @@
 import { Covid19Feed } from '@/features/covid19/components/Covid19Feed'
 import React from 'react'
-import { BsFlagFill } from 'react-icons/bs'
-import { FaUserInjured, FaUsersSlash } from 'react-icons/fa'
 import { FiMapPin } from 'react-icons/fi'
 const Container = () => {
   return (
