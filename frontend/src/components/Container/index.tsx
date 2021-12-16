@@ -2,9 +2,13 @@ import { Covid19Feed } from '@/features/covid19/components/Covid19Feed'
 import React from 'react'
 import { FiMapPin } from 'react-icons/fi'
 import { RiArrowDropDownLine } from "react-icons/ri"
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 const Container = () => {
 	const [activeSelect, setActiveSelect] = useState(false);
+	const nameSelect = useRef() as React.MutableRefObject<HTMLInputElement>;
+	useEffect(() => {
+		console.log(nameSelect.current.getBoundingClientRect())
+	},[])
 	return (
 		<div className="container">
 			<div className="col-9 container-main">
@@ -372,7 +376,7 @@ const Container = () => {
 									<h3>ĐỊA PHƯƠNG</h3>
 								</div>
 								<div className="location-select">
-									<div className="name-select" onClick={() => setActiveSelect(!activeSelect)}>
+									<div className="name-select" onClick={() => setActiveSelect(!activeSelect)} ref={nameSelect}>
 										Bển tre
 										<RiArrowDropDownLine />
 									</div>
@@ -512,6 +516,7 @@ const Container = () => {
 											</div>
 										</div>
 									</div>
+									<a href="/">Xem thêm</a>
 								</div>
 							</div>
 						</div>

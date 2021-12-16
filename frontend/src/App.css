@@ -71,6 +71,10 @@
 .icon-search,.logo:hover{
     cursor: pointer;
 }
+.icon-search:hover{
+    color: #2fa1b3;
+    font-size: 20px;
+}
 .header-top-right :hover{
     cursor: pointer;
 }
@@ -149,7 +153,7 @@
     text-transform: uppercase;
 }
 .menu-sub-item{
-    padding:10px 5px;
+    padding:5px;
     font-size: 13px;
     color: #495057;
     font-weight: 600;
@@ -475,7 +479,7 @@ table{
 .item-select{
     padding: 3px 10px;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 400;
 }
 .item-select:hover{
     cursor: pointer;
