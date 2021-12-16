@@ -1,5 +1,5 @@
 import type { Model, Document } from 'mongoose'
-// import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction } from 'express'
 export interface User {
   name: string
   email: string
@@ -13,22 +13,22 @@ export interface IUserDocument extends User, Document {
   checkPassword: (password: string) => boolean
 }
 
-// export interface IController<BodyType = {}, ResponseType = {}, QueryType = {}, ParamType = {}> {
-//   (
-//     req: Request<ParamType, ResponseType, BodyType, QueryType>,
-//     res: Response<ResponseType>,
-//     next: NextFunction
-//   ): void | Promise<void>
-// }
-// export interface IControllerAsync<
-//   BodyType = {},
-//   ResponseType = {},
-//   QueryType = {},
-//   ParamType = {}
-// > {
-//   (
-//     req: Request<ParamType, ResponseType, BodyType, QueryType>,
-//     res: Response<ResponseType>,
-//     next: NextFunction
-//   ): Promise<void>
-// }
+export interface IController<BodyType = {}, ResponseType = {}, QueryType = {}, ParamType = {}> {
+  (
+    req: Request<ParamType, ResponseType, BodyType, QueryType>,
+    res: Response<ResponseType>,
+    next: NextFunction
+  ): void | Promise<void>
+}
+export interface IControllerAsync<
+  BodyType = {},
+  ResponseType = {},
+  QueryType = {},
+  ParamType = {}
+> {
+  (
+    req: Request<ParamType, ResponseType, BodyType, QueryType>,
+    res: Response<ResponseType>,
+    next: NextFunction
+  ): Promise<void>
+}
