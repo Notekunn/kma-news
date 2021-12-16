@@ -304,7 +304,7 @@
 }
 .list-news-right .item-news-navbar{
     margin-top: 5px;
-    padding-top: 5px;
+    padding-top: 10px;
 }
 .list-news-right .img-news-navbar {
     height: 60px;
@@ -519,4 +519,204 @@ table{
 }
 a:hover{
     color: #2fa1b3;
+}
+.news-tilte{
+    position: relative;
+    text-transform: uppercase;
+    font-size: 28px;
+    color: #2fa1b3;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+.news-tilte h3::before{
+    content: "";
+    position: absolute;
+    background-color: #2fa1b3;
+    width: 65%;
+    height: 3px;
+    bottom: 14px;
+    transform: translateX(105px)
+}
+.news-video .list-news-right{
+    background-color: #eef8f9;
+    padding: 15px;
+}
+.news-video .item-news-navbar{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+.news-video .img-news-navbar{
+    width: 100%;
+    height: 150px;
+}
+.news-video .description-item-news{
+    margin-left: 0;
+    margin-top: 10px;
+}
+
+.news-photo .list-news-right{
+    background-color: #fcf2ee;
+    padding: 15px;
+}
+.news-photo .news-tilte,.news-hot .news-tilte{
+    color: #db562b;
+}
+.news-hot .news-tilte h3::before{
+    background-color: #db562b;
+}
+.news-photo .news-tilte h3::before{
+    background-color: #db562b;
+    width: 62%;
+    transform: translateX(112px);
+}
+.news-photo .item-news-navbar{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+.news-photo .list-img-photo{
+    height: 135px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 2fr 1.5fr;
+    grid-column-gap: 2px ;
+    grid-row-gap:2px ;
+    grid-template-areas: 
+    "h1 h1 h2"
+    "h1 h1 h3";
+}
+.news-photo .img-news-navbar{
+    width: 100%;
+}
+.news-photo .list-img-photo .img-news-navbar:first-child{
+    height: 100%;
+    grid-area: h1;
+}
+.news-photo .list-img-photo .img-news-navbar:nth-child(2){
+    height: 100%;
+    grid-area: h2;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.news-photo .list-img-photo .img-news-navbar:nth-child(2) img{
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.news-photo .list-img-photo .img-news-navbar:nth-child(3) img{
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.news-photo .list-img-photo .img-news-navbar:nth-child(3){
+    height: 100%;
+    grid-area: h3;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.news-photo .description-item-news{
+    margin-left: 0;
+    margin-top: 10px;
+}
+.news-hot .news-tilte h3::before{
+    width: 43%;
+    transform: translateX(169px)
+}
+.news-hot .list-news-right{
+    background-color: #f7f7f7;
+    padding: 15px;
+}
+.news-utilities .news-tilte{
+    color: #db562b;
+}
+.news-utilities .news-tilte h3::before{
+    background-color: #db562b;
+    width: 55%;
+    transform: translateX(133px);
+}
+.content-utilities,.news-analysis{
+    padding: 15px;
+    background-color: #f7f7f7;
+}
+.content-weather{
+    display: flex;
+    flex-direction: column;
+}
+.weather-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.img-weather{
+    width: 60px;
+    height: 60px;
+}
+.weather-detail{
+    display: flex;
+    flex-direction: column;
+    padding-left: 14px;
+    border-left: 1px solid #ddd;
+    line-height: 18px;
+}
+.temperature{
+    font-size: 28px;
+    font-weight: 700;
+}
+.temperature span{
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.list-day{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.item-day{
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-left: 1px solid #ddd;
+}
+.item-day:first-child{
+    border: none;
+}
+.img-weather-day img{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+.content-other{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f7f7f7;
+    padding: 9px 15px 0;
+    border-top: 1px solid #fff;
+}
+.content-other div{
+    display: flex;
+    flex-direction: column;
+
+}
+.content-other div span{
+    padding: 5px 0px;
+    font-size: 13px;
+    text-transform: capitalize;
+    font-weight: 500;
+}
+.content-other div span:hover{
+    color: #2fa1b3;
+    cursor: pointer;
+}
+.news-analysis .news-tilte{
+    font-size: 18px;
+    color: #db562b;
+}
+.news-analysis .news-tilte h3::before{
+    background-color: #db562b;
+    width: 23%;
+    transform: translateX(229px);
+    bottom: 8px;
 }
