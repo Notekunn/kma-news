@@ -11,6 +11,8 @@ services:
             NODE_ENV: development
             PORT: 9999
             DATABASE_URL: mongodb://admin:admin@db:27017/app?authSource=admin
+            SECRET: secret_for_token,
+            REFRESH_SECRET: secret_for_refresh_token
         depends_on:
             - db
         expose:
