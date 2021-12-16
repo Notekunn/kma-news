@@ -22,7 +22,8 @@ app.listen(PORT, () => {
 
 async function connectDatabase() {
   await mongoose.connect(
-    process.env.DATABASE_URL || 'mongodb://admin:admin@localhost:27017/app?authSource=admin'
+    process.env.DATABASE_URL ||
+      'mongodb+srv://notekunn:6LK7xV8nxQmC@kmabot-rfffk.azure.mongodb.net/app?retryWrites=true&w=majority'
   )
   console.log('🔥Connect database success!')
 }
