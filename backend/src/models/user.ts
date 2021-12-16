@@ -33,8 +33,6 @@ userSchema.methods.hashPassword = function () {
 }
 
 userSchema.methods.checkPassword = function (password: string) {
-  console.log('🚀 ~ file: user.ts ~ line 36 ~ password', password)
-
   return bcrypt.compareSync(password, this.password)
 }
 export const UserModel = mongoose.model('user', userSchema)

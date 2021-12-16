@@ -26,10 +26,42 @@ export const login: IController<Pick<User, 'email' | 'password'>> = errorWrapper
       email: user.email,
       id: user.id,
     }
+
+    const tokenExpiration = new Date(new Date().getTime() + 30 * 60 * 1000)
     const token = jwt.sign(payload, SECRET, {
-      expiresIn: '30m',
+      expiresIn: process.env.NODE_ENV === 'production' ? '30m' : '3d',
     })
-    const tokenExpiration = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
-    res.send({ token, tokenExpiration, userId: user.id })
+    const refreshTokenExpiration = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
+    const refreshToken = jwt.sign(payload, REFRESH_SECRET, {
+      expiresIn: '7d',
+    })
+    res.send({
+      token,
+      tokenExpiration,
+      refreshToken,
+      refreshTokenExpiration,
+      userId: user.id,
+    })
+  }
+)
+
+export const refreshToken: IController<{ refresh_token: string }> = errorWrapper(
+  async (req, res, next) => {
+    const { refresh_token } = req.body
+    // Phải viết thêm hàm kiểm tra refresh token
+    // Sau này sẽ lấy từ cookie thay vì body
+    if (!refresh_token) throw new Error('Refresh token không hợp lệ')
+
+    const { email, id } = jwt.verify(refresh_token, REFRESH_SECRET) as JwtPayload
+
+    const tokenExpiration = new Date(new Date().getTime() + 30 * 60 * 1000)
+    const token = jwt.sign({ email, id }, SECRET, {
+      expiresIn: process.env.NODE_ENV === 'production' ? '30m' : '3d',
+    })
+    res.send({
+      token,
+      tokenExpiration,
+      userId: id,
+    })
   }
 )
