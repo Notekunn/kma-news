@@ -263,14 +263,14 @@
     flex-direction: column;
 
 }
-.list-news-navbar a{
+.list-news-navbar > a{
     color: #2fa1b3;
     text-decoration: none;
     font-size: 18px;
     display: flex;
     justify-content: center;
 }
-.list-news-navbar a:hover{
+.list-news-navbar > a:hover{
     text-decoration: underline;
 }
 .item-news-navbar{

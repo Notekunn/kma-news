@@ -2,7 +2,7 @@ import { Covid19Feed } from '@/features/covid19/components/Covid19Feed'
 import React from 'react'
 import { FiMapPin } from 'react-icons/fi'
 import { RiArrowDropDownLine } from "react-icons/ri"
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import NewsTop from './contentLeft/NewsTop';
 import { ListNavbar } from './contentLeft/ListNavbar';
 const Container = () => {
@@ -15,9 +15,9 @@ const Container = () => {
 					<div className="col-8 content-left">
 						<NewsTop />
 						<ListNavbar title="PHÒNG CHỐNG DỊCH COVID-19" />
-						<ListNavbar title="NĂNG LƯỢNG TÍCH CỰC"/>
-						<ListNavbar title="KHÁM PHÁ VIỆT NAM"/>
-						<ListNavbar title="KHÁM PHÁ THẾ GIỚI"/>
+						<ListNavbar title="NĂNG LƯỢNG TÍCH CỰC" />
+						<ListNavbar title="KHÁM PHÁ VIỆT NAM" />
+						<ListNavbar title="KHÁM PHÁ THẾ GIỚI" />
 					</div>
 					<div className="col-4 content-right">
 						<div className="section">
