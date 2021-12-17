@@ -2,191 +2,22 @@ import { Covid19Feed } from '@/features/covid19/components/Covid19Feed'
 import React from 'react'
 import { FiMapPin } from 'react-icons/fi'
 import { RiArrowDropDownLine } from "react-icons/ri"
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import NewsTop from './contentLeft/NewsTop';
+import { ListNavbar } from './contentLeft/ListNavbar';
 const Container = () => {
 	const [activeSelect, setActiveSelect] = useState(false);
 	const [activeSelectWeather, setActiveSelectWeather] = useState(false);
-	const nameSelect = useRef() as React.MutableRefObject<HTMLInputElement>;
-	useEffect(() => {
-		console.log(nameSelect.current.getBoundingClientRect())
-	}, [])
 	return (
 		<div className="container">
 			<div className="col-9 container-main">
 				<div className="content">
 					<div className="col-8 content-left">
-						<div className="section">
-							<div className="img-top">
-								<img
-									src="https://photo-baomoi.zadn.vn/w700_r16x9/2021_12_12_83_41174941/244da11c115ef800a14f.jpg"
-									alt=""
-								/>
-							</div>
-							<div className="description-top">
-								<div className="title-top">
-									Quang Hải và Công Phượng ghi bàn, tuyển Việt Nam đè bẹp Malaysia
-								</div>
-								<div className="news-source">
-									<img
-										className="logo-source"
-										src="https://photo-baomoi.zadn.vn/d59db7f26ab183efdaa0.png"
-										alt=""
-									/>
-									<span className="news-time">2 giờ</span>
-									<span className="number-news-other">60 liên quan</span>
-								</div>
-							</div>
-						</div>
-						<div className="section">
-							<div className="list-news">
-								<div className="col-4 item-news">
-									<div className="img-item-news">
-										<img
-											src="https://photo-baomoi.zadn.vn/w300_r3x2_sm/2021_12_13_83_41179601/15e38ae13aa3d3fd8ab2.jpg"
-											alt=""
-										/>
-									</div>
-									<div className="description-item-news">
-										<span>Học sinh TP.HCM ngày đầu trở lại trường sau nửa năm học trực tuyến</span>
-										<div className="news-source">
-											<img
-												className="logo-source"
-												src="https://photo-baomoi.zadn.vn/6eede58338c0d19e88d1.png"
-												alt=""
-											/>
-											<span className="news-time">2 giờ</span>
-										</div>
-									</div>
-								</div>
-								<div className="col-4 item-news">
-									<div className="img-item-news">
-										<img
-											src="https://photo-baomoi.zadn.vn/w300_r3x2_sm/2021_12_13_83_41179601/15e38ae13aa3d3fd8ab2.jpg"
-											alt=""
-										/>
-									</div>
-									<div className="description-item-news">
-										<span>Học sinh TP.HCM ngày đầu trở lại trường sau nửa năm học trực tuyến</span>
-										<div className="news-source">
-											<img
-												className="logo-source"
-												src="https://photo-baomoi.zadn.vn/6eede58338c0d19e88d1.png"
-												alt=""
-											/>
-											<span className="news-time">2 giờ</span>
-										</div>
-									</div>
-								</div>
-								<div className="col-4 item-news">
-									<div className="img-item-news">
-										<img
-											src="https://photo-baomoi.zadn.vn/w300_r3x2_sm/2021_12_13_83_41179601/15e38ae13aa3d3fd8ab2.jpg"
-											alt=""
-										/>
-									</div>
-									<div className="description-item-news">
-										<span>Học sinh TP.HCM ngày đầu trở lại trường sau nửa năm học trực tuyến</span>
-										<div className="news-source">
-											<img
-												className="logo-source"
-												src="https://photo-baomoi.zadn.vn/6eede58338c0d19e88d1.png"
-												alt=""
-											/>
-											<span className="news-time">2 giờ</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className="section">
-							<div className="title-news-navbar">PHÒNG CHỐNG DỊCH COVID-19</div>
-							<div className="list-news-navbar">
-								<div className="item-news-navbar">
-									<div className="img-news-navbar">
-										<img
-											src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-											alt=""
-										/>
-									</div>
-									<div className="description-item-news">
-										<span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-										<div className="news-source">
-											<img
-												className="logo-source"
-												src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-												alt=""
-											/>
-											<span className="news-time">2 giờ</span>
-										</div>
-									</div>
-								</div>
-								<div className="item-news-navbar">
-									<div className="img-news-navbar">
-										<img
-											src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-											alt=""
-										/>
-									</div>
-									<div className="description-item-news">
-										<span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-										<div className="news-source">
-											<img
-												className="logo-source"
-												src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-												alt=""
-											/>
-											<span className="news-time">2 giờ</span>
-										</div>
-									</div>
-								</div>
-								<div className="item-news-navbar">
-									<div className="img-news-navbar">
-										<img
-											src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-											alt=""
-										/>
-									</div>
-									<div className="description-item-news">
-										<span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-										<div className="news-source">
-											<img
-												className="logo-source"
-												src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-												alt=""
-											/>
-											<span className="news-time">2 giờ</span>
-										</div>
-									</div>
-								</div>
-								<a href="">Xem thêm</a>
-							</div>
-							<div className="news-horizontal">
-								<div className="title-news-other-horizontal"><h3>Tuổi thơ thiếu tình thương và ước mơ làm mẹ chưa thành sự thật của Song Hye Kyo</h3></div>
-								<div className="list-news-other">
-									<div className="item-news-other">
-										<img src="https://photo-baomoi.zadn.vn/w300_r4x3_sm/2021_12_16_83_41217061/905dd6c064828ddcd493.jpg" alt="" />
-									</div>
-									<div className="item-news-other">
-										<img src="https://photo-baomoi.zadn.vn/w300_r4x3/2021_12_16_83_41217061/7bdf364284006d5e3411.jpg" alt="" />
-									</div>
-									<div className="item-news-other">
-										<img src="https://photo-baomoi.zadn.vn/w300_r4x3_sm/2021_12_16_83_41217061/a08def105d52b40ced43.jpg" alt="" />
-									</div>
-									<div className="item-news-other">
-										<img src="https://photo-baomoi.zadn.vn/w300_r4x3_sm/2021_12_16_83_41217061/305570c8c28a2bd4729b.jpg" alt="" />
-									</div>
-								</div>
-								<div className="news-source">
-									<img
-										className="logo-source"
-										src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-										alt=""
-									/>
-									<span className="news-time">2 giờ</span>
-									<span className="number-news-other">60 liên quan</span>
-								</div>
-							</div>
-						</div>
+						<NewsTop />
+						<ListNavbar title="PHÒNG CHỐNG DỊCH COVID-19" />
+						<ListNavbar title="NĂNG LƯỢNG TÍCH CỰC"/>
+						<ListNavbar title="KHÁM PHÁ VIỆT NAM"/>
+						<ListNavbar title="KHÁM PHÁ THẾ GIỚI"/>
 					</div>
 					<div className="col-4 content-right">
 						<div className="section">
@@ -404,7 +235,7 @@ const Container = () => {
 									<h3>ĐỊA PHƯƠNG</h3>
 								</div>
 								<div className="location-select">
-									<div className="name-select" onClick={() => setActiveSelect(!activeSelect)} ref={nameSelect}>
+									<div className="name-select" onClick={() => setActiveSelect(!activeSelect)} >
 										Bển tre
 										<RiArrowDropDownLine />
 									</div>
@@ -804,7 +635,7 @@ const Container = () => {
 											</div>
 										</div>
 										<div className="location-select">
-											<div className="name-select" onClick={() => setActiveSelectWeather(!activeSelectWeather)} ref={nameSelect}>
+											<div className="name-select" onClick={() => setActiveSelectWeather(!activeSelectWeather)}>
 												Bển tre
 												<RiArrowDropDownLine />
 											</div>
