@@ -63,11 +63,12 @@ const dataArrayHorizontal: Array<Newshorizontal> = [
 export const ItemNewsNavbar: React.FC<ItemNewsNavBarProps> = ({ children, data }) => {
   return (
     <div className="item-news-navbar">
-      <Link to="/">
-        <div className="img-news-navbar">
+      <div className="img-news-navbar">
+        <Link to="/">
           <img src={data?.img} alt="" />
-        </div>
-      </Link>
+        </Link>
+      </div>
+
       <div className="description-item-news">
         <Link to="/">
           <span>{data?.description}</span>
@@ -115,11 +116,11 @@ export const NewsHorizontal: React.FC<NewshorizontalProps> = () => {
       </div>
       <div className="list-news-other">
         {dataArrayHorizontal[0].img?.map((imgItem, index) => (
-          <Link to="/">
-            <div className="item-news-other" key={index}>
+          <div className="item-news-other" key={index}>
+            <Link to="/">
               <img src={imgItem} alt="" />
-            </div>
-          </Link>
+            </Link>
+          </div>
         ))}
       </div>
       <div className="news-source">
@@ -128,7 +129,7 @@ export const NewsHorizontal: React.FC<NewshorizontalProps> = () => {
         </Link>
         <span className="news-time">{dataArrayHorizontal[0].newsSource?.time}</span>
         <span className="number-news-other">
-          {dataArrayHorizontal[0].newsSource?.numberNewsOther}
+          <Link to="/">{dataArrayHorizontal[0].newsSource?.numberNewsOther}</Link>
         </span>
       </div>
     </div>
