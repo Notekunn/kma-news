@@ -7,7 +7,8 @@ const SECRET = process.env.SECRET || 'secret_key_for_jwt'
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization || ''
   const [, token] = authHeader.split(' ')
-  if (!token) return next(new HttpException(403, 'Invalid token'))
+  if (!authHeader.startsWith('Bearer') || !token)
+    return next(new HttpException(403, 'Invalid token'))
   try {
     const { email, id } = jwt.verify(token, SECRET) as JwtPayload
     const user = await UserModel.findOne({
