@@ -49,6 +49,8 @@ export interface Category {
   title: string
   slug: string
   description?: string
+  type: 'nav' | 'single'
+  subItems: Array<Category>
 }
 
 export interface ICategoryModel extends Model<Category> {}

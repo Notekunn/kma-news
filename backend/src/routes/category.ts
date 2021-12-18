@@ -8,4 +8,6 @@ router.get('/', categoryController.getAll)
 
 router.post('/', authMiddleware, guardMiddleware('admin'), categoryController.create)
 
+router.post('/sub', authMiddleware, guardMiddleware('admin'), categoryController.addSubItem)
+
 export default router

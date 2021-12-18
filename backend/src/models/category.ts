@@ -12,9 +12,21 @@ const categorySchema = new mongoose.Schema<ICategoryDocument>({
   description: {
     type: String,
   },
+  type: {
+    type: String,
+    enum: ['nav', 'single'],
+    default: 'single',
+  },
+  subItems: [
+    {
+      ref: 'category',
+      type: mongoose.Schema.Types.ObjectId,
+    },
+  ],
 })
 categorySchema.pre('save', function (next) {
   this.slug = stringToSlug(this.title)
+  if (!this.subItems || this.type == 'single') this.subItems = []
   next()
 })
 export const CategoryModel = mongoose.model('category', categorySchema)
