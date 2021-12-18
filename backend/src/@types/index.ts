@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express'
 declare global {
   namespace Express {
     interface Request {
-      context?: User
+      context?: IUserDocument
     }
   }
 }
@@ -42,4 +42,5 @@ export interface IUserModel extends Model<User> {}
 export interface IUserDocument extends User, Document {
   hashPassword: () => Promise<void>
   checkPassword: (password: string) => boolean
+  validRole: (requiredRole: UserRole) => boolean
 }

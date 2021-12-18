@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
-import { IUserDocument } from '../@types'
+import { IUserDocument, UserRole } from '../@types'
 
 const userSchema = new mongoose.Schema<IUserDocument>({
   email: {
@@ -39,5 +39,12 @@ userSchema.methods.hashPassword = function () {
 
 userSchema.methods.checkPassword = function (password: string) {
   return bcrypt.compareSync(password, this.password)
+}
+
+userSchema.methods.validRole = function (requiredRole: UserRole) {
+  if (this.role === requiredRole) return true
+  if (this.role === 'admin') return true
+  if (this.role === 'writter' && requiredRole === 'user') return true
+  return false
 }
 export const UserModel = mongoose.model('user', userSchema)
