@@ -44,3 +44,15 @@ export interface IUserDocument extends User, Document {
   checkPassword: (password: string) => boolean
   validRole: (requiredRole: UserRole) => boolean
 }
+
+export interface Category {
+  title: string
+  slug: string
+  description?: string
+  type: 'nav' | 'single'
+  subItems: Array<Category>
+}
+
+export interface ICategoryModel extends Model<Category> {}
+
+export interface ICategoryDocument extends Category, Document {}
