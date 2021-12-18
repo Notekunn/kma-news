@@ -460,7 +460,11 @@ const Container = () => {
 												<div className="news-source">
 													<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 													<span className='news-time'>2 giờ</span>
+<<<<<<< HEAD
 													<span className='number-news-orther'>60 liên quan</span>
+=======
+													<span className='number-news-other'>60 liên quan</span>
+>>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 												</div>
 											</div>
 										</div>
@@ -486,7 +490,11 @@ const Container = () => {
 												<div className="news-source">
 													<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 													<span className='news-time'>2 giờ</span>
+<<<<<<< HEAD
 													<span className='number-news-orther'>60 liên quan</span>
+=======
+													<span className='number-news-other'>60 liên quan</span>
+>>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 												</div>
 											</div>
 										</div>
@@ -499,7 +507,11 @@ const Container = () => {
 												<div className="news-source">
 													<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 													<span className='news-time'>2 giờ</span>
+<<<<<<< HEAD
 													<span className='number-news-orther'>60 liên quan</span>
+=======
+													<span className='number-news-'>60 liên quan</span>
+>>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 												</div>
 											</div>
 										</div>
@@ -536,7 +548,11 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
+<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
+=======
+												<span className='number-news-'>60 liên quan</span>
+>>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -562,7 +578,11 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
+<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
+=======
+												<span className='number-news-'>60 liên quan</span>
+>>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -592,7 +612,11 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
+<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
+=======
+												<span className='number-news-'>60 liên quan</span>
+>>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -613,7 +637,11 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
+<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
+=======
+												<span className='number-news-'>60 liên quan</span>
+>>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -634,7 +662,11 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
+<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
+=======
+												<span className='number-news-'>60 liên quan</span>
+>>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -656,7 +688,11 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
+<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
+=======
+												<span className='number-news-'>60 liên quan</span>
+>>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -669,7 +705,11 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
+<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
+=======
+												<span className='number-news-other'>60 liên quan</span>
+>>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -682,7 +722,11 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
+<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
+=======
+												<span className='number-news-other'>60 liên quan</span>
+>>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -922,7 +966,11 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
+<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
+=======
+												<span className='number-news-other'>60 liên quan</span>
+>>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -948,7 +996,11 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
+<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
+=======
+												<span className='number-news-other'>60 liên quan</span>
+>>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -961,7 +1013,11 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
+<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
+=======
+												<span className='number-news-other'>60 liên quan</span>
+>>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
