@@ -2,14 +2,11 @@ import { Covid19Feed } from '@/features/covid19/components/Covid19Feed'
 import React from 'react'
 import { FiMapPin } from 'react-icons/fi'
 import { RiArrowDropDownLine } from "react-icons/ri"
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 const Container = () => {
 	const [activeSelect, setActiveSelect] = useState(false);
 	const [activeSelectWeather, setActiveSelectWeather] = useState(false);
-	const nameSelect = useRef() as React.MutableRefObject<HTMLInputElement>;
-	useEffect(() => {
-		console.log(nameSelect.current.getBoundingClientRect())
-	}, [])
+
 	return (
 		<div className="container">
 			<div className="col-9 container-main">
@@ -377,7 +374,7 @@ const Container = () => {
 									<h3>ĐỊA PHƯƠNG</h3>
 								</div>
 								<div className="location-select">
-									<div className="name-select" onClick={() => setActiveSelect(!activeSelect)} ref={nameSelect}>
+									<div className="name-select" onClick={() => setActiveSelect(!activeSelect)}>
 										Bển tre
 										<RiArrowDropDownLine />
 									</div>
@@ -460,11 +457,20 @@ const Container = () => {
 												<div className="news-source">
 													<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 													<span className='news-time'>2 giờ</span>
-<<<<<<< HEAD
 													<span className='number-news-orther'>60 liên quan</span>
-=======
-													<span className='number-news-other'>60 liên quan</span>
->>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
+												</div>
+											</div>
+										</div>
+										<div className="item-news-navbar">
+											<div className="img-news-navbar">
+												<img src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg" alt="" />
+											</div>
+											<div className="description-item-news">
+												<span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+												<div className="news-source">
+													<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
+													<span className='news-time'>2 giờ</span>
+													<span className='number-news-orther'>60 liên quan</span>
 												</div>
 											</div>
 										</div>
@@ -490,28 +496,7 @@ const Container = () => {
 												<div className="news-source">
 													<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 													<span className='news-time'>2 giờ</span>
-<<<<<<< HEAD
 													<span className='number-news-orther'>60 liên quan</span>
-=======
-													<span className='number-news-other'>60 liên quan</span>
->>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
-												</div>
-											</div>
-										</div>
-										<div className="item-news-navbar">
-											<div className="img-news-navbar">
-												<img src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg" alt="" />
-											</div>
-											<div className="description-item-news">
-												<span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-												<div className="news-source">
-													<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
-													<span className='news-time'>2 giờ</span>
-<<<<<<< HEAD
-													<span className='number-news-orther'>60 liên quan</span>
-=======
-													<span className='number-news-'>60 liên quan</span>
->>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 												</div>
 											</div>
 										</div>
@@ -548,23 +533,6 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
-<<<<<<< HEAD
-												<span className='number-news-orther'>60 liên quan</span>
-=======
-												<span className='number-news-'>60 liên quan</span>
->>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
-											</div>
-										</div>
-									</div>
-									<div className="item-news-navbar">
-										<div className="img-news-navbar">
-											<img src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg" alt="" />
-										</div>
-										<div className="description-item-news">
-											<span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-											<div className="news-source">
-												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
-												<span className='news-time'>2 giờ</span>
 												<span className='number-news-orther'>60 liên quan</span>
 											</div>
 										</div>
@@ -578,11 +546,20 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
-<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
-=======
-												<span className='number-news-'>60 liên quan</span>
->>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
+											</div>
+										</div>
+									</div>
+									<div className="item-news-navbar">
+										<div className="img-news-navbar">
+											<img src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg" alt="" />
+										</div>
+										<div className="description-item-news">
+											<span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+											<div className="news-source">
+												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
+												<span className='news-time'>2 giờ</span>
+												<span className='number-news-orther'>60 liên quan</span>
 											</div>
 										</div>
 									</div>
@@ -612,11 +589,7 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
-<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
-=======
-												<span className='number-news-'>60 liên quan</span>
->>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -637,11 +610,7 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
-<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
-=======
-												<span className='number-news-'>60 liên quan</span>
->>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -662,11 +631,7 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
-<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
-=======
-												<span className='number-news-'>60 liên quan</span>
->>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -688,11 +653,7 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
-<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
-=======
-												<span className='number-news-'>60 liên quan</span>
->>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -705,11 +666,7 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
-<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
-=======
-												<span className='number-news-other'>60 liên quan</span>
->>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -722,11 +679,7 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
-<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
-=======
-												<span className='number-news-other'>60 liên quan</span>
->>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
@@ -821,7 +774,7 @@ const Container = () => {
 											</div>
 										</div>
 										<div className="location-select">
-											<div className="name-select" onClick={() => setActiveSelectWeather(!activeSelectWeather)} ref={nameSelect}>
+											<div className="name-select" onClick={() => setActiveSelectWeather(!activeSelectWeather)}>
 												Bển tre
 												<RiArrowDropDownLine />
 											</div>
@@ -966,11 +919,20 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
-<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
-=======
-												<span className='number-news-other'>60 liên quan</span>
->>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
+											</div>
+										</div>
+									</div>
+									<div className="item-news-navbar">
+										<div className="img-news-navbar">
+											<img src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg" alt="" />
+										</div>
+										<div className="description-item-news">
+											<span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+											<div className="news-source">
+												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
+												<span className='news-time'>2 giờ</span>
+												<span className='number-news-orther'>60 liên quan</span>
 											</div>
 										</div>
 									</div>
@@ -996,28 +958,7 @@ const Container = () => {
 											<div className="news-source">
 												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
 												<span className='news-time'>2 giờ</span>
-<<<<<<< HEAD
 												<span className='number-news-orther'>60 liên quan</span>
-=======
-												<span className='number-news-other'>60 liên quan</span>
->>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
-											</div>
-										</div>
-									</div>
-									<div className="item-news-navbar">
-										<div className="img-news-navbar">
-											<img src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg" alt="" />
-										</div>
-										<div className="description-item-news">
-											<span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-											<div className="news-source">
-												<img className='logo-source' src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png" alt="" />
-												<span className='news-time'>2 giờ</span>
-<<<<<<< HEAD
-												<span className='number-news-orther'>60 liên quan</span>
-=======
-												<span className='number-news-other'>60 liên quan</span>
->>>>>>> 68c3a3a3a78c8b195112353d4ce0b3186f1a5e36
 											</div>
 										</div>
 									</div>
