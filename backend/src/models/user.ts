@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema<IUserDocument>({
     type: String,
     required: false,
   },
+  role: {
+    enum: ['admin', 'writter', 'user'],
+    type: String,
+    default: 'user',
+  },
 })
 
 userSchema.pre('save', function (next) {
