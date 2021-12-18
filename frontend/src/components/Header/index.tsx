@@ -4,8 +4,10 @@ import { BsSearch } from 'react-icons/bs'
 import { useState } from 'react'
 import { DropMenuItem } from './DropMenuItem'
 import { Link } from 'react-router-dom'
+import Login from './Login'
 const Header = () => {
   const [active, setActive] = useState(false)
+  const [activeLogin, setActiveLogin] = useState(false)
   return (
     <div className="header">
       <div className="col-9 header-top">
@@ -27,7 +29,10 @@ const Header = () => {
           </div>
         </div>
         <div className="header-top-right">
-          <AiOutlineUser size="22px" />
+          <div className="logo-user" onClick={() => setActiveLogin(!activeLogin)}>
+            <AiOutlineUser size="22px" />
+          </div>
+          {activeLogin ? <Login /> : ''}
         </div>
       </div>
       <div className="header-body">
