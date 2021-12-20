@@ -2,29 +2,34 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 import { IUserDocument, UserRole } from '../@types'
 
-const userSchema = new mongoose.Schema<IUserDocument>({
-  email: {
-    type: String,
-    unique: true,
+const userSchema = new mongoose.Schema<IUserDocument>(
+  {
+    email: {
+      type: String,
+      unique: true,
+    },
+    password: {
+      type: String,
+    },
+    name: {
+      type: String,
+      required: false,
+      default: 'John',
+    },
+    avatarURL: {
+      type: String,
+      required: false,
+    },
+    role: {
+      enum: ['admin', 'writter', 'user'],
+      type: String,
+      default: 'user',
+    },
   },
-  password: {
-    type: String,
-  },
-  name: {
-    type: String,
-    required: false,
-    default: 'John',
-  },
-  avatarURL: {
-    type: String,
-    required: false,
-  },
-  role: {
-    enum: ['admin', 'writter', 'user'],
-    type: String,
-    default: 'user',
-  },
-})
+  {
+    timestamps: true,
+  }
+)
 
 userSchema.pre('save', function (next) {
   this.hashPassword()

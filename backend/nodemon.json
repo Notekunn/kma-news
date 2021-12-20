@@ -4,5 +4,8 @@
   "execMap": {
     "ts": "node --inspect=0.0.0.0:9229 --nolazy -r ts-node/register"
   },
-  "legacyWatch": true
+  "legacyWatch": true,
+  "env": {
+    "TIMEZONE": "Asia/Ho_Chi_Minh"
+  }
 }

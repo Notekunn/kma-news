@@ -13,6 +13,7 @@ services:
             DATABASE_URL: mongodb://admin:admin@db:27017/app?authSource=admin
             SECRET: secret_for_token,
             REFRESH_SECRET: secret_for_refresh_token
+            TIMEZONE: Asia/Ho_Chi_Minh
         depends_on:
             - db
         expose:
