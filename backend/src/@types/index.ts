@@ -9,21 +9,26 @@ declare global {
   }
 }
 
-export interface IController<BodyType = {}, ResponseType = {}, QueryType = {}, ParamType = {}> {
+export interface IController<
+  BodyType = {},
+  ParamType extends string = any,
+  QueryType extends string = any,
+  ResponseType = {}
+> {
   (
-    req: Request<ParamType, ResponseType, BodyType, QueryType>,
+    req: Request<Record<ParamType, string>, ResponseType, BodyType, Record<QueryType, string>>,
     res: Response<ResponseType>,
     next: NextFunction
   ): void | Promise<void>
 }
 export interface IControllerAsync<
   BodyType = {},
-  ResponseType = {},
-  QueryType = {},
-  ParamType = {}
+  ParamType extends string = any,
+  QueryType extends string = any,
+  ResponseType = {}
 > {
   (
-    req: Request<ParamType, ResponseType, BodyType, QueryType>,
+    req: Request<Record<ParamType, string>, ResponseType, BodyType, Record<QueryType, string>>,
     res: Response<ResponseType>,
     next: NextFunction
   ): Promise<void>
