@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import { IPostDocument, IParagraph } from '@/@types/post'
+import { stringToSlug } from '@/services/generate-slug'
 
 const ParagraphSchema = new mongoose.Schema<IParagraph>({
   type: {
@@ -21,7 +22,7 @@ const ParagraphSchema = new mongoose.Schema<IParagraph>({
   },
 })
 
-const PostSchema = new mongoose.Schema<IPostDocument>(
+const postSchema = new mongoose.Schema<IPostDocument>(
   {
     title: {
       type: String,
@@ -50,4 +51,21 @@ const PostSchema = new mongoose.Schema<IPostDocument>(
     timestamps: true,
   }
 )
-export const PostModel = mongoose.model('post', PostSchema)
+postSchema.pre('save', function (next) {
+  this.slug = stringToSlug(this.title)
+  this.paragraphs = this.paragraphs.map((e) => {
+    if (e.type === 'text') {
+      return {
+        type: 'text',
+        content: e.content,
+      }
+    }
+    return {
+      type: 'image',
+      description: e.description,
+      imageUrl: e.imageUrl,
+    }
+  })
+  next()
+})
+export const PostModel = mongoose.model('post', postSchema)
