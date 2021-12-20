@@ -1,4 +1,3 @@
-import type { Model, Document } from 'mongoose'
 import { Request, Response, NextFunction } from 'express'
 import { IUserDocument } from './user'
 
@@ -34,15 +33,3 @@ export interface IControllerAsync<
     next: NextFunction
   ): Promise<void>
 }
-
-export interface Category {
-  title: string
-  slug: string
-  description?: string
-  type: 'nav' | 'single'
-  subItems: Array<Category>
-}
-
-export interface ICategoryModel extends Model<Category> {}
-
-export interface ICategoryDocument extends Category, Document {}

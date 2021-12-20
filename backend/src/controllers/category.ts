@@ -1,5 +1,6 @@
 import joi from 'joi'
-import { Category, IController } from '@/@types'
+import { ICategory } from '@/@types/category'
+import { IController } from '@/@types'
 import { CategoryModel } from '@/models/category'
 import { errorWrapper } from '@/services/error-wrapper'
 
@@ -7,7 +8,7 @@ export const getAll: IController = errorWrapper(async (req, res, next) => {
   const data = await CategoryModel.find({})
   res.json(data)
 })
-const createValidator = joi.object<Category>({
+const createValidator = joi.object<ICategory>({
   title: joi.string().required(),
   description: joi.string(),
   type: joi.string().valid('nav', 'single').default('single'),
