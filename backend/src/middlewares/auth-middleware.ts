@@ -14,7 +14,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
     const user = await UserModel.findOne({
       email,
     })
-    if (!user || id != user.id) {
+    if (!user || id != user._id) {
       return next(new HttpException(403, 'Invalid token'))
     }
     req.context = user

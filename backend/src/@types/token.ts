@@ -7,6 +7,7 @@ export interface IToken {
   type: 'reset' | 'refresh'
   status: 'active' | 'disabled'
   expiredAt: Date
+  lastTimeRefresh: Date
 }
 
 export interface ITokenModel extends Model<IToken> {}
