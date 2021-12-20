@@ -1,7 +1,7 @@
 import { IController, IControllerAsync } from '../@types'
 import HttpException from '../exceptions/HttpException'
 
-export const errorWrapper = <T, K, U, P>(
+export const errorWrapper = <T, K extends string, U extends string, P>(
   callback: IControllerAsync<T, K, U, P>
 ): IController<T, K, U, P> => {
   return (req, res, next) => {

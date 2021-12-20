@@ -8,6 +8,8 @@ router.get('/', authMiddleware, guardMiddleware('admin'), userController.getAll)
 
 router.post('/', userController.create)
 
+router.patch('/:id', authMiddleware, userController.update)
+
 router.get('/me', authMiddleware, userController.me)
 
 export default router
