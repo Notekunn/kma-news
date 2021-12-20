@@ -110,8 +110,6 @@ export const refreshToken: IController<{ refresh_token: string }> = errorWrapper
     })
   },
   (error) => {
-    console.log(error.stack)
-
     if (error instanceof HttpException) {
       return error
     }
