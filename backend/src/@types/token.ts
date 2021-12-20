@@ -1,3 +1,4 @@
+import type { JwtPayload } from 'jsonwebtoken'
 import type { Types, Model, Document } from 'mongoose'
 
 export interface IToken {
@@ -11,3 +12,8 @@ export interface IToken {
 export interface ITokenModel extends Model<IToken> {}
 
 export interface ITokenDocument extends IToken, Document {}
+
+export interface ITokenPayload extends JwtPayload {
+  id: string | Types.ObjectId
+  email: string
+}

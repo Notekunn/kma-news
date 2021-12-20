@@ -4,6 +4,8 @@ import { IController, User } from '@/@types'
 import { UserModel } from '@/models/user'
 import { TokenModel } from '@/models/token'
 import { errorWrapper } from '@/services/error-wrapper'
+import HttpException from '@/exceptions/HttpException'
+import { ITokenPayload } from '@/@types/token'
 
 const SECRET = process.env.SECRET || 'secret_key_for_jwt'
 const REFRESH_SECRET = process.env.REFRESH_SECRET || 'secret_key_for_refresh'
@@ -25,7 +27,7 @@ export const login: IController<Pick<User, 'email' | 'password'>> = errorWrapper
     if (!user || !user.checkPassword(value?.password || '')) {
       throw Error('Email/Password is not correct')
     }
-    const payload: JwtPayload = {
+    const payload: ITokenPayload = {
       email: user.email,
       id: user.id,
     }
@@ -39,7 +41,7 @@ export const login: IController<Pick<User, 'email' | 'password'>> = errorWrapper
       expiresIn: REFRESH_TOKEN_LIVE,
     })
     const tokenData = new TokenModel({
-      token: token,
+      token: refreshToken,
       user: user._id,
       expiredAt: refreshTokenExpiration,
       type: 'refresh',
@@ -57,21 +59,38 @@ export const login: IController<Pick<User, 'email' | 'password'>> = errorWrapper
 
 export const refreshToken: IController<{ refresh_token: string }> = errorWrapper(
   async (req, res, next) => {
-    const { refresh_token } = req.body
+    const { refresh_token: refreshToken } = req.body
     // Phải viết thêm hàm kiểm tra refresh token
     // Sau này sẽ lấy từ cookie thay vì body
-    if (!refresh_token) throw new Error('Refresh token không hợp lệ')
+    if (!refreshToken) throw new HttpException(401, 'Refresh token is required')
+    const tokenData = await TokenModel.findOne({
+      token: refreshToken,
+      status: 'active',
+      expiredAt: {
+        $gte: new Date(),
+      },
+      type: 'refresh',
+    })
+    if (!tokenData) throw new HttpException(403, 'Refresh token is invalid')
 
-    const { email, id } = jwt.verify(refresh_token, REFRESH_SECRET) as JwtPayload
+    const { email, id } = jwt.verify(refreshToken, REFRESH_SECRET) as ITokenPayload
 
-    const tokenExpiration = new Date(new Date().getTime() + 30 * 60 * 1000)
+    const tokenExpiration = new Date(new Date().getTime() + ACCESS_TOKEN_LIVE * 1000)
     const token = jwt.sign({ email, id }, SECRET, {
-      expiresIn: process.env.NODE_ENV === 'production' ? '30m' : '3d',
+      expiresIn: ACCESS_TOKEN_LIVE,
     })
     res.send({
       token,
       tokenExpiration,
       userId: id,
     })
+  },
+  (error) => {
+    console.log(error.stack)
+
+    if (error instanceof HttpException) {
+      return error
+    }
+    return new HttpException(403, 'Refresh token is invalid')
   }
 )
