@@ -1,10 +1,12 @@
 import React from 'react'
 import BoxVideo from '../components/BoxVideo'
+import BoxHot from '../components/BoxHot'
 import { IoIosArrowForward } from 'react-icons/io'
 import { AiOutlineStar } from 'react-icons/ai'
 import { HiOutlineDocumentDuplicate, HiOutlineKey } from 'react-icons/hi'
+import BoxNews from '../components/BoxNews'
 interface Props {}
-const PageRender: React.FC<Props> = (props) => {
+const ReadingPage: React.FC<Props> = (props) => {
   return (
     <div className="container">
       <div className="extensions">
@@ -13,13 +15,13 @@ const PageRender: React.FC<Props> = (props) => {
         </div>
       </div>
       <div className="col-9 container-main">
+        <div className="indexPath">
+          <h3 className="indexPath-name">Xã hội</h3>
+          <IoIosArrowForward className="indexPath-icon" />
+          <h3 className="indexPath-name">Thời sự</h3>
+        </div>
         <div className="content">
           <div className="col-8 content-left">
-            <div className="indexPath">
-              <h3 className="indexPath-name">Xã hội</h3>
-              <IoIosArrowForward className="indexPath-icon" />
-              <h3 className="indexPath-name">Thời sự</h3>
-            </div>
             <div className="page-title">
               <h1 className="page-title-content">
                 Tổng Bí thư: Xây dựng trường phái ngoại giao mang đậm bản sắc 'cây tre Việt Nam'
@@ -295,17 +297,68 @@ const PageRender: React.FC<Props> = (props) => {
                 </ul>
               </div>
             </div>
+            <p className="page-source">
+              Nguồn <span className="page-source-name">VOV</span>:{' '}
+              <span className="page-source-link">
+                https://vov.vn/chinh-tri/tong-bi-thu-xay-dung-truong-phai-ngoai-giao-mang-dam-ban-sac-cay-tre-viet-nam-911534.vov
+              </span>
+            </p>
+            <div className="page-news">
+              <div className="page-news-header">
+                <p className="page-news-title">TIN KHÁC</p>
+                <div className="page-news-decor"></div>
+              </div>
+              <div className="page-news-content">
+                <BoxNews />
+                <BoxNews />
+                <BoxNews />
+              </div>
+            </div>
+            <div className="page-news">
+              <div className="page-news-header">
+                <p className="page-news-title">TIN NÓNG</p>
+                <div className="page-news-decor"></div>
+              </div>
+              <div className="page-news-content">
+                <BoxNews />
+                <BoxNews />
+                <BoxNews />
+              </div>
+            </div>
+            <div className="page-news">
+              <div className="page-news-header">
+                <p className="page-news-title">TIN MỚI</p>
+                <div className="page-news-decor"></div>
+              </div>
+              <div className="page-news-content">
+                <BoxNews />
+                <BoxNews />
+                <BoxNews />
+              </div>
+            </div>
           </div>
-
           <div className="col-4 content-right">
             <div className="videoFrame">
               <div className="videoFrame-header">
                 <h3 className="videoFrame-title">VIDEO</h3>
                 <div className="videoFrame-decor"></div>
               </div>
-              <BoxVideo />
-              <BoxVideo />
-              <BoxVideo />
+              <div className="videoFrame-content">
+                <BoxVideo />
+                <BoxVideo />
+                <BoxVideo />
+              </div>
+            </div>
+            <div className="hotFrame">
+              <div className="hotFrame-header">
+                <h3 className="hotFrame-title">NÓNG 24H</h3>
+                <div className="hotFrame-decor"></div>
+              </div>
+              <div className="hotFrame-content">
+                <BoxHot />
+                <BoxHot />
+                <BoxHot />
+              </div>
             </div>
           </div>
         </div>
@@ -313,4 +366,4 @@ const PageRender: React.FC<Props> = (props) => {
     </div>
   )
 }
-export default PageRender
+export default ReadingPage
