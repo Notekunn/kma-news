@@ -44,13 +44,16 @@ interface ItemNewsProps {
 const ItemNews: React.FC<ItemNewsProps> = ({ children, data }) => {
   return (
     <div className="col-4 item-news">
-      <Link to="/">
-        <div className="img-item-news">
+      <div className="img-item-news">
+        <Link to="/">
           <img src={data.img} alt="" />
-        </div>
-      </Link>
+        </Link>
+      </div>
+
       <div className="description-item-news">
-        <span>{data.description}</span>
+        <Link to="/">
+          <span>{data.description}</span>
+        </Link>
         <div className="news-source">
           <Link to="/">
             <img className="logo-source" src={data.newsSource?.logo} alt="" />
@@ -80,7 +83,6 @@ const NewsTop = () => {
           </div>
           <div className="news-source">
             <Link to="/">
-              {' '}
               <img
                 className="logo-source"
                 src="https://photo-baomoi.zadn.vn/d59db7f26ab183efdaa0.png"

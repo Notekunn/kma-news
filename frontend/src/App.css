@@ -206,7 +206,7 @@
     width: 20%;
     margin-bottom: 10px;
 }
-.menu-item-title{
+.menu-item-title a{
     padding: 3px 5px;
     border-left: 3px solid #2fa1b3;
     font-size: 14px;
@@ -255,9 +255,13 @@
     cursor: pointer;
     transform: scale(1.1);
 }
-.title-top{
+.title-top a{
     font-size: 28px;
     line-height: 36px;
+    color: #212529;
+}
+.description-item-news > a{
+    color: #212529;
 }
 .news-source{
     display: flex;
@@ -375,6 +379,9 @@
 .title-news-other-horizontal{
     font-size: 18px;
     font-weight: 700;
+}
+.title-news-other-horizontal a{
+    color: #212529;
 }
 .list-news-other{
     display: flex;
