@@ -33,6 +33,12 @@ export const me: IController = errorWrapper(async (req, res, next) => {
   res.send(user)
 })
 
+export const getOne: IController<User> = errorWrapper(async (req, res, next) => {
+  const { id } = req.params
+  const user = await UserModel.findById(id)
+  if (!user) return next(new HttpException(404, 'User not found'))
+  res.send(user)
+})
 const updateValidator = joi.object<User>({
   name: joi.string(),
   password: joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
@@ -63,6 +69,21 @@ export const update: IController<User, 'id'> = errorWrapper(async (req, res, nex
     },
     { new: true }
   )
-  if (!data) throw new Error('User not found')
+  if (!data) return next(new HttpException(404, "User doesn't exist"))
+  res.send(data)
+})
+
+export const remove: IController<User, 'id'> = errorWrapper(async (req, res, next) => {
+  const user = req.context
+  const { id } = req.params
+
+  // Chỉ được xóa nếu có quyền admin
+  // Không cần kiểm tra user vì đã có auth middleware rồi
+  if (user?.role != 'admin') {
+    return next(new HttpException(403, 'Unauthorized access'))
+  }
+
+  const data = await UserModel.findByIdAndDelete(id)
+  if (!data) return next(new HttpException(404, "User doesn't exist"))
   res.send(data)
 })

@@ -8,7 +8,11 @@ router.get('/', authMiddleware, guardMiddleware('admin'), userController.getAll)
 
 router.post('/', userController.create)
 
+router.get('/:id', authMiddleware, userController.getOne)
+
 router.patch('/:id', authMiddleware, userController.update)
+
+router.delete('/:id', authMiddleware, userController.remove)
 
 router.get('/me', authMiddleware, userController.me)
 
