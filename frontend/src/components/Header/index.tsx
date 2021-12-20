@@ -13,12 +13,14 @@ const Header = () => {
       <div className="col-9 header-top">
         <div className="header-top-left">
           <div className="logo">
-            <div className="logo-main">
-              <span>
-                BAOM
-                <img src="https://baomoi-static.zadn.vn/favicons/favicon-32x32.png" alt="logo" />I
-              </span>
-            </div>
+            <Link to="/">
+              <div className="logo-main">
+                <span>
+                  BAOM
+                  <img src="https://baomoi-static.zadn.vn/favicons/favicon-32x32.png" alt="logo" />I
+                </span>
+              </div>
+            </Link>
             <span className="logo-description">trang thông tin điện tử</span>
           </div>
           <div className="header-input">
@@ -51,19 +53,39 @@ const Header = () => {
               <li className="header-navbar-item">CHỦ ĐỀ</li>
             </Link>
             <Link to="/phong-chong-dich-covid-19/top/:id">
-              <li className="header-navbar-item">Phòng chống dịch COVID-19</li>
+              <li className="header-navbar-item--hot">
+                <div className="header-navbar-item--hotC">Phòng chống dịch COVID-19</div>
+              </li>
             </Link>
             <Link to="/nang-luong-tich-cuc/top/:id">
-              <li className="header-navbar-item">Năng lượng tích cực</li>
+              <li className="header-navbar-item--hot">
+                <div className="header-navbar-item--hotC">Năng lượng tích cực</div>
+              </li>
             </Link>
             <Link to="/kham-pha-viet-nam/top/:id">
-              <li className="header-navbar-item">Khám phá Việt Nam</li>
+              <li className="header-navbar-item--hot">
+                <div className="header-navbar-item--hotC">Khám phá Việt Nam</div>
+              </li>
             </Link>
             <Link to="/kham-pha-the-gioi/top/:id">
-              <li className="header-navbar-item">Khám phá thế giới</li>
+              <li className="header-navbar-item--hot">
+                <div className="header-navbar-item--hotC">Khám phá thế giới</div>
+              </li>
             </Link>
-            <li className="header-navbar-item" onClick={() => setActive(!active)}>
-              <AiOutlineMenu />
+            <Link to="/kham-pha-the-gioi/top/:id">
+              <li className="header-navbar-item--hot">
+                <div className="header-navbar-item--hotC">Khám phá Filip đz vl</div>
+              </li>
+            </Link>
+            <Link to="/page">
+              <li className="header-navbar-item--hot">
+                <div className="header-navbar-item--hotC">Page</div>
+              </li>
+            </Link>
+            <li className=" header-navbar-item-menu" onClick={() => setActive(!active)}>
+              <div className="header-navbar-item-menu-icon">
+                <AiOutlineMenu />
+              </div>
             </li>
           </ul>
         </div>
