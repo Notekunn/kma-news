@@ -6,6 +6,8 @@
   },
   "legacyWatch": true,
   "env": {
-    "TIMEZONE": "Asia/Ho_Chi_Minh"
+    "TIMEZONE": "Asia/Ho_Chi_Minh",
+    "ACCESS_TOKEN_LIVE": "300",
+    "REFRESH_TOKEN_LIVE": "86400"
   }
 }

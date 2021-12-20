@@ -2,10 +2,13 @@ import jwt, { JwtPayload } from 'jsonwebtoken'
 import joi from 'joi'
 import { IController, User } from '@/@types'
 import { UserModel } from '@/models/user'
+import { TokenModel } from '@/models/token'
 import { errorWrapper } from '@/services/error-wrapper'
 
 const SECRET = process.env.SECRET || 'secret_key_for_jwt'
 const REFRESH_SECRET = process.env.REFRESH_SECRET || 'secret_key_for_refresh'
+const ACCESS_TOKEN_LIVE = parseInt(process.env.ACCESS_TOKEN_LIVE || '' + 30 * 60)
+const REFRESH_TOKEN_LIVE = parseInt(process.env.REFRESH_TOKEN_LIVE || '' + 7 * 24 * 60 * 60)
 
 const loginValidator = joi.object<Pick<User, 'email' | 'password'>>({
   password: joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
@@ -27,14 +30,21 @@ export const login: IController<Pick<User, 'email' | 'password'>> = errorWrapper
       id: user.id,
     }
 
-    const tokenExpiration = new Date(new Date().getTime() + 30 * 60 * 1000)
+    const tokenExpiration = new Date(new Date().getTime() + ACCESS_TOKEN_LIVE * 1000)
     const token = jwt.sign(payload, SECRET, {
-      expiresIn: process.env.NODE_ENV === 'production' ? '30m' : '3d',
+      expiresIn: ACCESS_TOKEN_LIVE,
     })
-    const refreshTokenExpiration = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
+    const refreshTokenExpiration = new Date(new Date().getTime() + REFRESH_TOKEN_LIVE * 1000)
     const refreshToken = jwt.sign(payload, REFRESH_SECRET, {
-      expiresIn: '7d',
+      expiresIn: REFRESH_TOKEN_LIVE,
     })
+    const tokenData = new TokenModel({
+      token: token,
+      user: user._id,
+      expiredAt: refreshTokenExpiration,
+      type: 'refresh',
+    })
+    await tokenData.save()
     res.send({
       token,
       tokenExpiration,

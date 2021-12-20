@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
+import { ITokenDocument } from '@/@types/token'
 
-const tokenSchema = new mongoose.Schema(
+const tokenSchema = new mongoose.Schema<ITokenDocument>(
   {
     token: {
       type: String,
@@ -21,6 +22,7 @@ const tokenSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ['active', 'disabled'], // Dùng với chức năng đăng xuất
+      default: 'active',
     },
   },
   {
