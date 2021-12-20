@@ -1,6 +1,6 @@
 import joi from 'joi'
-import { Request } from 'express'
-import { IController, IUserModel, User } from '@/@types'
+import { IController } from '@/@types'
+import { IUser } from '@/@types/user'
 import { UserModel } from '@/models/user'
 import { errorWrapper } from '@/services/error-wrapper'
 import HttpException from '@/exceptions/HttpException'
@@ -10,14 +10,14 @@ export const getAll: IController = async (req, res) => {
   res.json(users)
 }
 
-const createValidator = joi.object<User>({
+const createValidator = joi.object<IUser>({
   name: joi.string().required(),
   password: joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
   email: joi.string().email().required(),
   avatarURL: joi.string().uri(),
 })
 
-export const create: IController<User> = errorWrapper(async (req, res, next) => {
+export const create: IController<IUser> = errorWrapper(async (req, res, next) => {
   const { error, value } = createValidator.validate(req.body)
   if (error) throw error
 
@@ -33,13 +33,13 @@ export const myInfo: IController = errorWrapper(async (req, res, next) => {
   res.send(user)
 })
 
-export const getOne: IController<User> = errorWrapper(async (req, res, next) => {
+export const getOne: IController<IUser> = errorWrapper(async (req, res, next) => {
   const { id } = req.params
   const user = await UserModel.findById(id)
   if (!user) return next(new HttpException(404, 'User not found'))
   res.send(user)
 })
-const updateValidator = joi.object<User>({
+const updateValidator = joi.object<IUser>({
   name: joi.string(),
   password: joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
   email: joi.string().email(),
@@ -47,13 +47,13 @@ const updateValidator = joi.object<User>({
   role: joi.string().valid('admin', 'writter', 'user'),
 })
 
-export const update: IController<User, 'id'> = errorWrapper(async (req, res, next) => {
+export const update: IController<IUser, 'id'> = errorWrapper(async (req, res, next) => {
   const user = req.context
   const { id } = req.params
 
   // Chỉ được chỉnh sửa nếu có quyền admin hoặc tự sửa chính mình
   // Không cần kiểm tra user vì đã có auth middleware rồi
-  if (user?.role != 'admin' && user?.id != id) {
+  if (user?.role != 'admin' && user?._id != id) {
     return next(new HttpException(403, 'Unauthorized access'))
   }
   const { error, value } = updateValidator.validate(req.body)
@@ -73,7 +73,7 @@ export const update: IController<User, 'id'> = errorWrapper(async (req, res, nex
   res.send(data)
 })
 
-export const remove: IController<User, 'id'> = errorWrapper(async (req, res, next) => {
+export const remove: IController<IUser, 'id'> = errorWrapper(async (req, res, next) => {
   const user = req.context
   const { id } = req.params
 

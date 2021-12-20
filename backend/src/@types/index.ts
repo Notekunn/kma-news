@@ -1,5 +1,6 @@
 import type { Model, Document } from 'mongoose'
 import { Request, Response, NextFunction } from 'express'
+import { IUserDocument } from './user'
 
 declare global {
   namespace Express {
@@ -32,22 +33,6 @@ export interface IControllerAsync<
     res: Response<ResponseType>,
     next: NextFunction
   ): Promise<void>
-}
-
-export type UserRole = 'admin' | 'writter' | 'user'
-export interface User {
-  name: string
-  email: string
-  password: string
-  avatarURL?: string
-  role: UserRole
-}
-// type Request<T, K, U, P> = Request<T, K, U, P>
-export interface IUserModel extends Model<User> {}
-export interface IUserDocument extends User, Document {
-  hashPassword: () => Promise<void>
-  checkPassword: (password: string) => boolean
-  validRole: (requiredRole: UserRole) => boolean
 }
 
 export interface Category {
