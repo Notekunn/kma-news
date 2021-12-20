@@ -1,11 +1,18 @@
-import jwt, { JwtPayload } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
+import moment from 'moment-timezone'
 import joi from 'joi'
 import { IController, User } from '@/@types'
 import { UserModel } from '@/models/user'
+import { TokenModel } from '@/models/token'
 import { errorWrapper } from '@/services/error-wrapper'
+import HttpException from '@/exceptions/HttpException'
+import { ITokenPayload } from '@/@types/token'
 
 const SECRET = process.env.SECRET || 'secret_key_for_jwt'
 const REFRESH_SECRET = process.env.REFRESH_SECRET || 'secret_key_for_refresh'
+const ACCESS_TOKEN_LIVE = parseInt(process.env.ACCESS_TOKEN_LIVE || '' + 30 * 60)
+const REFRESH_TOKEN_LIVE = parseInt(process.env.REFRESH_TOKEN_LIVE || '' + 7 * 24 * 60 * 60)
+const TIMEZONE = process.env.TIMEZONE || 'Asia/Ho_Chi_Minh'
 
 const loginValidator = joi.object<Pick<User, 'email' | 'password'>>({
   password: joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
@@ -22,23 +29,52 @@ export const login: IController<Pick<User, 'email' | 'password'>> = errorWrapper
     if (!user || !user.checkPassword(value?.password || '')) {
       throw Error('Email/Password is not correct')
     }
-    const payload: JwtPayload = {
+    const payload: ITokenPayload = {
       email: user.email,
-      id: user.id,
+      id: user._id,
     }
 
-    const tokenExpiration = new Date(new Date().getTime() + 30 * 60 * 1000)
+    const tokenExpiration = moment.tz(TIMEZONE).add(ACCESS_TOKEN_LIVE, 'seconds').toDate()
     const token = jwt.sign(payload, SECRET, {
-      expiresIn: process.env.NODE_ENV === 'production' ? '30m' : '3d',
+      expiresIn: ACCESS_TOKEN_LIVE,
     })
-    const refreshTokenExpiration = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
+    const refreshTokenExpiration = moment.tz(TIMEZONE).add(REFRESH_TOKEN_LIVE, 'seconds').toDate()
     const refreshToken = jwt.sign(payload, REFRESH_SECRET, {
-      expiresIn: '7d',
+      expiresIn: REFRESH_TOKEN_LIVE,
     })
+    // Vô hiệu hóa token cũ
+    await TokenModel.updateMany(
+      {
+        user: user._id,
+        type: 'refresh',
+        $or: [
+          {
+            expiredAt: {
+              $lt: moment.tz(TIMEZONE).toDate(),
+            },
+          },
+          {
+            status: 'active',
+          },
+        ],
+      },
+      {
+        $set: {
+          status: 'disabled',
+        },
+      }
+    )
+    const tokenData = new TokenModel({
+      token: refreshToken,
+      user: user._id,
+      expiredAt: refreshTokenExpiration,
+      type: 'refresh',
+    })
+    await tokenData.save()
     res.send({
-      token,
+      access_token: token,
       tokenExpiration,
-      refreshToken,
+      refresh_token: refreshToken,
       refreshTokenExpiration,
       userId: user.id,
     })
@@ -47,21 +83,58 @@ export const login: IController<Pick<User, 'email' | 'password'>> = errorWrapper
 
 export const refreshToken: IController<{ refresh_token: string }> = errorWrapper(
   async (req, res, next) => {
-    const { refresh_token } = req.body
+    const { refresh_token: refreshToken } = req.body
     // Phải viết thêm hàm kiểm tra refresh token
     // Sau này sẽ lấy từ cookie thay vì body
-    if (!refresh_token) throw new Error('Refresh token không hợp lệ')
+    if (!refreshToken) throw new HttpException(401, 'Refresh token is required')
+    const tokenData = await TokenModel.findOne({
+      token: refreshToken,
+      status: 'active',
+      expiredAt: {
+        $gte: moment.tz(TIMEZONE).toDate(),
+      },
+      type: 'refresh',
+    })
+    if (!tokenData) throw new HttpException(403, 'Refresh token is invalid')
 
-    const { email, id } = jwt.verify(refresh_token, REFRESH_SECRET) as JwtPayload
+    const { email, id } = jwt.verify(refreshToken, REFRESH_SECRET) as ITokenPayload
 
-    const tokenExpiration = new Date(new Date().getTime() + 30 * 60 * 1000)
+    const tokenExpiration = moment.tz(TIMEZONE).add(ACCESS_TOKEN_LIVE, 'seconds').toDate()
     const token = jwt.sign({ email, id }, SECRET, {
-      expiresIn: process.env.NODE_ENV === 'production' ? '30m' : '3d',
+      expiresIn: ACCESS_TOKEN_LIVE,
     })
     res.send({
-      token,
+      access_token: token,
       tokenExpiration,
       userId: id,
+    })
+  },
+  (error) => {
+    if (error instanceof HttpException) {
+      return error
+    }
+    return new HttpException(403, 'Refresh token is invalid')
+  }
+)
+
+export const logout: IController<{ refresh_token: string }> = errorWrapper(
+  async (req, res, next) => {
+    const { refresh_token: refreshToken } = req.body
+    // Phải viết thêm hàm kiểm tra refresh token
+    // Sau này sẽ lấy từ cookie thay vì body
+    if (!refreshToken) throw new HttpException(401, 'Refresh token is required')
+    const token = await TokenModel.updateOne(
+      {
+        token: refreshToken,
+      },
+      {
+        $set: {
+          status: 'disabled',
+        },
+      }
+    )
+    res.send({
+      message: 'Logout success',
     })
   }
 )

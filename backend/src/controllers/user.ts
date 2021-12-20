@@ -27,7 +27,7 @@ export const create: IController<User> = errorWrapper(async (req, res, next) => 
   res.send(data)
 })
 
-export const me: IController = errorWrapper(async (req, res, next) => {
+export const myInfo: IController = errorWrapper(async (req, res, next) => {
   const user = req.context
   if (!user) return next(new HttpException(403, 'Unauthorized access'))
   res.send(user)
