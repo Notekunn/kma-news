@@ -88,9 +88,9 @@ const NewsTop = () => {
               />
             </Link>
             <span className="news-time">2 giờ</span>
-            <span className="number-news-other">
-              <Link to="/">60 liên quan</Link>
-            </span>
+            <Link to="/">
+              <span className="number-news-other">60 liên quan</span>
+            </Link>
           </div>
         </div>
       </div>
