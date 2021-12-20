@@ -118,3 +118,25 @@ export const refreshToken: IController<{ refresh_token: string }> = errorWrapper
     return new HttpException(403, 'Refresh token is invalid')
   }
 )
+
+export const logout: IController<{ refresh_token: string }> = errorWrapper(
+  async (req, res, next) => {
+    const { refresh_token: refreshToken } = req.body
+    // Phải viết thêm hàm kiểm tra refresh token
+    // Sau này sẽ lấy từ cookie thay vì body
+    if (!refreshToken) throw new HttpException(401, 'Refresh token is required')
+    const token = await TokenModel.updateOne(
+      {
+        token: refreshToken,
+      },
+      {
+        $set: {
+          status: 'disabled',
+        },
+      }
+    )
+    res.send({
+      message: 'Logout success',
+    })
+  }
+)
