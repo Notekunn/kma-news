@@ -4,6 +4,7 @@ import { IUser } from '@/@types/user'
 import { UserModel } from '@/models/user'
 import { errorWrapper } from '@/services/error-wrapper'
 import HttpException from '@/exceptions/HttpException'
+import NotFoundExeption from '@/exceptions/NotFoundExeption'
 
 export const getAll: IController = async (req, res) => {
   const users = await UserModel.find({})
@@ -36,7 +37,7 @@ export const myInfo: IController = errorWrapper(async (req, res, next) => {
 export const getOne: IController<IUser> = errorWrapper(async (req, res, next) => {
   const { id } = req.params
   const user = await UserModel.findById(id)
-  if (!user) return next(new HttpException(404, 'User not found'))
+  if (!user) throw new NotFoundExeption('User not found')
   res.send(user)
 })
 const updateValidator = joi.object<IUser>({
@@ -69,7 +70,7 @@ export const update: IController<IUser, 'id'> = errorWrapper(async (req, res, ne
     },
     { new: true }
   )
-  if (!data) return next(new HttpException(404, "User doesn't exist"))
+  if (!data) throw new NotFoundExeption('User not found')
   res.send(data)
 })
 
@@ -84,6 +85,6 @@ export const remove: IController<IUser, 'id'> = errorWrapper(async (req, res, ne
   }
 
   const data = await UserModel.findByIdAndDelete(id)
-  if (!data) return next(new HttpException(404, "User doesn't exist"))
+  if (!data) throw new NotFoundExeption('User not found')
   res.send(data)
 })

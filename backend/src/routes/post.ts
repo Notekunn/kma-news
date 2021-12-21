@@ -6,6 +6,12 @@ const router = Router()
 
 router.get('/', postController.getAll)
 
-router.post('/', postController.create)
+router.post('/', authMiddleware, guardMiddleware('writter'), postController.create)
+
+router.get('/:id', postController.getOne)
+
+router.patch('/:id', authMiddleware, guardMiddleware('writter'), postController.update)
+
+router.delete('/:id', authMiddleware, guardMiddleware('writter'), postController.remove)
 
 export default router
