@@ -1,7 +1,10 @@
 import { CheerioAPI } from 'cheerio'
 import RssParser from 'rss-parser'
-import { NewsParagraph } from '../types'
+import { IParagraph, IPost } from '../@types/post'
 import BaseService from './base'
+import moment from 'moment'
+import { stringToSlug } from './generate-slug'
+import { formatTime } from './format-time'
 
 export const RSS_URL = 'https://vnexpress.net/rss/tin-moi-nhat.rss'
 
@@ -27,7 +30,9 @@ export default class VNExpress extends BaseService {
     const title = $('.title-detail').text()
     const description = $('.description').text()
     const data = $('.fck_detail').children()
-    const paragraphs: NewsParagraph[] = []
+    const publishedTime = formatTime($('span.date').text())
+
+    const paragraphs: IParagraph[] = []
     for (const el of data) {
       if (el.tagName == 'p') {
         paragraphs.push({
@@ -42,17 +47,31 @@ export default class VNExpress extends BaseService {
         if (imageUrl)
           paragraphs.push({
             type: 'image',
-            imageUrl,
+            imageUrl: [imageUrl],
             description: imageDescription,
           })
       }
     }
-    // console.log(data)
-
-    return {
+    const result: IPost = {
       title,
+      slug: stringToSlug(title),
       description,
+      status: 'publish',
+      source: 'vnexpress.net',
+      owner: 'Đức Cường',
+      publishedAt: publishedTime,
+      sourceUrl: url,
       paragraphs,
     }
+    const last = paragraphs.splice(-1)
+    if (last.length != 1) return result
+    if (last[0].type === 'text') {
+      result.owner = last[0].content
+      result.paragraphs = paragraphs
+    } else {
+      result.paragraphs = [...paragraphs, ...last]
+    }
+
+    return result
   }
 }
