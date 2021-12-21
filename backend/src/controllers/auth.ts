@@ -1,12 +1,13 @@
 import jwt from 'jsonwebtoken'
 import moment from 'moment-timezone'
 import joi from 'joi'
-import { IController, User } from '@/@types'
+import { IController } from '@/@types'
 import { UserModel } from '@/models/user'
 import { TokenModel } from '@/models/token'
 import { errorWrapper } from '@/services/error-wrapper'
 import HttpException from '@/exceptions/HttpException'
 import { ITokenPayload } from '@/@types/token'
+import { IUser } from '@/@types/user'
 
 const SECRET = process.env.SECRET || 'secret_key_for_jwt'
 const REFRESH_SECRET = process.env.REFRESH_SECRET || 'secret_key_for_refresh'
@@ -14,12 +15,12 @@ const ACCESS_TOKEN_LIVE = parseInt(process.env.ACCESS_TOKEN_LIVE || '' + 30 * 60
 const REFRESH_TOKEN_LIVE = parseInt(process.env.REFRESH_TOKEN_LIVE || '' + 7 * 24 * 60 * 60)
 const TIMEZONE = process.env.TIMEZONE || 'Asia/Ho_Chi_Minh'
 
-const loginValidator = joi.object<Pick<User, 'email' | 'password'>>({
+const loginValidator = joi.object<Pick<IUser, 'email' | 'password'>>({
   password: joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
   email: joi.string().email().required(),
 })
 
-export const login: IController<Pick<User, 'email' | 'password'>> = errorWrapper(
+export const login: IController<Pick<IUser, 'email' | 'password'>> = errorWrapper(
   async (req, res, next) => {
     const { error, value } = loginValidator.validate(req.body)
     if (error) throw error

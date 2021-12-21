@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
-import { IUserDocument, UserRole } from '../@types'
+import { IUserDocument, UserRole } from '@/@types/user'
 
 const userSchema = new mongoose.Schema<IUserDocument>(
   {
@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema<IUserDocument>(
     },
   },
   {
+    versionKey: false,
     timestamps: true,
   }
 )

@@ -26,6 +26,7 @@ const tokenSchema = new mongoose.Schema<ITokenDocument>(
     },
   },
   {
+    versionKey: false,
     timestamps: true,
   }
 )
