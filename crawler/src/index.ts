@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import { logger } from './logger'
 import VNExpress from './services/vnexpress'
 import Queue from 'bull'
@@ -16,7 +17,7 @@ crawlQueue.process('vnexpress', function (job, done) {
   //   console.log('VNExpress', job.data)
   vnexpress
     .getNewDetail(job.data)
-    .then(waitForResult(2000))
+    .then(vnexpress.updateDatabase)
     .then((e) => done(null, e))
     .catch((e) => done(e))
 })
@@ -25,9 +26,6 @@ crawlQueue.process('zing', function (job, done) {
   //   done(null, { ahihi: 456 })
 })
 crawlQueue
-  //   .on('waiting', function (jobId) {
-  //     logger(`Job ${jobId} waiting to be processed `)
-  //   })
   .on('failed', function (job, err) {
     logger(`Job ${job.id} in queue failed`, err)
   })
@@ -35,7 +33,7 @@ crawlQueue
     logger('Queue Error:', err)
   })
   .on('completed', function (job, result) {
-    console.log(result)
+    logger('Store post with id:', result._id)
   })
 
 async function main() {
@@ -55,3 +53,14 @@ async function main() {
 }
 main()
 setInterval(main, 60 * 1000)
+async function connectDatabase() {
+  await mongoose.connect(
+    process.env.DATABASE_URL ||
+      'mongodb+srv://notekunn:6LK7xV8nxQmC@kmabot-rfffk.azure.mongodb.net/app?retryWrites=true&w=majority'
+  )
+  console.log('🔥Connect database success!')
+}
+
+connectDatabase().catch((e) => {
+  console.log('🤦‍♂️Connect database error:', e.message)
+})
