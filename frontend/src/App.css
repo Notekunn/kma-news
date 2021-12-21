@@ -6,7 +6,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 99;
+    z-index: 999;
     background-color: #fff;
 }
 .header-top,.container-main,.footer-main{
@@ -140,6 +140,11 @@
 .header-top-right .logo-user :hover{
     cursor: pointer;
 }
+.logo-user{
+    margin-right: 15px;
+    padding-right: 10px;
+
+}
 .header-body{
     height: 40px;
     background-color: #2fa1b3;
@@ -157,6 +162,44 @@
     display: flex;
     align-items: center;
     height: 100%;
+    width: 100%;
+}
+.header-navbar-item--hotC{
+    border-radius: 20px;
+    border:1px #ddd solid;
+    line-height: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 0 10px;    
+}
+.header-navbar-item--hot{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    color: #fff;
+}
+
+.header-navbar-item-menu{
+    padding-right: 15px;
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+    height: 100%;
+}
+.header-navbar-item-menu-icon{
+    color: #fff;
+    width: 44px;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+    border-left: hsla(0,0%,100%,.2) 1px solid;
+    border-right: hsla(0,0%,100%,.2) 1px solid;
+transition: 0.2s ease-in-out;
+}
+.header-menu-icon{
+    font-size: 20px;
 }
 .header-navbar-item{
     display: flex;
@@ -169,10 +212,18 @@
     height: 100%;
     transition: 0.2s ease-in-out;
 }
-.header-navbar-item:last-child{
+/* .header-navbar-item:last-child{
     border-right: 1px solid hsla(0,0%,100%,.2);
-}
+} */
 .header-navbar-item:hover{
+    cursor: pointer;
+    background-color: #2990a0;
+}
+.header-navbar-item-menu-icon:hover{
+    cursor: pointer;
+    background-color: #2990a0;
+} 
+.header-navbar-item--hotC:hover{
     cursor: pointer;
     background-color: #2990a0;
 }

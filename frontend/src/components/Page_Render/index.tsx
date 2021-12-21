@@ -1,12 +1,10 @@
 import React from 'react'
-import BoxVideo from '../components/BoxVideo'
-import BoxHot from '../components/BoxHot'
+import BoxVideo from './compoments/boxVideo'
 import { IoIosArrowForward } from 'react-icons/io'
 import { AiOutlineStar } from 'react-icons/ai'
 import { HiOutlineDocumentDuplicate, HiOutlineKey } from 'react-icons/hi'
-import BoxNews from '../components/BoxNews'
 interface Props {}
-const ReadingPage: React.FC<Props> = (props) => {
+const PageRender: React.FC<Props> = (props) => {
   return (
     <div className="container">
       <div className="extensions">
@@ -15,13 +13,13 @@ const ReadingPage: React.FC<Props> = (props) => {
         </div>
       </div>
       <div className="col-9 container-main">
-        <div className="indexPath">
-          <h3 className="indexPath-name">Xã hội</h3>
-          <IoIosArrowForward className="indexPath-icon" />
-          <h3 className="indexPath-name">Thời sự</h3>
-        </div>
         <div className="content">
           <div className="col-8 content-left">
+            <div className="indexPath">
+              <h3 className="indexPath-name">Xã hội</h3>
+              <IoIosArrowForward className="indexPath-icon" />
+              <h3 className="indexPath-name">Thời sự</h3>
+            </div>
             <div className="page-title">
               <h1 className="page-title-content">
                 Tổng Bí thư: Xây dựng trường phái ngoại giao mang đậm bản sắc 'cây tre Việt Nam'
@@ -115,7 +113,7 @@ const ReadingPage: React.FC<Props> = (props) => {
               kết và đan xen ngày càng chặt chẽ với nhau, nhất là trong điều kiện toàn cầu hóa phát
               triển mạnh mẽ và sâu rộng. Đối ngoại ngày nay không chỉ là sự nối tiếp của chính sách
               đối nội, mà còn là một động lực mạnh mẽ cho sự phát triển của các quốc gia, dân tộc.
-            </p>
+            </p> 
             <p className="page-word">
               Tổng Bí thư Nguyễn Phú Trọng nhấn mạnh: "Trong lịch sử hàng nghìn năm dựng nước và giữ
               nước của dân tộc ta, độc lập, tự cường và bảo đảm cao nhất lợi ích quốc gia - dân tộc
@@ -297,68 +295,17 @@ const ReadingPage: React.FC<Props> = (props) => {
                 </ul>
               </div>
             </div>
-            <p className="page-source">
-              Nguồn <span className="page-source-name">VOV</span>:{' '}
-              <span className="page-source-link">
-                https://vov.vn/chinh-tri/tong-bi-thu-xay-dung-truong-phai-ngoai-giao-mang-dam-ban-sac-cay-tre-viet-nam-911534.vov
-              </span>
-            </p>
-            <div className="page-news">
-              <div className="page-news-header">
-                <p className="page-news-title">TIN KHÁC</p>
-                <div className="page-news-decor"></div>
-              </div>
-              <div className="page-news-content">
-                <BoxNews />
-                <BoxNews />
-                <BoxNews />
-              </div>
-            </div>
-            <div className="page-news">
-              <div className="page-news-header">
-                <p className="page-news-title">TIN NÓNG</p>
-                <div className="page-news-decor"></div>
-              </div>
-              <div className="page-news-content">
-                <BoxNews />
-                <BoxNews />
-                <BoxNews />
-              </div>
-            </div>
-            <div className="page-news">
-              <div className="page-news-header">
-                <p className="page-news-title">TIN MỚI</p>
-                <div className="page-news-decor"></div>
-              </div>
-              <div className="page-news-content">
-                <BoxNews />
-                <BoxNews />
-                <BoxNews />
-              </div>
-            </div>
           </div>
+
           <div className="col-4 content-right">
             <div className="videoFrame">
               <div className="videoFrame-header">
                 <h3 className="videoFrame-title">VIDEO</h3>
                 <div className="videoFrame-decor"></div>
               </div>
-              <div className="videoFrame-content">
-                <BoxVideo />
-                <BoxVideo />
-                <BoxVideo />
-              </div>
-            </div>
-            <div className="hotFrame">
-              <div className="hotFrame-header">
-                <h3 className="hotFrame-title">NÓNG 24H</h3>
-                <div className="hotFrame-decor"></div>
-              </div>
-              <div className="hotFrame-content">
-                <BoxHot />
-                <BoxHot />
-                <BoxHot />
-              </div>
+              <BoxVideo />
+              <BoxVideo />
+              <BoxVideo />
             </div>
           </div>
         </div>
@@ -366,4 +313,4 @@ const ReadingPage: React.FC<Props> = (props) => {
     </div>
   )
 }
-export default ReadingPage
+export default PageRender

@@ -4,7 +4,8 @@ import { BsSearch } from 'react-icons/bs'
 import { useState } from 'react'
 import { DropMenuItem } from './DropMenuItem'
 import { Link } from 'react-router-dom'
-import Login from './Login'
+import Login from '@/features/Auth/components/Login'
+// import Login from './Login'
 const Header = () => {
   const [active, setActive] = useState(false)
   const [activeLogin, setActiveLogin] = useState(false)
@@ -32,7 +33,7 @@ const Header = () => {
         </div>
         <div className="header-top-right">
           <div className="logo-user" onClick={() => setActiveLogin(!activeLogin)}>
-            <AiOutlineUser size="22px" />
+            <AiOutlineUser size="25px" />
           </div>
           {activeLogin ? <Login /> : ''}
         </div>
@@ -72,19 +73,14 @@ const Header = () => {
                 <div className="header-navbar-item--hotC">Khám phá thế giới</div>
               </li>
             </Link>
-            <Link to="/kham-pha-the-gioi/top/:id">
-              <li className="header-navbar-item--hot">
-                <div className="header-navbar-item--hotC">Khám phá Filip đz vl</div>
-              </li>
-            </Link>
             <Link to="/page">
               <li className="header-navbar-item--hot">
                 <div className="header-navbar-item--hotC">Page</div>
               </li>
             </Link>
-            <li className=" header-navbar-item-menu" onClick={() => setActive(!active)}>
+            <li className="header-navbar-item-menu" onClick={() => setActive(!active)}>
               <div className="header-navbar-item-menu-icon">
-                <AiOutlineMenu />
+                <AiOutlineMenu className="header-menu-icon" />
               </div>
             </li>
           </ul>

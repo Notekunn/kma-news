@@ -1,5 +1,9 @@
 import React from 'react'
+<<<<<<< HEAD
 import './index.css'
+=======
+import './page_Render.css'
+>>>>>>> e4f01b2 (finsih readingPage)
 import { HiOutlineVideoCamera } from 'react-icons/hi'
 interface Props {}
 
