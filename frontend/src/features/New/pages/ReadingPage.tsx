@@ -1,5 +1,5 @@
 import React from 'react'
-import BoxVideo from './compoments/boxVideo'
+import BoxVideo from '../components/BoxVideo'
 import { IoIosArrowForward } from 'react-icons/io'
 import { AiOutlineStar } from 'react-icons/ai'
 import { HiOutlineDocumentDuplicate, HiOutlineKey } from 'react-icons/hi'
