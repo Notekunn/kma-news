@@ -4,7 +4,8 @@ import { BsSearch } from 'react-icons/bs'
 import { useState } from 'react'
 import { DropMenuItem } from './DropMenuItem'
 import { Link } from 'react-router-dom'
-import Login from './Login'
+import Login from '@/features/Auth/components/Login'
+// import Login from './Login'
 const Header = () => {
   const [active, setActive] = useState(false)
   const [activeLogin, setActiveLogin] = useState(false)
