@@ -6,6 +6,7 @@
     left: 0;
     display: flex;
     animation: fadeIn linear 0.1s;
+    z-index: 100;
 }
 .modal__overlay{
   position: absolute;
@@ -27,7 +28,6 @@
     
 }
 .auth-form{
-
 }
 .auth-form__header{
     display: flex;
