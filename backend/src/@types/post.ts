@@ -13,6 +13,7 @@ export interface IParagraphImage {
 
 export type IParagraph = IParagraphText | IParagraphImage
 
+export type IPostStatus = 'publish' | 'pending' | 'draft' | 'trash'
 export interface IPost {
   title: string
   slug: string
@@ -21,6 +22,8 @@ export interface IPost {
   source?: string
   owner?: string
   writter?: Types.ObjectId
+  status: IPostStatus
+  publishedAt?: Date
 }
 
 export interface IPostModel extends Model<IPost> {}

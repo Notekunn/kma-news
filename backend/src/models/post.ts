@@ -45,6 +45,14 @@ const postSchema = new mongoose.Schema<IPostDocument>(
       ref: 'user',
     },
     paragraphs: [ParagraphSchema],
+    status: {
+      type: String,
+      enum: ['publish', 'pending', 'draft', 'trash'], // can be publish, pending, draft, trash
+      default: 'draft',
+    },
+    publishedAt: {
+      type: Date,
+    },
   },
   {
     versionKey: false,
