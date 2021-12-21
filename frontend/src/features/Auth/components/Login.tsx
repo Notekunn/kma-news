@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
 import './auth.css'
-const Login = () => {
-  const [hidden, setHidden] = useState(true)
+export interface LoginPopupProps {
+  visible: boolean
+  toggleVisible: (visible: boolean) => void
+}
+const Login: React.FC<LoginPopupProps> = (props) => {
+  const { visible, toggleVisible } = props
   const handleClick = () => {
-    setHidden(!hidden)
+    toggleVisible(!visible)
   }
 
   return (
-    <div className={hidden ? 'modal' : 'modal-none'} id="modal" onClick={handleClick}>
+    <div className={visible ? 'modal' : 'modal-none'} id="modal" onClick={handleClick}>
       <div className="modal__overlay"></div>
       <div className="modal__body">
         <div className="auth-form">

@@ -35,7 +35,7 @@ const Header = () => {
           <div className="logo-user" onClick={() => setActiveLogin(!activeLogin)}>
             <AiOutlineUser size="25px" />
           </div>
-          {activeLogin ? <Login /> : ''}
+          <Login visible={activeLogin} toggleVisible={setActiveLogin} />
         </div>
       </div>
       <div className="header-body">

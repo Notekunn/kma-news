@@ -8,13 +8,8 @@ import BoxNews from '../components/BoxNews'
 interface Props {}
 const ReadingPage: React.FC<Props> = (props) => {
   return (
-    <div className="container">
-      <div className="extensions">
-        <div className="box-extension">
-          <div className="logo-zalo"></div>
-        </div>
-      </div>
-      <div className="col-9 container-main">
+    <>
+      <div className="">
         <div className="indexPath">
           <h3 className="indexPath-name">Xã hội</h3>
           <IoIosArrowForward className="indexPath-icon" />
@@ -363,7 +358,7 @@ const ReadingPage: React.FC<Props> = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 export default ReadingPage
