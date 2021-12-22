@@ -9,19 +9,19 @@ const categorySchema = new mongoose.Schema<ICategoryDocument>(
     slug: {
       type: String,
       unique: true,
+      index: true,
     },
     description: {
       type: String,
     },
-    type: {
-      type: String,
-      enum: ['nav', 'single'],
-      default: 'single',
+    parrent: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'category',
     },
-    subItems: [
+    ancestors: [
       {
-        ref: 'category',
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'category',
       },
     ],
   },
@@ -32,7 +32,6 @@ const categorySchema = new mongoose.Schema<ICategoryDocument>(
 )
 categorySchema.pre('save', function (next) {
   this.slug = stringToSlug(this.title)
-  if (!this.subItems || this.type == 'single') this.subItems = []
   next()
 })
 export const CategoryModel = mongoose.model('category', categorySchema)

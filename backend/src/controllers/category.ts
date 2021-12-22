@@ -1,8 +1,9 @@
 import joi from 'joi'
-import { ICategory } from '@/@types/category'
+import { ICategory, ICategoryDocument } from '@/@types/category'
 import { IController } from '@/@types'
 import { CategoryModel } from '@/models/category'
 import { errorWrapper } from '@/services/error-wrapper'
+import NotFoundExeption from '@/exceptions/NotFoundExeption'
 
 export const getAll: IController = errorWrapper(async (req, res, next) => {
   const data = await CategoryModel.find({})
@@ -11,16 +12,39 @@ export const getAll: IController = errorWrapper(async (req, res, next) => {
 const createValidator = joi.object<ICategory>({
   title: joi.string().required(),
   description: joi.string(),
-  type: joi.string().valid('nav', 'single').default('single'),
+  parrent: joi.string(),
 })
 export const create: IController = errorWrapper(async (req, res, next) => {
   const { error, value } = createValidator.validate(req.body)
-  if (error) throw error
-  const { title, description, type } = value || {}
-  const category = new CategoryModel({ title, description, type })
-  const data = await category.save()
-  res.send(data)
+  if (error || !value) throw error
+  const { title, description, parrent } = value
+
+  if (!parrent) {
+    // Root Category
+    const data = await createRootCategory(title, description)
+    res.send(data)
+  } else {
+    const data = await createChildCategory(parrent.toString(), title, description)
+    res.send(data)
+  }
 })
+
+export const createRootCategory = (title: string, description?: string) => {
+  const category = new CategoryModel({ title, description })
+  return category.save()
+}
+export const createChildCategory = async (
+  parrentId: string,
+  title: string,
+  description?: string
+) => {
+  const parrent = await CategoryModel.findById(parrentId)
+  if (!parrent) throw new NotFoundExeption('Parrent category not found')
+  const ancestors = [parrent._id, ...parrent.ancestors]
+  const category = new CategoryModel({ title, description, ancestors, parrent })
+  const data = await category.save()
+  return data
+}
 
 const addSubItemValidator = joi.object({
   parrentId: joi.string().required(),
