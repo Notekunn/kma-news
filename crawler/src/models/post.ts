@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { IPostDocument, IParagraph } from '../@types/post'
-import { stringToSlug } from '../services/generate-slug'
+import BaseService from '../services/base'
 
 const ParagraphSchema = new mongoose.Schema<IParagraph>({
   type: {
@@ -31,13 +31,14 @@ const postSchema = new mongoose.Schema<IPostDocument>(
       type: String,
       unique: true,
     },
+    thumbnailUrl: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
     },
     source: {
-      type: String,
-    },
-    sourceUrl: {
       type: String,
     },
     owner: {
@@ -56,6 +57,12 @@ const postSchema = new mongoose.Schema<IPostDocument>(
     publishedAt: {
       type: Date,
     },
+    categories: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'category',
+      },
+    ],
   },
   {
     versionKey: false,
@@ -63,7 +70,7 @@ const postSchema = new mongoose.Schema<IPostDocument>(
   }
 )
 postSchema.pre('save', function (next) {
-  this.slug = stringToSlug(this.title)
+  this.slug = BaseService.stringToSlug(this.title)
   this.paragraphs = this.paragraphs.map((e) => {
     if (e.type === 'text') {
       return {
