@@ -31,13 +31,14 @@ const postSchema = new mongoose.Schema<IPostDocument>(
       type: String,
       unique: true,
     },
+    thumbnailUrl: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
     },
     source: {
-      type: String,
-    },
-    sourceUrl: {
       type: String,
     },
     owner: {
@@ -56,6 +57,12 @@ const postSchema = new mongoose.Schema<IPostDocument>(
     publishedAt: {
       type: Date,
     },
+    categories: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'category',
+      },
+    ],
   },
   {
     versionKey: false,

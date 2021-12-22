@@ -19,12 +19,13 @@ export interface IPost {
   slug: string
   description: string
   paragraphs: Array<IParagraph>
+  thumbnailUrl: string
   source?: string
   owner?: string
   writter?: Types.ObjectId
   status: IPostStatus
   publishedAt?: Date
-  sourceUrl?: string
+  categories: Types.ObjectId[]
 }
 
 export interface IPostModel extends Model<IPost> {}
