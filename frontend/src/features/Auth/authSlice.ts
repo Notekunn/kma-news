@@ -1,10 +1,15 @@
-import { loginWithEmail } from '@/api/auth'
+import { loginWithEmail, getProfile } from '@/api/auth'
 import { RootState } from '@/app/store'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 export const login = createAsyncThunk('auth/login', async (_: ThunkParameter.Login, thunkAPI) => {
   const result = await loginWithEmail(_.email, _.password)
   return result
+})
+export const profile = createAsyncThunk('auth/profile', async (_, thunkAPI) => {
+  const data = await getProfile()
+  console.log(data)
+  return data
 })
 
 export interface AuthState {

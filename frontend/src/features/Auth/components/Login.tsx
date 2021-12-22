@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { login } from '../authSlice'
+import { login, profile } from '../authSlice'
 import './auth.css'
 export interface LoginPopupProps {
   visible: boolean
@@ -52,7 +52,16 @@ const Login: React.FC<LoginPopupProps> = React.memo((props) => {
               <p className="auth-form__group-forget">Bạn quên mật khẩu ?</p>
             </div>
             <div className="auth-form__btn">
-              <input type="button" className="auth-btn auth-btn--regis" value="Đăng kí" />
+              <input
+                type="button"
+                className="auth-btn auth-btn--regis"
+                value="Đăng kí"
+                onClick={() => {
+                  for (let i = 0; i < 10; i++) {
+                    dispatch(profile())
+                  }
+                }}
+              />
               <input
                 type="button"
                 className="auth-btn auth-btn--login"
