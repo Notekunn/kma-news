@@ -23,7 +23,7 @@ type LocationField =
 type LocationData = Record<LocationField, number>
 type APIResponse =
   | Record<'total' | 'today', Record<'internal' | 'world', LocationReport>> &
-  Record<'locations', LocationReport[]>
+      Record<'locations', LocationReport[]>
 
 type Covid19StateData = Record<'internal' | 'world', LocationData> &
   Record<'locations', Array<LocationData & Record<'name', string>>>
@@ -39,7 +39,7 @@ const initialState: Covid19State = {
   loading: 'idle',
 }
 
-export const fetchCovid19Data = createAsyncThunk<Covid19StateData>('fetch', async () => {
+export const fetchCovid19Data = createAsyncThunk<Covid19StateData>('covid19/fetch', async () => {
   const { data } = await axios.get<APIResponse>(COVID19_API)
   const { locations, total, today } = data
   return {

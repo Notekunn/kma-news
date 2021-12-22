@@ -1,18 +1,23 @@
 import React, { useState } from 'react'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { login } from '../authSlice'
 import './auth.css'
 export interface LoginPopupProps {
   visible: boolean
   toggleVisible: (visible: boolean) => void
 }
-const Login: React.FC<LoginPopupProps> = (props) => {
+const Login: React.FC<LoginPopupProps> = React.memo((props) => {
+  const dispatch = useAppDispatch()
   const { visible, toggleVisible } = props
-  const handleClick = () => {
-    toggleVisible(!visible)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const handleSubmit = () => {
+    dispatch(login({ email, password }))
   }
 
   return (
-    <div className={visible ? 'modal' : 'modal-none'} id="modal" onClick={handleClick}>
-      <div className="modal__overlay"></div>
+    <div className={visible ? 'modal' : 'modal-none'} id="modal">
+      <div className="modal__overlay" onClick={() => toggleVisible(false)} />
       <div className="modal__body">
         <div className="auth-form">
           <div className="auth-form__header">
@@ -31,6 +36,8 @@ const Login: React.FC<LoginPopupProps> = (props) => {
                   type="text"
                   className="auth-form__group-input "
                   placeholder="Nhập email tài khoản của bạn"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="auth-form__group">
@@ -38,17 +45,24 @@ const Login: React.FC<LoginPopupProps> = (props) => {
                   type="text"
                   className="auth-form__group-input "
                   placeholder="Nhập mật khẩu của bạn"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <p className="auth-form__group-forget">Bạn quên mật khẩu ?</p>
             </div>
             <div className="auth-form__btn">
               <input type="button" className="auth-btn auth-btn--regis" value="Đăng kí" />
-              <input type="button" className="auth-btn auth-btn--login" value="Đăng nhập" />
+              <input
+                type="button"
+                className="auth-btn auth-btn--login"
+                value="Đăng nhập"
+                onClick={handleSubmit}
+              />
             </div>
           </form>
           <div className="auth-form__socials">
-            <a href="" className="auth-socials__btn auth-socials__btn--zalo">
+            <a href="/#" className="auth-socials__btn auth-socials__btn--zalo">
               <img
                 src="https://page.widget.zalo.me/static/images/2.0/Logo.svg"
                 alt=""
@@ -56,7 +70,7 @@ const Login: React.FC<LoginPopupProps> = (props) => {
               />
               <p className="auth-socials__name auth-socials__name--zalo">Đăng nhập bằng Zalo</p>
             </a>
-            <a href="" className="auth-socials__btn auth-socials__btn--face">
+            <a href="/#" className="auth-socials__btn auth-socials__btn--face">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png"
                 alt=""
@@ -69,5 +83,5 @@ const Login: React.FC<LoginPopupProps> = (props) => {
       </div>
     </div>
   )
-}
+})
 export default Login
