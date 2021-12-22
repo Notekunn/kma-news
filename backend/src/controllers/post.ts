@@ -5,19 +5,42 @@ import { PostModel } from '@/models/post'
 import { errorWrapper } from '@/services/error-wrapper'
 import NotFoundExeption from '@/exceptions/NotFoundExeption'
 
+const queryValidator = joi.object({
+  page: joi.number().integer().min(1).default(1),
+  limit: joi.number().integer().min(1).default(10),
+  status: joi
+    .array()
+    .items(joi.string().valid('publish', 'pending', 'draft', 'trash').required())
+    .single()
+    .default(['publish']),
+})
+
 export const getAll: IController = errorWrapper(async (req, res, next) => {
-  const data = await PostModel.find({})
+  const { error, value } = queryValidator.validate(req.query)
+  if (error) throw error
+  const { page, limit, status } = value || {}
+  const data = await PostModel.find({
+    status: {
+      $in: status,
+    },
+  })
+    .skip(page * limit - limit)
+    .limit(limit)
+    .sort({ publishedAt: -1 })
   res.json(data)
 })
+
 const textParagraph = joi.object<IParagraphText>({
   type: joi.string().valid('text').required(),
   content: joi.string().required(),
 })
+
 const imageParagraph = joi.object<IParagraphImage>({
   type: joi.string().valid('image').required(),
   description: joi.string().required(),
   imageUrl: joi.array().items(joi.string()).min(1).required(),
 })
+
 const createValidator = joi.object<IPost>({
   title: joi.string().required(),
   description: joi.string().required(),
@@ -26,6 +49,7 @@ const createValidator = joi.object<IPost>({
   writter: joi.string(),
   paragraphs: joi.array().items(textParagraph, imageParagraph).required(),
 })
+
 export const create: IController<IPost> = errorWrapper(async (req, res, next) => {
   const { error, value } = createValidator.validate(req.body)
   if (error) throw error
@@ -34,6 +58,7 @@ export const create: IController<IPost> = errorWrapper(async (req, res, next) =>
   const data = await post.save()
   res.status(201).send(data)
 })
+
 const updateValidator = joi.object<IPost>({
   title: joi.string(),
   description: joi.string(),
