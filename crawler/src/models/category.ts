@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { ICategoryDocument } from '../@types/category'
-import { stringToSlug } from '../services/generate-slug'
+import BaseService from '../services/base'
 const categorySchema = new mongoose.Schema<ICategoryDocument>(
   {
     title: {
@@ -31,7 +31,7 @@ const categorySchema = new mongoose.Schema<ICategoryDocument>(
   }
 )
 categorySchema.pre('save', function (next) {
-  this.slug = stringToSlug(this.title)
+  this.slug = BaseService.stringToSlug(this.title)
   next()
 })
 export const CategoryModel = mongoose.model('category', categorySchema)

@@ -1,10 +1,7 @@
-import { CheerioAPI } from 'cheerio'
-import RssParser from 'rss-parser'
-import { IParagraph, IPost } from '../@types/post'
 import BaseService from './base'
-import moment from 'moment'
-import { stringToSlug } from './generate-slug'
-import { formatTime } from './format-time'
+import type { CheerioAPI } from 'cheerio'
+import RssParser from 'rss-parser'
+import { IParagraph, IParagraphImage, IPost } from '../@types/post'
 
 export const RSS_URL = 'https://vnexpress.net/rss/tin-moi-nhat.rss'
 
@@ -30,14 +27,14 @@ export default class VNExpress extends BaseService {
     const title = $('.title-detail').text()
     const description = $('.description').text()
     const data = $('.fck_detail').children()
-    const publishedTime = formatTime($('span.date').text())
+    const publishedTime = this.formatTime($('span.date').text())
 
     const paragraphs: IParagraph[] = []
     for (const el of data) {
       if (el.tagName == 'p') {
         paragraphs.push({
           type: 'text',
-          content: $(el).text(),
+          content: this.formatText($(el).text()),
         })
       }
       if (el.tagName == 'figure') {
@@ -52,15 +49,18 @@ export default class VNExpress extends BaseService {
           })
       }
     }
+    const thumbnailUrl =
+      (<IParagraphImage>paragraphs.find((e) => e.type === 'image'))?.imageUrl?.[0] || ''
     const result: IPost = {
       title,
-      slug: stringToSlug(title),
+      slug: BaseService.stringToSlug(title),
+      thumbnailUrl,
+      categories: [],
       description,
       status: 'publish',
       source: 'vnexpress.net',
       owner: 'Đức Cường',
       publishedAt: publishedTime,
-      sourceUrl: url,
       paragraphs,
     }
     const last = paragraphs.splice(-1)
@@ -71,7 +71,10 @@ export default class VNExpress extends BaseService {
     } else {
       result.paragraphs = [...paragraphs, ...last]
     }
-
+    const category = $('ul.breadcrumb').find('li')
+    const categories = [...category].map((e) => this.formatText($(e).text()))
+    const categoriesId = (await Promise.all(categories.map(this.getCategoryId))).filter((e) => !!e)
+    result.categories = categoriesId
     return result
   }
 }

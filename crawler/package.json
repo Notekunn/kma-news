@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node src/index.ts"
+    "dev": "ts-node src/index.ts",
+    "test": "ts-node src/demo.ts"
   },
   "devDependencies": {
     "@types/bull": "^3.15.7",
