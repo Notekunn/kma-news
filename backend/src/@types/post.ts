@@ -24,6 +24,7 @@ export interface IPost {
   writter?: Types.ObjectId
   status: IPostStatus
   publishedAt?: Date
+  categories: Types.ObjectId[]
 }
 
 export interface IPostModel extends Model<IPost> {}

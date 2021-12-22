@@ -54,6 +54,7 @@ const createChildCategory = async (parrentId: string, title: string, description
 }
 
 const showCategorySameRoot = async (root: ICategory['parrent']) => {
+  // Tìm con của root
   if (!root) return []
   const data = await CategoryModel.find({
     ancestors: {
