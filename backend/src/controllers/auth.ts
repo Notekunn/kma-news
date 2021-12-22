@@ -54,9 +54,9 @@ export const login: IController<Pick<IUser, 'email' | 'password'>> = errorWrappe
               $lt: moment.tz(TIMEZONE).toDate(),
             },
           },
-          {
-            status: 'active',
-          },
+          //   {
+          //     status: 'active',
+          //   },
         ],
       },
       {
