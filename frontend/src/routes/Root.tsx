@@ -4,6 +4,7 @@ import { BasicLayout } from '@/layouts/BasicLayout'
 import Home from '@/features/HomePage/pages/HomePage'
 import Topic from '@/features/Topic/pages/Topic'
 import ReadingPage from '@/features/New/pages/ReadingPage'
+import { HotTopicPage } from '@/features/New/pages/HotTopicPage'
 export const RootRouter = () => {
   return (
     <div>
@@ -13,6 +14,7 @@ export const RootRouter = () => {
           <Route path="/chu-de" element={<Topic />} />
           <Route path="bai-bao/:slug" element={<ReadingPage />} />
           <Route path="/" element={<Home />} />
+          <Route path="/phong-chong-dich-covid-19" element={<HotTopicPage />} />
         </Route>
         <Route path="/admin" element={<BasicLayout />}></Route>
       </Routes>

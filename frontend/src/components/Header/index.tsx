@@ -53,7 +53,7 @@ const Header = () => {
             <Link to="/chu-de">
               <li className="header-navbar-item">CHỦ ĐỀ</li>
             </Link>
-            <Link to="/phong-chong-dich-covid-19/top/:id">
+            <Link to="/phong-chong-dich-covid-19">
               <li className="header-navbar-item--hot">
                 <div className="header-navbar-item--hotC">Phòng chống dịch COVID-19</div>
               </li>
