@@ -48,6 +48,7 @@ const imageParagraph = joi.object<IParagraphImage>({
 const createValidator = joi.object<IPost>({
   title: joi.string().required(),
   description: joi.string().required(),
+  thumbnailUrl: joi.string().uri().required(),
   source: joi.string(),
   owner: joi.string().default('Tổng hợp'),
   writter: joi.string(),
@@ -68,6 +69,7 @@ export const create: IController<IPost> = errorWrapper(async (req, res, next) =>
 const updateValidator = joi.object<IPost>({
   title: joi.string(),
   description: joi.string(),
+  thumbnailUrl: joi.string().uri(),
   source: joi.string(),
   owner: joi.string(),
   writter: joi.string(),

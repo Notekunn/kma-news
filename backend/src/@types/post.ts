@@ -19,6 +19,7 @@ export interface IPost {
   slug: string
   description: string
   paragraphs: Array<IParagraph>
+  thumbnailUrl: string
   source?: string
   owner?: string
   writter?: Types.ObjectId

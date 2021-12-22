@@ -31,6 +31,10 @@ const postSchema = new mongoose.Schema<IPostDocument>(
       type: String,
       unique: true,
     },
+    thumbnailUrl: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
     },
