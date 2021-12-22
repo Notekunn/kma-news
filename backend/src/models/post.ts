@@ -31,6 +31,10 @@ const postSchema = new mongoose.Schema<IPostDocument>(
       type: String,
       unique: true,
     },
+    thumbnailUrl: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
     },
@@ -53,6 +57,12 @@ const postSchema = new mongoose.Schema<IPostDocument>(
     publishedAt: {
       type: Date,
     },
+    categories: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'category',
+      },
+    ],
   },
   {
     versionKey: false,

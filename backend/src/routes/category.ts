@@ -6,8 +6,10 @@ const router = Router()
 
 router.get('/', categoryController.getAll)
 
+router.get('/tree', categoryController.showCategoryByTree)
+
 router.post('/', authMiddleware, guardMiddleware('admin'), categoryController.create)
 
-router.post('/sub', authMiddleware, guardMiddleware('admin'), categoryController.addSubItem)
+// router.post('/sub', authMiddleware, guardMiddleware('admin'), categoryController.addSubItem)
 
 export default router

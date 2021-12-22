@@ -8,7 +8,7 @@ router.get('/', postController.getAll)
 
 router.post('/', authMiddleware, guardMiddleware('writter'), postController.create)
 
-router.get('/:id', postController.getOne)
+router.get('/:slug', postController.getBySlug)
 
 router.patch('/:id', authMiddleware, guardMiddleware('writter'), postController.update)
 

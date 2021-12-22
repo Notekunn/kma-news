@@ -7,7 +7,7 @@
   "legacyWatch": true,
   "env": {
     "TIMEZONE": "Asia/Ho_Chi_Minh",
-    "ACCESS_TOKEN_LIVE": "10",
+    "ACCESS_TOKEN_LIVE": "600",
     "REFRESH_TOKEN_LIVE": "86400"
   }
 }
