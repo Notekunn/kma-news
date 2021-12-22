@@ -90,6 +90,13 @@ export const getOne: IController<IPost, 'id'> = errorWrapper(async (req, res, ne
   res.send(data)
 })
 
+export const getBySlug: IController<IPost, 'slug'> = errorWrapper(async (req, res, next) => {
+  const { slug } = req.params
+  const data = await PostModel.findOne({ slug })
+  if (!data) throw new NotFoundExeption('Post not found')
+  res.send(data)
+})
+
 export const remove: IController<IPost, 'id'> = errorWrapper(async (req, res, next) => {
   const { id } = req.params
   const data = await PostModel.findByIdAndUpdate(
