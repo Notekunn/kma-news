@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { refreshToken } from './auth'
+import { refreshToken } from './api/auth'
+import { APIResponse } from './types'
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8888',
   headers: {

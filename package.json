@@ -1,16 +1,22 @@
 {
-	"name": "kma-news",
-	"version": "1.0.0",
-	"license": "MIT",
-	"private": true,
-	"workspaces": [
-        "packages/*"
-	],
-	"scripts": {
-		"frontend": "yarn workspace frontend",
-		"backend": "yarn workspace backend",
-		"crawler": "yarn workspace crawler",
-        "admin": "yarn workspace admin",
-        "shared": "yarn workspace shared-types"
-	}
+  "name": "kma-news",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "frontend": "yarn workspace frontend",
+    "backend": "yarn workspace backend",
+    "crawler": "yarn workspace crawler",
+    "admin": "yarn workspace admin",
+    "shared-types": "yarn workspace shared-types",
+    "shared-api": "yarn workspace shared-api",
+    "link-register": "yarn shared-types link && yarn shared-api link",
+    "link-types": "yarn backend link shared-types && yarn crawler link shared-types && yarn shared-api link shared-types",
+    "link-api": "yarn admin link shared-api && yarn frontend link shared-api",
+    "link-all": "yarn link-register && yarn link-types && yarn link-api",
+    "postinstall": "yarn shared-api build && yarn link-all"
+  }
 }
