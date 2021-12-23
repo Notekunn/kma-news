@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Container from '@/components/Container'
 import { Link } from 'react-router-dom'
 import { AiOutlineArrowsAlt } from 'react-icons/ai'
 import { PopUp } from '../components/PopUp'

@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export interface ItemNews {
+export interface NewDataSource {
   img?: string
   description?: string
   newSource?: newSource
 }
 
 export interface ItemNewsProps {
-  data?: ItemNews
+  data?: NewDataSource
 }
 
 export interface NewshorizontalProps {}
@@ -19,7 +19,7 @@ interface newSource {
   numberNewsOther?: string
 }
 
-const dataArray: Array<ItemNews> = [  
+const dataArray: Array<NewDataSource> = [
   {
     img: 'https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg',
     description: 'Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ',
@@ -91,7 +91,7 @@ const dataArray: Array<ItemNews> = [
       time: '2 giờ',
       numberNewsOther: '60 liên quan',
     },
-  }
+  },
 ]
 
 export const ItemNews: React.FC<ItemNewsProps> = ({ children, data }) => {
@@ -120,7 +120,7 @@ export const ItemNews: React.FC<ItemNewsProps> = ({ children, data }) => {
   )
 }
 
-export const ListNewsRight: React.FC<ItemNews> = () => {
+export const ListNewsRight: React.FC<NewDataSource> = () => {
   return (
     <div className="section">
       <div className="list-news-right">

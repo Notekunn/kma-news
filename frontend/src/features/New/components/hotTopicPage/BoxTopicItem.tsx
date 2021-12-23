@@ -14,7 +14,7 @@ export const BoxTopicItem = () => {
 
         <h4 className={'boxTopicItem__title'}>
           <span>
-            <a href="">Cơ sở giáo dục mầm non đủ điều kiện an toàn, trẻ em được đến trường</a>
+            <a href="/">Cơ sở giáo dục mầm non đủ điều kiện an toàn, trẻ em được đến trường</a>
           </span>
         </h4>
         <div className="box-exten">
@@ -25,9 +25,9 @@ export const BoxTopicItem = () => {
           />
           <div className="box-exten--time">1 giờ</div>
           <div className="box-exten--involve">
-            <a href="">11 liên quân</a>
+            <a href="/">11 liên quân</a>
           </div>
-          <a href="" className="box-logo">
+          <a href="/" className="box-logo">
             <img
               src="https://baomoi-static.zadn.vn/favicons/favicon-32x32.png"
               alt="logo"
