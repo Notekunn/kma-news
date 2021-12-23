@@ -1,7 +1,7 @@
 import { NewsDetail, ShortDetailNews } from '../types'
 import axios, { AxiosInstance } from 'axios'
 import cheerio from 'cheerio'
-import { IPost } from '../@types/post'
+import { IPost } from 'shared-types'
 import { PostModel } from '../models/post'
 import moment from 'moment'
 import { CategoryModel } from '../models/category'

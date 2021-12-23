@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { IPostDocument, IParagraph } from '../@types/post'
+import { IPostDocument, IParagraph } from 'shared-types'
 import BaseService from '../services/base'
 
 const ParagraphSchema = new mongoose.Schema<IParagraph>({
