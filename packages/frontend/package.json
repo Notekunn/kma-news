@@ -21,7 +21,6 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^6.1.1",
     "react-scripts": "4.0.3",
-    "shared-api": "file:./packages/shared-api",
     "typescript": "~4.1.5"
   },
   "scripts": {
