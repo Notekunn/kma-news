@@ -1,5 +1,7 @@
 import React from 'react'
+import { AiOutlineStar } from 'react-icons/ai'
 import { IoIosArrowBack, IoIosArrowForward, IoIosClose } from 'react-icons/io'
+import { BsLink45Deg } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 interface PopUpProps {
   setShowPopUp: Function
@@ -11,8 +13,13 @@ export const PopUp: React.FC<PopUpProps> = ({ setShowPopUp }) => {
         <div className="list-topic">
           <div className="item-topic">
             <div className="header-item-topic">
-              <Link to="/">Năng lượng tích cực</Link>
-              <div onClick={() => setShowPopUp(false)}>
+              <div>
+                <Link to="/">Năng lượng tích cực</Link>
+                <span>
+                  <AiOutlineStar />
+                </span>
+              </div>
+              <div className="icon-pop-up" onClick={() => setShowPopUp(false)}>
                 <IoIosClose size="20px" />
               </div>
             </div>
@@ -305,6 +312,12 @@ export const PopUp: React.FC<PopUpProps> = ({ setShowPopUp }) => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="link-topic">
+          <Link to="/">
+            <BsLink45Deg size="30px" />
+            <span>Xem chi tiết chủ đề</span>
+          </Link>
         </div>
         <div className="btn-arrow-left">
           <IoIosArrowBack size="25px" />

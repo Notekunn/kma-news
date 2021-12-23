@@ -29,69 +29,6 @@ const dataArray: Array<NewDataSource> = [
       numberNewsOther: '60 liên quan',
     },
   },
-  {
-    img: 'https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg',
-    description: 'Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ',
-    newSource: {
-      logo: 'https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png',
-      time: '2 giờ',
-      numberNewsOther: '60 liên quan',
-    },
-  },
-  {
-    img: 'https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg',
-    description: 'Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ',
-    newSource: {
-      logo: 'https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png',
-      time: '2 giờ',
-      numberNewsOther: '60 liên quan',
-    },
-  },
-  {
-    img: 'https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg',
-    description: 'Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ',
-    newSource: {
-      logo: 'https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png',
-      time: '2 giờ',
-      numberNewsOther: '60 liên quan',
-    },
-  },
-  {
-    img: 'https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg',
-    description: 'Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ',
-    newSource: {
-      logo: 'https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png',
-      time: '2 giờ',
-      numberNewsOther: '60 liên quan',
-    },
-  },
-  {
-    img: 'https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg',
-    description: 'Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ',
-    newSource: {
-      logo: 'https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png',
-      time: '2 giờ',
-      numberNewsOther: '60 liên quan',
-    },
-  },
-  {
-    img: 'https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg',
-    description: 'Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ',
-    newSource: {
-      logo: 'https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png',
-      time: '2 giờ',
-      numberNewsOther: '60 liên quan',
-    },
-  },
-  {
-    img: 'https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg',
-    description: 'Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ',
-    newSource: {
-      logo: 'https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png',
-      time: '2 giờ',
-      numberNewsOther: '60 liên quan',
-    },
-  },
 ]
 
 export const ItemNews: React.FC<ItemNewsProps> = ({ children, data }) => {

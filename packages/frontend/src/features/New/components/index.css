@@ -561,13 +561,13 @@
     cursor: pointer;
 }
 
-.news-photo {
+.boxNews-title .news-photo {
     border-radius: 5px;
     width: 155px;
     height: 100px;
 }
 
-.news-photo:hover {
+.boxNews-title .news-photo:hover {
     transform: scale(1.2);
     cursor: pointer;
     width: 155px;
