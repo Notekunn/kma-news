@@ -4,9 +4,6 @@
 	"license": "MIT",
 	"private": true,
 	"workspaces": [
-		"frontend",
-		"backend",
-		"crawler",
         "packages/*"
 	],
 	"scripts": {
