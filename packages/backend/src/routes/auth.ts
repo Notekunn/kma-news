@@ -1,5 +1,6 @@
 import { Router } from 'express'
-import * as userController from '@/controllers/auth'
+import * as authController from '@/controllers/auth'
+import { create as register } from '@/controllers/user'
 const router = Router()
 
 /**
@@ -8,6 +9,50 @@ const router = Router()
  *   name: Auth
  *   description: Authentication
  */
+
+/**
+ * @swagger
+ * /auth/register:
+ *   post:
+ *     summary: Register
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: must be unique
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 minLength: 8
+ *                 description: At least one number and one letter
+ *             example:
+ *               name: Trần Đức Cường
+ *               email: admin@gmail.com
+ *               password: password
+ *     responses:
+ *       "201":
+ *         description: Created
+ *         content:
+ *           application/json:
+ *             $ref: '#/components/schemas/User'
+ *       "500":
+ *         $ref: '#/components/responses/DuplicateEmail'
+ */
+
+router.post('/register', register)
 
 /**
  * @swagger
@@ -32,21 +77,11 @@ const router = Router()
  *                 type: string
  *                 format: password
  *             example:
- *               email: fake@example.com
- *               password: password1
+ *               email: admin@gmail.com
+ *               password: password
  *     responses:
  *       "200":
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                  access_token:
- *                      type: string
- *                  refresh_token:
- *                      type: string
- *
+ *          $ref: '#/components/responses/LoginSuccess'
  *
  *       "401":
  *         description: Invalid email or password
@@ -58,10 +93,70 @@ const router = Router()
  *               code: 401
  *               message: Invalid email or password
  */
-router.post('/login', userController.login)
+router.post('/login', authController.login)
 
-router.post('/logout', userController.logout)
+/**
+ * @swagger
+ * /auth/logout:
+ *   post:
+ *     summary: Logout
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - refresh_token
+ *             properties:
+ *               refresh_token:
+ *                 type: string
+ *             example:
+ *               refresh_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWJhYzUzNDk1NGI1NDEzOTgwNmMxMTIiLCJpYXQiOjE1ODkyOTg0ODQsImV4cCI6MTU4OTMwMDI4NH0.m1U63blB0MLej_WfB7yC2FTMnCziif9X8yzwDEfJXAg
+ *     responses:
+ *       "200":
+ *         description: No content
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ */
 
-router.post('/refresh', userController.refreshToken)
+router.post('/logout', authController.logout)
+
+/**
+ * @swagger
+ * /auth/refresh:
+ *   post:
+ *     summary: Refresh access token
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - refresh_token
+ *             properties:
+ *               refresh_token:
+ *                 type: string
+ *             example:
+ *               refresh_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWJhYzUzNDk1NGI1NDEzOTgwNmMxMTIiLCJpYXQiOjE1ODkyOTg0ODQsImV4cCI6MTU4OTMwMDI4NH0.m1U63blB0MLej_WfB7yC2FTMnCziif9X8yzwDEfJXAg
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Token'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ */
+
+router.post('/refresh', authController.refreshToken)
 
 export default router

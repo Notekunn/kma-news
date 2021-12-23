@@ -18,12 +18,20 @@ components:
         email: admin@gmail.com
         name: Tran Duc Cuong
         role: admin
-    
+
     Token:
       type: object
       properties:
         access_token:
-            type: string
+          type: string
+        refresh_token:
+          type: string
+        tokenExpiration:
+          type: string
+          format: date-time
+        refreshTokenExpiration:
+          type: string
+          format: date-time
 
     Error:
       type: object
@@ -41,7 +49,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            code: 400
+            code: 500
             message: Email already taken
     Unauthorized:
       description: Unauthorized
@@ -70,6 +78,17 @@ components:
           example:
             code: 404
             message: Not found
+    LoginSuccess:
+      description: Login successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Token'
+          example:
+            access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlkIjoiNjFiZDk1MzM3MDZlMDNhNzk1ZjJhNjRhIiwiaWF0IjoxNjQwMjQyNDE5LCJleHAiOjE2NDAyNDMwMTl9.rrAOCzmTAyL8dPWdm7ZQSX4WNUQlRRRrHg3DEDk4VPo
+            refresh_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlkIjoiNjFiZDk1MzM3MDZlMDNhNzk1ZjJhNjRhIiwiaWF0IjoxNjQwMjQyNDE5LCJleHAiOjE2NDAzMjg4MTl9.VFjQwLVIR1tt9zZFm8R56-yUxO8BDyCeFhfggYLZ3mU
+            tokenExpiration: 2021-12-23T07:03:39.992Z
+            refreshTokenExpiration:
 
   securitySchemes:
     bearerAuth:
