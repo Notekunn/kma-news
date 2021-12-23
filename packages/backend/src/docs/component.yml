@@ -18,6 +18,11 @@ components:
         email: admin@gmail.com
         name: Tran Duc Cuong
         role: admin
+    Category:
+      type: object
+      properties:
+        title: string
+        slug: string
 
     Token:
       type: object

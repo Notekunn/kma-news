@@ -109,12 +109,6 @@ export default router
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
  */
-/**
- * @swagger
- * tags:
- *   name: Users
- *   description: User management and retrieval
- */
 
 /**
  * @swagger
