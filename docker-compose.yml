@@ -4,7 +4,7 @@ services:
     backend:
         image: backend
         build:
-            context: backend
+            context: packages/backend
             dockerfile: ./Dockerfile
             target: base
         environment:
@@ -19,7 +19,7 @@ services:
         expose:
             - 9999
         volumes:
-            - ./backend/src:/home/node/app/src
+            - ./packages/backend/src:/home/node/app/src
         ports:
             - 9999:9999
             - 9229:9229
@@ -64,8 +64,8 @@ services:
         environment:
             REDIS_PORT: 6379
         volumes:
-            - ./crawler/src:/home/node/app/src
-            - ./crawler/crontab:/etc/cron.d/crawl-cron
+            - ./packages/crawler/src:/home/node/app/src
+            - ./packages/crawler/crontab:/etc/cron.d/crawl-cron
         command: [ "yarn", "dev" ]
         networks:
             - app-network
