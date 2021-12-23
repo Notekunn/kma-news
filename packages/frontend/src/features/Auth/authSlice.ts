@@ -1,4 +1,4 @@
-import { loginWithEmail, getProfile } from '@/api/auth'
+import { loginWithEmail, getProfile } from 'shared-api'
 import { RootState } from '@/app/store'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
