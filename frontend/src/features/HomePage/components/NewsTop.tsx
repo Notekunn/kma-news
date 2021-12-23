@@ -4,13 +4,13 @@ interface newSource {
   logo?: string
   time?: string
 }
-interface ItemNews {
+interface NewDataSource {
   img?: string
   description?: string
   newsSource?: newSource
 }
 
-const dataArray: Array<ItemNews> = [
+const dataArray: Array<NewDataSource> = [
   {
     img: 'https://photo-baomoi.zadn.vn/w300_r3x2_sm/2021_12_13_83_41179601/15e38ae13aa3d3fd8ab2.jpg',
     description: 'Học sinh TP.HCM ngày đầu trở lại trường sau nửa năm học trực tuyến',
@@ -38,7 +38,7 @@ const dataArray: Array<ItemNews> = [
 ]
 
 interface ItemNewsProps {
-  data: ItemNews
+  data: NewDataSource
 }
 
 const ItemNews: React.FC<ItemNewsProps> = ({ children, data }) => {
@@ -65,7 +65,7 @@ const ItemNews: React.FC<ItemNewsProps> = ({ children, data }) => {
   )
 }
 
-const NewsTop = () => {
+export const TopNews = () => {
   return (
     <>
       <div className="section">
@@ -106,5 +106,3 @@ const NewsTop = () => {
     </>
   )
 }
-
-export default NewsTop

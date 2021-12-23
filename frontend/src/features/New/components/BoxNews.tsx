@@ -1,16 +1,15 @@
 import React from 'react'
-import './page_Render.css'
-import { HiOutlineVideoCamera } from 'react-icons/hi'
-interface Props {}
+import './index.css'
+interface BoxNewProps {}
 
-const BoxNews: React.FC<Props> = (props) => {
+export const BoxNews: React.FC<BoxNewProps> = (props) => {
   return (
     <div className="boxNews">
       <div className="boxNews-photo video-icon">
         <img
           className="news-photo "
           src="https://photo-baomoi.zadn.vn/w300_r3x2_sm/2021_12_19_30_41248238/bb2a1e69ad2b44751d3a.jpg"
-          alt="image Park-sensei"
+          alt="Park-sensei"
         />
       </div>
       <div className="boxNews-left">
@@ -35,4 +34,3 @@ const BoxNews: React.FC<Props> = (props) => {
     </div>
   )
 }
-export default BoxNews

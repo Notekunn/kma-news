@@ -7,7 +7,7 @@ import { BiLike } from 'react-icons/bi'
 import { VscTag } from 'react-icons/vsc'
 import { GoReport } from 'react-icons/go'
 import { HiOutlineDocumentDuplicate, HiOutlineKey } from 'react-icons/hi'
-import BoxNews from '../components/BoxNews'
+import { BoxNews } from '../components/BoxNews'
 interface Props {}
 const ReadingPage: React.FC<Props> = (props) => {
   return (
@@ -67,7 +67,7 @@ const ReadingPage: React.FC<Props> = (props) => {
                 quan trọng chỉ đạo tại hội nghị.
               </p>
               <p className="page-img">
-                <a href="" className="page-img-link">
+                <a href="/" className="page-img-link">
                   <img
                     src="https://photo-baomoi.zadn.vn/w700_r1/2021_12_14_65_30791999/96a6e0125150b80ee141.jpg"
                     alt=""
@@ -92,7 +92,7 @@ const ReadingPage: React.FC<Props> = (props) => {
                 Quốc hội, Liên hiệp các Hội hữu nghị Việt Nam.
               </p>
               <p className="page-img">
-                <a href="" className="page-img-link">
+                <a href="/" className="page-img-link">
                   <img
                     src="https://photo-baomoi.zadn.vn/w700_r1/2021_12_14_65_30791999/fcf87f4cce0e27507e1f.jpg"
                     alt=""
@@ -147,7 +147,7 @@ const ReadingPage: React.FC<Props> = (props) => {
                 thời đại của cha ông ta, mãi mãi vẫn còn nguyên giá trị".
               </p>
               <p className="page-img">
-                <a href="" className="page-img-link">
+                <a href="/" className="page-img-link">
                   <img
                     src="https://photo-baomoi.zadn.vn/w700_r1/2021_12_14_65_30791999/6984a50f144dfd13a45c.jpg"
                     alt=""
@@ -236,7 +236,7 @@ const ReadingPage: React.FC<Props> = (props) => {
                 của cả hệ thống chính trị, trong đó ngành Ngoại giao là những người đi đầu.
               </p>
               <p className="page-img">
-                <a href="" className="page-img-link">
+                <a href="/" className="page-img-link">
                   <img
                     src="https://photo-baomoi.zadn.vn/w700_r1/2021_12_14_65_30791999/32699fe72ea5c7fb9eb4.jpg"
                     alt=""
@@ -285,7 +285,7 @@ const ReadingPage: React.FC<Props> = (props) => {
                 nữa cho công tác đối ngoại trong thời gian tới, góp phần cùng cả nước thực hiện
                 thành công Nghị quyết Đại hội XIII của Đảng./.
               </p>
-              <p className="page-author">Văn Hiếu – Lại Hoa/VOV</p>
+              <p className="page-author">Văn Hiếu - Lại Hoa/VOV</p>
               <div className="page-key">
                 <HiOutlineKey className="page-key-icon" />
                 <div className="page-key-box">

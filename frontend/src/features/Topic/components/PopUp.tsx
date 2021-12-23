@@ -1,8 +1,8 @@
-import React, { Props } from 'react'
+import React from 'react'
 import { IoIosArrowBack, IoIosArrowForward, IoIosClose } from 'react-icons/io'
-import { Link } from 'react-router-dom';
-interface PopUpProps{
-    setShowPopUp:Function
+import { Link } from 'react-router-dom'
+interface PopUpProps {
+  setShowPopUp: Function
 }
 export const PopUp: React.FC<PopUpProps> = ({ setShowPopUp }) => {
   return (

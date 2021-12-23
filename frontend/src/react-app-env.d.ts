@@ -8,10 +8,11 @@ declare namespace ThunkParameter {
 }
 
 declare namespace Entity {
+  type UserRole = 'admin' | 'writter' | 'user'
   interface User {
     email: string
     name: string
-    role: 'admin' | 'writer' | 'user'
+    role: UserRole
   }
 }
 

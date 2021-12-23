@@ -1,11 +1,10 @@
 import React from 'react'
-import Container from '@/components/Container'
-import { useState } from 'react'
-import NewsTop from '../components/contentLeft/NewsTop'
-import { ListNavbar } from '../components/contentLeft/ListNavbar'
-import { Link } from 'react-router-dom'
-import { ListNewsRight } from '../components/contentRight/ListNewsRight'
 import { Covid19Feed } from '@/features/covid19/components/Covid19Feed'
+import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { TopNews } from '../components/NewsTop'
+import { ListNavbar } from '../components/ListNavbar'
+import { ListNewsRight } from '../components/ListNewsRight'
 import { FiMapPin } from 'react-icons/fi'
 import { RiArrowDropDownLine } from 'react-icons/ri'
 const Home = () => {
@@ -16,7 +15,7 @@ const Home = () => {
       <div className="col-9 container-main">
         <div className="content">
           <div className="col-8 content-left">
-            <NewsTop />
+            <TopNews />
             <ListNavbar title="Phòng chống dịch covid" />
             <div className="btn-next-page">
               <Link to="/">Xem thêm</Link>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { AiOutlineStar } from 'react-icons/ai'
-import { BoxTopicHeader } from '../components/hotTopicPage/BoxTopicHeader'
+// import { BoxTopicHeader } from '../components/hotTopicPage/BoxTopicHeader'
 import { BoxTopicItem } from '../components/hotTopicPage/BoxTopicItem'
 import '../components/hotTopicPage/hotTopicPage.css'
 export const HotTopicPage = () => {

@@ -8,13 +8,14 @@ export const login = createAsyncThunk('auth/login', async (_: ThunkParameter.Log
 })
 export const profile = createAsyncThunk('auth/profile', async (_, thunkAPI) => {
   const data = await getProfile()
-  console.log(data)
   return data
 })
 
 export interface AuthState {
   loading: 'idle' | 'pending' | 'done' | 'error'
   loggedIn: boolean
+  profile?: APIResponse.Profile
+  message?: string
 }
 const initialState: AuthState = {
   loading: 'idle',
@@ -38,10 +39,25 @@ export const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = 'error'
+        state.message = action.error.message
+      })
+      .addCase(profile.pending, (state) => {
+        state.loading = 'pending'
+      })
+      .addCase(profile.fulfilled, (state, action) => {
+        state.loading = 'done'
+        state.profile = action.payload
+      })
+      .addCase(profile.rejected, (state, action) => {
+        state.loading = 'error'
+        state.message = action.error.message
       })
   },
 })
 
 export const selectLoading = (state: RootState) => state.auth.loading
+export const selectLoggedIn = (state: RootState) => state.auth.loggedIn
+export const selectProfile = (state: RootState) => state.auth.profile
+export const selectMessage = (state: RootState) => state.auth.message
 
 export default authSlice.reducer

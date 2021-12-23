@@ -1,6 +1,5 @@
 import React from 'react'
-import './page_Render.css'
-import { HiOutlineVideoCamera } from 'react-icons/hi'
+import './index.css'
 interface Props {}
 
 const BoxVideo: React.FC<Props> = (props) => {
@@ -9,7 +8,7 @@ const BoxVideo: React.FC<Props> = (props) => {
       <div className="boxVideo-photo video-icon">
         <img
           src="https://photo-baomoi.zadn.vn/w300_r3x2_sm/2021_12_19_30_41248238/bb2a1e69ad2b44751d3a.jpg"
-          alt="image Park-sensei"
+          alt="Park-sensei"
         />
       </div>
       <div className="boxVideo-title">
