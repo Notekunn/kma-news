@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import Login from '@/features/Auth/components/Login'
 // import Login from './Login'
 const Header = () => {
-  const [active, setActive] = useState(false)
+  const [activeDropMenu, setActiveDropMenu] = useState(false)
   const [activeLogin, setActiveLogin] = useState(false)
   return (
     <div className="header">
@@ -28,6 +28,22 @@ const Header = () => {
             <input type="text" placeholder="Nhập nội dung tìm kiếm" />
             <div className="icon-search">
               <BsSearch />
+            </div>
+            <div
+              className="result-search"
+              style={false ? { display: 'block' } : { display: 'none' }}
+            >
+              <div className="list-result-search">
+                <Link to="">
+                  <div className="item-result-search">
+                    Hội thảo: Đột phá hạ tầng phát triển kinh tế vùng TP.Hồ Chí Minh - Đồng Nai - Bà
+                    Rịa Vũng Tàu -
+                  </div>
+                </Link>
+                <Link to="">
+                  <div className="item-result-search">xem các kết quả của 'key'</div>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -53,7 +69,7 @@ const Header = () => {
             <Link to="/chu-de">
               <li className="header-navbar-item">CHỦ ĐỀ</li>
             </Link>
-            <Link to="/phong-chong-dich-covid-19">
+            <Link to="/phong-chong-dich-covid-19/top/:id">
               <li className="header-navbar-item--hot">
                 <div className="header-navbar-item--hotC">Phòng chống dịch COVID-19</div>
               </li>
@@ -73,19 +89,20 @@ const Header = () => {
                 <div className="header-navbar-item--hotC">Khám phá thế giới</div>
               </li>
             </Link>
-            <Link to="/page">
-              <li className="header-navbar-item--hot">
-                <div className="header-navbar-item--hotC">Page</div>
-              </li>
-            </Link>
-            <li className="header-navbar-item-menu" onClick={() => setActive(!active)}>
+            <li
+              className="header-navbar-item-menu"
+              onClick={() => setActiveDropMenu(!activeDropMenu)}
+            >
               <div className="header-navbar-item-menu-icon">
                 <AiOutlineMenu className="header-menu-icon" />
               </div>
             </li>
           </ul>
         </div>
-        <div className={active ? 'drop-menu-active' : 'drop-menu'}>
+        <div
+          className="drop-menu"
+          style={activeDropMenu ? { visibility: 'visible', opacity: '1' } : {}}
+        >
           <ul className="col-9 drop-menu-list">
             <DropMenuItem title="Thế giới" subItems={[]} />
             <DropMenuItem

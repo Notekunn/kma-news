@@ -98,7 +98,10 @@ const Home = () => {
                     Bển tre
                     <RiArrowDropDownLine />
                   </div>
-                  <div className={!activeSelect ? 'option-select' : 'option-select active-select'}>
+                  <div
+                    className="option-select"
+                    style={!activeSelect ? { display: 'none' } : { display: 'block' }}
+                  >
                     <ul className="list-select">
                       <li className="item-select">An Giang</li>
                       <li className="item-select">BR-VT</li>
@@ -170,101 +173,31 @@ const Home = () => {
                   <div className="list-news-right">
                     <div className="item-news-navbar">
                       <div className="img-news-navbar">
-                        <img
-                          src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                          alt=""
-                        />
-                      </div>
-                      <div className="description-item-news">
-                        <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                        <div className="news-source">
+                        <Link to="/">
                           <img
-                            className="logo-source"
-                            src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
+                            src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
                             alt=""
                           />
-                          <span className="news-time">2 giờ</span>
-                          <span className="number-news-other">60 liên quan</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="item-news-navbar">
-                      <div className="img-news-navbar">
-                        <img
-                          src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                          alt=""
-                        />
+                        </Link>
                       </div>
                       <div className="description-item-news">
-                        <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+                        <Link to="/">
+                          <span>
+                            Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ
+                          </span>
+                        </Link>
                         <div className="news-source">
-                          <img
-                            className="logo-source"
-                            src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                            alt=""
-                          />
+                          <Link to="/">
+                            <img
+                              className="logo-source"
+                              src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
+                              alt=""
+                            />
+                          </Link>
                           <span className="news-time">2 giờ</span>
-                          <span className="number-news-other">60 liên quan</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="item-news-navbar">
-                      <div className="img-news-navbar">
-                        <img
-                          src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                          alt=""
-                        />
-                      </div>
-                      <div className="description-item-news">
-                        <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                        <div className="news-source">
-                          <img
-                            className="logo-source"
-                            src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                            alt=""
-                          />
-                          <span className="news-time">2 giờ</span>
-                          <span className="number-news-other">60 liên quan</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="item-news-navbar">
-                      <div className="img-news-navbar">
-                        <img
-                          src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                          alt=""
-                        />
-                      </div>
-                      <div className="description-item-news">
-                        <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                        <div className="news-source">
-                          <img
-                            className="logo-source"
-                            src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                            alt=""
-                          />
-                          <span className="news-time">2 giờ</span>
-                          <span className="number-news-other">60 liên quan</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="item-news-navbar">
-                      <div className="img-news-navbar">
-                        <img
-                          src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                          alt=""
-                        />
-                      </div>
-                      <div className="description-item-news">
-                        <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                        <div className="news-source">
-                          <img
-                            className="logo-source"
-                            src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                            alt=""
-                          />
-                          <span className="news-time">2 giờ</span>
-                          <span className="number-news-other">60 liên quan</span>
+                          <span className="number-news-other">
+                            <Link to="/">60 liên quan</Link>
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -281,61 +214,29 @@ const Home = () => {
                 <div className="list-news-right">
                   <div className="item-news-navbar">
                     <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
+                      <Link to="/">
                         <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
+                          src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
                           alt=""
                         />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
+                      </Link>
                     </div>
                     <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+                      <Link to="/">
+                        <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+                      </Link>
                       <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
+                        <Link to="/">
+                          <img
+                            className="logo-source"
+                            src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
+                            alt=""
+                          />
+                        </Link>
                         <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
+                        <span className="number-news-other">
+                          <Link to="/">60 liên quan</Link>
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -350,103 +251,47 @@ const Home = () => {
                 <div className="list-news-right">
                   <div className="item-news-navbar">
                     <div className="list-img-photo">
-                      <div className="img-news-navbar">
-                        <img
-                          src="https://photo-baomoi.zadn.vn/w300_r4x3_sm/2021_12_16_181_41214739/c2a695122750ce0e9741.jpg"
-                          alt=""
-                        />
-                      </div>
-                      <div className="img-news-navbar">
-                        <img
-                          src="https://photo-baomoi.zadn.vn/w300_r4x3/2021_12_16_181_41214739/669028249a6673382a77.jpg"
-                          alt=""
-                        />
-                      </div>
-                      <div className="img-news-navbar">
-                        <img
-                          src="https://photo-baomoi.zadn.vn/w300_r4x3/2021_12_16_181_41214739/c02d959927dbce8597ca.jpg"
-                          alt=""
-                        />
-                      </div>
+                      <Link to="">
+                        <div className="img-news-navbar">
+                          <img
+                            src="https://photo-baomoi.zadn.vn/w300_r4x3_sm/2021_12_16_181_41214739/c2a695122750ce0e9741.jpg"
+                            alt=""
+                          />
+                        </div>
+                      </Link>
+                      <Link to="">
+                        <div className="img-news-navbar">
+                          <img
+                            src="https://photo-baomoi.zadn.vn/w300_r4x3/2021_12_16_181_41214739/669028249a6673382a77.jpg"
+                            alt=""
+                          />
+                        </div>
+                      </Link>
+                      <Link to="">
+                        <div className="img-news-navbar">
+                          <img
+                            src="https://photo-baomoi.zadn.vn/w300_r4x3/2021_12_16_181_41214739/c02d959927dbce8597ca.jpg"
+                            alt=""
+                          />
+                        </div>
+                      </Link>
                     </div>
                     <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+                      <Link to="/">
+                        <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+                      </Link>
                       <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
+                        <Link to="/">
+                          <img
+                            className="logo-source"
+                            src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
+                            alt=""
+                          />
+                        </Link>
                         <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="list-img-photo">
-                      <div className="img-news-navbar">
-                        <img
-                          src="https://photo-baomoi.zadn.vn/w300_r4x3_sm/2021_12_16_181_41214739/c2a695122750ce0e9741.jpg"
-                          alt=""
-                        />
-                      </div>
-                      <div className="img-news-navbar">
-                        <img
-                          src="https://photo-baomoi.zadn.vn/w300_r4x3/2021_12_16_181_41214739/669028249a6673382a77.jpg"
-                          alt=""
-                        />
-                      </div>
-                      <div className="img-news-navbar">
-                        <img
-                          src="https://photo-baomoi.zadn.vn/w300_r4x3/2021_12_16_181_41214739/c02d959927dbce8597ca.jpg"
-                          alt=""
-                        />
-                      </div>
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="list-img-photo">
-                      <div className="img-news-navbar">
-                        <img
-                          src="https://photo-baomoi.zadn.vn/w300_r4x3_sm/2021_12_16_181_41214739/c2a695122750ce0e9741.jpg"
-                          alt=""
-                        />
-                      </div>
-                      <div className="img-news-navbar">
-                        <img
-                          src="https://photo-baomoi.zadn.vn/w300_r4x3/2021_12_16_181_41214739/669028249a6673382a77.jpg"
-                          alt=""
-                        />
-                      </div>
-                      <div className="img-news-navbar">
-                        <img
-                          src="https://photo-baomoi.zadn.vn/w300_r4x3/2021_12_16_181_41214739/c02d959927dbce8597ca.jpg"
-                          alt=""
-                        />
-                      </div>
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
+                        <span className="number-news-other">
+                          <Link to="/">60 liên quan</Link>
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -461,161 +306,29 @@ const Home = () => {
                 <div className="list-news-right">
                   <div className="item-news-navbar">
                     <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
+                      <Link to="/">
                         <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
+                          src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
                           alt=""
                         />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
+                      </Link>
                     </div>
                     <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+                      <Link to="/">
+                        <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+                      </Link>
                       <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
+                        <Link to="/">
+                          <img
+                            className="logo-source"
+                            src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
+                            alt=""
+                          />
+                        </Link>
                         <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
+                        <span className="number-news-other">
+                          <Link to="/">60 liên quan</Link>
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -656,9 +369,8 @@ const Home = () => {
                         <RiArrowDropDownLine />
                       </div>
                       <div
-                        className={
-                          !activeSelectWeather ? 'option-select' : 'option-select active-select'
-                        }
+                        className="option-select"
+                        style={!activeSelectWeather ? { display: 'none' } : { display: 'block' }}
                       >
                         <ul className="list-select">
                           <li className="item-select">An Giang</li>
@@ -805,161 +517,29 @@ const Home = () => {
                 <div className="list-news-right">
                   <div className="item-news-navbar">
                     <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
+                      <Link to="/">
                         <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
+                          src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
                           alt=""
                         />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
+                      </Link>
                     </div>
                     <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+                      <Link to="/">
+                        <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
+                      </Link>
                       <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
+                        <Link to="/">
+                          <img
+                            className="logo-source"
+                            src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
+                            alt=""
+                          />
+                        </Link>
                         <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item-news-navbar">
-                    <div className="img-news-navbar">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="description-item-news">
-                      <span>Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ</span>
-                      <div className="news-source">
-                        <img
-                          className="logo-source"
-                          src="https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png"
-                          alt=""
-                        />
-                        <span className="news-time">2 giờ</span>
-                        <span className="number-news-other">60 liên quan</span>
+                        <span className="number-news-other">
+                          <Link to="/">60 liên quan</Link>
+                        </span>
                       </div>
                     </div>
                   </div>
