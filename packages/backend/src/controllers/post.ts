@@ -1,6 +1,5 @@
 import joi from 'joi'
-import { IController } from '@/@types'
-import { IPost, IParagraphText, IParagraphImage } from '@/@types/post'
+import { IController, IPost, IParagraphText, IParagraphImage } from 'shared-types'
 import { PostModel } from '@/models/post'
 import { errorWrapper } from '@/services/error-wrapper'
 import NotFoundExeption from '@/exceptions/NotFoundExeption'

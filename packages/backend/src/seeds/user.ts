@@ -1,5 +1,5 @@
 import { UserModel } from '@/models/user'
-import { User } from '@/@types'
+import { User } from 'shared-types
 
 export async function run() {
   const users: User[] = [

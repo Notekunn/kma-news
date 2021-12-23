@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { IPostDocument, IParagraph } from '@/@types/post'
+import { IPostDocument, IParagraph } from 'shared-types'
 import { stringToSlug } from '@/services/generate-slug'
 
 const ParagraphSchema = new mongoose.Schema<IParagraph>({

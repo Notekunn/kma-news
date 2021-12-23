@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { ICategoryDocument } from '@/@types/category'
+import { ICategoryDocument } from 'shared-types'
 import { stringToSlug } from '@/services/generate-slug'
 const categorySchema = new mongoose.Schema<ICategoryDocument>(
   {

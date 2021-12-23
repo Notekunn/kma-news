@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express'
-import { IUserDocument } from './user'
+import type { Request, Response, NextFunction } from 'express'
+import type { IUserDocument } from './user'
 
 declare global {
   namespace Express {
@@ -33,3 +33,8 @@ export interface IControllerAsync<
     next: NextFunction
   ): Promise<void>
 }
+
+export * from './user'
+export * from './token'
+export * from './category'
+export * from './post'

@@ -1,0 +1,15 @@
+{
+  "name": "shared-types",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "exports": {
+    "./user": "./src/user.ts"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "mongoose": "^6.1.3"
+  },
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}

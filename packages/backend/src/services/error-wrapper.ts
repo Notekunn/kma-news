@@ -1,4 +1,4 @@
-import { IController, IControllerAsync } from '../@types'
+import { IController, IControllerAsync } from 'shared-types'
 import HttpException from '../exceptions/HttpException'
 
 /**

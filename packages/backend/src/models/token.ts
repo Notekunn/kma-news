@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { ITokenDocument } from '@/@types/token'
+import { ITokenDocument } from 'shared-types'
 
 const tokenSchema = new mongoose.Schema<ITokenDocument>(
   {

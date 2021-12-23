@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
-import { IUserDocument, UserRole } from '@/@types/user'
+import { IUserDocument, UserRole } from 'shared-types'
 
 const userSchema = new mongoose.Schema<IUserDocument>(
   {

@@ -1,4 +1,4 @@
-import { Model, Document } from 'mongoose'
+import type { Model, Document } from 'mongoose'
 
 export type UserRole = 'admin' | 'writter' | 'user'
 export interface IUser {
