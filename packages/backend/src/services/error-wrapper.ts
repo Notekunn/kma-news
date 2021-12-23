@@ -15,6 +15,8 @@ export const errorWrapper = <T, K extends string, U extends string, P>(
     callback(req, res, next).catch((err: HttpException | Error) => {
       if (errorHandler) {
         next(errorHandler(err))
+      } else if (err instanceof HttpException) {
+        next(err)
       } else {
         next(new HttpException(500, err.message))
       }

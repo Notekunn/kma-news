@@ -26,7 +26,7 @@ export const login: IController<Pick<IUser, 'email' | 'password'>> = errorWrappe
       email: value?.email,
     })
     if (!user || !user.checkPassword(value?.password || '')) {
-      throw Error('Email/Password is not correct')
+      throw new HttpException(401, 'Email/Password is not correct')
     }
     const payload: ITokenPayload = {
       email: user.email,

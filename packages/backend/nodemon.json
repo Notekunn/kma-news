@@ -9,5 +9,6 @@
     "TIMEZONE": "Asia/Ho_Chi_Minh",
     "ACCESS_TOKEN_LIVE": "600",
     "REFRESH_TOKEN_LIVE": "86400"
-  }
+  },
+  "delay": "2500"
 }

@@ -1,0 +1,102 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        role:
+          type: string
+          enum: [admin, writter, user]
+      example:
+        _id: 5ebac534954b54139806c112
+        email: admin@gmail.com
+        name: Tran Duc Cuong
+        role: admin
+    Category:
+      type: object
+      properties:
+        title: string
+        slug: string
+
+    Token:
+      type: object
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        tokenExpiration:
+          type: string
+          format: date-time
+        refreshTokenExpiration:
+          type: string
+          format: date-time
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+
+  responses:
+    DuplicateEmail:
+      description: Email already taken
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 500
+            message: Email already taken
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 401
+            message: Please authenticate
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 403
+            message: Forbidden
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not found
+    LoginSuccess:
+      description: Login successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Token'
+          example:
+            access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlkIjoiNjFiZDk1MzM3MDZlMDNhNzk1ZjJhNjRhIiwiaWF0IjoxNjQwMjQyNDE5LCJleHAiOjE2NDAyNDMwMTl9.rrAOCzmTAyL8dPWdm7ZQSX4WNUQlRRRrHg3DEDk4VPo
+            refresh_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlkIjoiNjFiZDk1MzM3MDZlMDNhNzk1ZjJhNjRhIiwiaWF0IjoxNjQwMjQyNDE5LCJleHAiOjE2NDAzMjg4MTl9.VFjQwLVIR1tt9zZFm8R56-yUxO8BDyCeFhfggYLZ3mU
+            tokenExpiration: 2021-12-23T07:03:39.992Z
+            refreshTokenExpiration:
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
