@@ -6,11 +6,13 @@
 	"workspaces": [
 		"frontend",
 		"backend",
-		"crawler"
+		"crawler",
+        "packages/*"
 	],
 	"scripts": {
 		"frontend": "yarn workspace frontend",
 		"backend": "yarn workspace backend",
-		"crawler": "yarn workspace crawler"
+		"crawler": "yarn workspace crawler",
+        "admin": "yarn workspace admin"
 	}
 }
