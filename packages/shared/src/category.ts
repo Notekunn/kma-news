@@ -1,4 +1,4 @@
-import { Model, Document, Types } from 'mongoose'
+import type { Model, Document, Types } from 'mongoose'
 
 export interface ICategory {
   title: string

@@ -1,7 +1,7 @@
 import BaseService from './base'
 import type { CheerioAPI } from 'cheerio'
 import RssParser from 'rss-parser'
-import { IParagraph, IParagraphImage, IPost } from '../@types/post'
+import { IParagraph, IParagraphImage, IPost } from 'shared-types'
 
 export const RSS_URL = 'https://vnexpress.net/rss/tin-moi-nhat.rss'
 

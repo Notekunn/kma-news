@@ -1,6 +1,6 @@
 import joi from 'joi'
-import { ICategory } from '@/@types/category'
-import { IController } from '@/@types'
+import { ICategory } from 'shared-types'
+import { IController } from 'shared-types'
 import { CategoryModel } from '@/models/category'
 import { errorWrapper } from '@/services/error-wrapper'
 import NotFoundExeption from '@/exceptions/NotFoundExeption'

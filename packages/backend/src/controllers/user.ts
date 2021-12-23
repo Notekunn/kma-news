@@ -1,6 +1,5 @@
 import joi from 'joi'
-import { IController } from '@/@types'
-import { IUser } from '@/@types/user'
+import { IController, IUser } from 'shared-types'
 import { UserModel } from '@/models/user'
 import { errorWrapper } from '@/services/error-wrapper'
 import HttpException from '@/exceptions/HttpException'
