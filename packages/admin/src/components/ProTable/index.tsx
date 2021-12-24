@@ -1,19 +1,23 @@
 import React, { useMemo } from 'react'
-import { ObjectWithID } from 'shared-types'
 import { TableColumnsType, Space, Form, Input, Button, Table, Popconfirm } from 'antd'
 import { ReloadOutlined, SettingOutlined, PlusOutlined } from '@ant-design/icons'
+import { ObjectWithID } from 'shared-types'
+
+export type ProTableColumns<T extends Object> = TableColumnsType<ObjectWithID<T>>
+
+export type ProTableDataSource<T extends Object> = Array<ObjectWithID<T>>
 interface ProTableProps<T extends ObjectWithID> {
   tableName: string
-  items: T[]
+  items: ProTableDataSource<T>
   columns: TableColumnsType<T>
   toggleAdd?: () => unknown
-  toggleEdit?: (id: T['_id']) => unknown
-  onDelete?: (id: T['_id']) => unknown
+  toggleEdit?: (id: string) => unknown
+  onDelete?: (id: string) => unknown
 }
 
-export const ProTable = function <T extends ObjectWithID>(props: ProTableProps<T>) {
+export const ProTable = function <T extends Object>(props: ProTableProps<ObjectWithID<T>>) {
   const { tableName, columns, items, toggleAdd, toggleEdit, onDelete } = props
-  const actionColumn: TableColumnsType<T> = useMemo(() => {
+  const actionColumn: ProTableColumns<T> = useMemo(() => {
     return [
       {
         title: 'Action',
@@ -24,13 +28,13 @@ export const ProTable = function <T extends ObjectWithID>(props: ProTableProps<T
               <Button
                 type="link"
                 color="primary"
-                onClick={() => toggleEdit && toggleEdit(record._id)}
+                onClick={() => toggleEdit && toggleEdit(record._id as string)}
               >
                 Edit
               </Button>
               <Popconfirm
                 title="Bạn có chắc muốn xóa bản ghi này?"
-                onConfirm={() => onDelete && onDelete(record._id)}
+                onConfirm={() => onDelete && onDelete(record._id as string)}
                 onCancel={undefined}
                 okText="Xóa"
                 cancelText="Hủy"
@@ -87,10 +91,8 @@ export const ProTable = function <T extends ObjectWithID>(props: ProTableProps<T
             </Button>
           </div>
         </div>
-        <Table<T> columns={fullColumn} dataSource={items} rowKey="id" />
+        <Table<ObjectWithID<T>> columns={fullColumn} dataSource={items} rowKey="id" />
       </div>
     </div>
   )
 }
-
-export type ProTableColumns<T> = TableColumnsType<T>
