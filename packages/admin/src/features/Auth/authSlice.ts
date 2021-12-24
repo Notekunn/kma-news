@@ -17,7 +17,7 @@ export const profile = createAsyncThunk('auth/profile', async (_, thunkAPI) => {
 export interface AuthState {
   loading: 'idle' | 'pending' | 'done' | 'error'
   loggedIn: boolean
-  profile?: APIResponse.Profile
+  profile?: Types.APIResponse.Profile
   message?: string
 }
 const initialState: AuthState = {

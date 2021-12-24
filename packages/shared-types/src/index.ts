@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from 'express'
+import type { Types } from 'mongoose'
 import type { IUserDocument } from './user'
 
 declare global {
@@ -38,3 +39,7 @@ export * from './user'
 export * from './token'
 export * from './category'
 export * from './post'
+
+export interface EntityObject {
+  _id: Types.ObjectId | string
+}
