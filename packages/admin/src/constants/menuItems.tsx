@@ -18,23 +18,16 @@ export const sideNavigateMenu: MenuTree[] = [
       },
       {
         key: 'categories',
-        title: 'Quản lý thể loại truyện',
+        title: 'Quản lý thể loại tin tức',
       },
+
       {
-        key: 'artists',
-        title: 'Quản lý tác giả',
-      },
-      {
-        key: 'groups',
-        title: 'Quản lý nhóm dịch',
-      },
-      {
-        key: 'mangas',
-        title: 'Quản lý truyện',
+        key: 'posts',
+        title: 'Quản lý bài viết',
       },
       {
         key: 'chapters',
-        title: 'Quản lý chương',
+        title: 'Quản lý nhóm',
       },
     ],
   },

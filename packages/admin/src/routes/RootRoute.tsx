@@ -3,11 +3,17 @@ import { Button, Result } from 'antd'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import { BasicLayout } from '@/layouts/BasicLayout'
 import { LoadingGlobal } from '@components/LoadingGlobal'
+import { BlankLayout } from '@/layouts/BlankLayout'
+const LoginPage = React.lazy(() => import('@/features/Auth/pages/LoginPage'))
 export const RootRoute = () => {
   return (
     <Suspense fallback={<LoadingGlobal />}>
       <Routes>
         <Route path="/" element={<BasicLayout />}>
+          <Route path="*" element={<NotFound />} />
+        </Route>
+        <Route path="/auth" element={<BlankLayout />}>
+          <Route path="login" element={<LoginPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

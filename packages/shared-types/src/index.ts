@@ -40,6 +40,8 @@ export * from './token'
 export * from './category'
 export * from './post'
 
-export interface EntityObject {
+export type ObjectWithID<T = {}> = {
   _id: Types.ObjectId | string
-}
+} & T
+
+export type LoadingState = 'idle' | 'pending' | 'done' | 'error'

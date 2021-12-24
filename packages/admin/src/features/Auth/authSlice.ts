@@ -1,6 +1,7 @@
 import { loginWithEmail, getProfile, Types } from 'shared-api'
 import { RootState } from '@/app/store'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { LoadingState } from 'shared-types'
 
 export const login = createAsyncThunk(
   'auth/login',
@@ -15,7 +16,7 @@ export const profile = createAsyncThunk('auth/profile', async (_, thunkAPI) => {
 })
 
 export interface AuthState {
-  loading: 'idle' | 'pending' | 'done' | 'error'
+  loading: LoadingState
   loggedIn: boolean
   profile?: Types.APIResponse.Profile
   message?: string

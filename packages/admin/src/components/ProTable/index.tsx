@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
-import { EntityObject } from 'shared-types'
+import { ObjectWithID } from 'shared-types'
 import { TableColumnsType, Space, Form, Input, Button, Table, Popconfirm } from 'antd'
 import { ReloadOutlined, SettingOutlined, PlusOutlined } from '@ant-design/icons'
-interface ProTableProps<T extends EntityObject> {
+interface ProTableProps<T extends ObjectWithID> {
   tableName: string
   items: T[]
   columns: TableColumnsType<T>
@@ -11,7 +11,7 @@ interface ProTableProps<T extends EntityObject> {
   onDelete?: (id: T['_id']) => unknown
 }
 
-export const ProTable = function <T extends EntityObject>(props: ProTableProps<T>) {
+export const ProTable = function <T extends ObjectWithID>(props: ProTableProps<T>) {
   const { tableName, columns, items, toggleAdd, toggleEdit, onDelete } = props
   const actionColumn: TableColumnsType<T> = useMemo(() => {
     return [
