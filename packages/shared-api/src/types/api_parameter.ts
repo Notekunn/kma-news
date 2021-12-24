@@ -4,4 +4,9 @@ export namespace APIParameter {
     password: string
   }
   export interface Profile {}
+
+  export interface Pagination {
+    page?: number
+    limit?: number
+  }
 }

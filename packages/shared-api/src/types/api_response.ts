@@ -1,4 +1,4 @@
-import { IUser } from 'shared-types'
+import { IUser, ObjectWithID } from 'shared-types'
 
 export namespace APIResponse {
   export interface Login {
@@ -19,7 +19,7 @@ export namespace APIResponse {
     message: string
   }
 
-  export interface Profile extends IUser {}
+  export interface Profile extends ObjectWithID<IUser> {}
 
   interface LocationReport {
     name: string
@@ -45,4 +45,6 @@ export namespace APIResponse {
   // Data sau khi xử lý
   export type Covid19 = Record<'internal' | 'world', LocationData> &
     Record<'locations', Array<LocationData & Record<'name', string>>>
+
+  export type GetAllUsers = ObjectWithID<IUser>[]
 }
