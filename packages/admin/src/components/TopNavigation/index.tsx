@@ -8,10 +8,14 @@ import {
   LogoutOutlined,
   CaretDownOutlined,
 } from '@ant-design/icons'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { selectProfile, logoutAction } from '@/features/Auth/authSlice'
 import styles from './index.module.css'
 const { Header } = Layout
 
 export const TopNavigation = () => {
+  const profile = useAppSelector(selectProfile)
+  const dispatch = useAppDispatch()
   return (
     <Header className="header" style={{ height: '50px', lineHeight: '50px' }}>
       <div className="logo" style={{ display: 'inline-block', float: 'left' }}>
@@ -31,17 +35,24 @@ export const TopNavigation = () => {
             <BellOutlined style={{ fontSize: '16px', color: '#fff' }} />
           </Badge>
         </Menu.Item>
-        <Menu.SubMenu key="setting" icon={<CaretDownOutlined />} title="Trần Đức Cường">
-          <Menu.Item key="profile" icon={<UserOutlined />} className={styles.submenu_child}>
-            Trang cá nhân
-          </Menu.Item>
-          <Menu.Item key="follow" icon={<BookOutlined />} className={styles.submenu_child}>
-            Truyện theo dõi
-          </Menu.Item>
-          <Menu.Item key="logout" icon={<LogoutOutlined />} className={styles.submenu_child}>
-            Đăng xuất
-          </Menu.Item>
-        </Menu.SubMenu>
+        {profile && (
+          <Menu.SubMenu key="setting" icon={<CaretDownOutlined />} title={profile.name}>
+            <Menu.Item key="profile" icon={<UserOutlined />} className={styles.submenu_child}>
+              Chỉnh sửa tài khoản
+            </Menu.Item>
+            <Menu.Item key="follow" icon={<BookOutlined />} className={styles.submenu_child}>
+              Tin tức
+            </Menu.Item>
+            <Menu.Item
+              key="logout"
+              icon={<LogoutOutlined />}
+              className={styles.submenu_child}
+              onClick={() => dispatch(logoutAction())}
+            >
+              Đăng xuất
+            </Menu.Item>
+          </Menu.SubMenu>
+        )}
       </Menu>
     </Header>
   )

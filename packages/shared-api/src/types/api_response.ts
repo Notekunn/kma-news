@@ -15,6 +15,10 @@ export namespace APIResponse {
     userId: string
   }
 
+  export interface Logout {
+    message: string
+  }
+
   export interface Profile extends IUser {}
 
   interface LocationReport {

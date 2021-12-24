@@ -12,3 +12,7 @@ export const refreshToken = (refresh_token: string) => {
 export const getProfile = () => {
   return client.get('/users/me') as Promise<APIResponse.Profile>
 }
+
+export const logout = (refresh_token: string) => {
+  return client.post('/auth/logout', { refresh_token }) as Promise<APIResponse.Logout>
+}
