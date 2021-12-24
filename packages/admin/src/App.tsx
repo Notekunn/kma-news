@@ -1,8 +1,8 @@
 import React from 'react'
 import './App.css'
-
+import { RootRoute } from './routes/RootRoute'
 function App() {
-  return <div></div>
+  return <RootRoute />
 }
 
 export default App
