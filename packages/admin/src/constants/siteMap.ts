@@ -4,6 +4,7 @@ const siteMap: SiteMap = {
   '/admin': 'Dashboard',
   '/admin/users': 'Quản lý người dùng',
   '/admin/categories': 'Quản lý thể loại',
+  '/admin/posts': 'Quản lý bài viết',
 }
 
 export default siteMap

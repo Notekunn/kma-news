@@ -47,4 +47,10 @@ export namespace APIResponse {
     Record<'locations', Array<LocationData & Record<'name', string>>>
 
   export type GetAllUsers = ObjectWithID<IUser>[]
+
+  export interface CreateUser extends ObjectWithID<IUser> {}
+
+  export interface UpdateUser extends ObjectWithID<IUser> {}
+
+  export interface DeleteUser extends ObjectWithID<IUser> {}
 }

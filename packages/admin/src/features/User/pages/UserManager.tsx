@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { ProTable, ProTableColumns, ProTableDataSource } from '@/components/ProTable'
+import { ProTable, ProTableColumns } from '@/components/ProTable'
 import { IUser } from 'shared-types'
 import { Tag } from 'antd'
 import { AddModal } from '@components/AddModal'
 import { EditModal } from '@components/EditModal'
-// import { AddUserForm } from '../components/AddUserForm'
-// import { EditUserForm } from '../components/EditUserForm'
-import { getAll, selectUsers } from '../userSlice'
+import { AddUserForm } from '../components/AddUserForm'
+import { EditUserForm } from '../components/EditUserForm'
+import { getAllAction, selectUsers, selectLoading, updateAction, createAction } from '../userSlice'
 const columns: ProTableColumns<IUser> = [
   {
     key: 'name',
@@ -39,10 +39,18 @@ const UserManager: React.FC = () => {
   const [editingID, setEditingID] = useState('')
   const dispatch = useAppDispatch()
   const users = useAppSelector(selectUsers)
+  const loading = useAppSelector(selectLoading)
   useEffect(() => {
-    dispatch(getAll())
+    dispatch(getAllAction())
     return () => {}
   }, [dispatch])
+  // Đóng form sau khi request success
+  useEffect(() => {
+    if (loading === 'done' && modalShowing !== 'none') {
+      setModalShowing('none')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading])
   return (
     <>
       <ProTable<IUser>
@@ -55,26 +63,29 @@ const UserManager: React.FC = () => {
           setEditingID(id)
         }}
       />
-      {/* <AddModal<IUser>
+      <AddModal<IUser>
         visible={modalShowing === 'add'}
         hideModal={() => setModalShowing('none')}
-        loading
+        loading={loading === 'pending'}
         onSubmit={(form) => {
-          // const { username, email } = form.getFieldsValue()
+          const { email, name, password /* , role */ } = form.getFieldsValue()
+          dispatch(createAction({ email, name, password }))
         }}
       >
         <AddUserForm />
-      </AddModal> */}
-      {/* <EditModal<Entity.User>
+      </AddModal>
+      <EditModal<IUser>
         visible={modalShowing === 'edit'}
         hideModal={() => setModalShowing('none')}
+        loading={loading === 'pending'}
         onSubmit={(form) => {
-          // const { username, email } = form.getFieldsValue()
+          const { email, name, password /* , role */ } = form.getFieldsValue()
+          dispatch(updateAction({ _id: editingID, email, name, password }))
         }}
-        initialValues={data.find((e) => e.id === editingID)}
+        initialValues={users.find((e) => e._id === editingID)}
       >
         <EditUserForm />
-      </EditModal> */}
+      </EditModal>
     </>
   )
 }

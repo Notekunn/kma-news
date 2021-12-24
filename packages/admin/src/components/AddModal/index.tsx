@@ -8,7 +8,7 @@ export interface AddModalProps<T extends {} = any> {
   onSubmit: (form: FormInstance<T>) => unknown
   width?: number | string
 }
-function AddModalWithGeneric<T extends {} = any>(props: React.PropsWithChildren<AddModalProps<T>>) {
+function AddModalWithGeneric<T extends {} = {}>(props: React.PropsWithChildren<AddModalProps<T>>) {
   const { children, title, loading, visible, hideModal, onSubmit, width } = props
   const [form] = Form.useForm()
   return (

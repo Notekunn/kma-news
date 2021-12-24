@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { IUser, ObjectWithID, LoadingState } from 'shared-types'
-import { getAllUsers } from 'shared-api'
+import { getAllUsers, updateUser, createUser, Types } from 'shared-api'
 import { RootState } from '@/app/store'
 
 interface UserSliceState {
@@ -14,10 +14,26 @@ const initialState: UserSliceState = {
   loading: 'idle',
 }
 
-export const getAll = createAsyncThunk('user/getAll', async (_, thunkAPI) => {
+export const getAllAction = createAsyncThunk('user/getAll', async (_, thunkAPI) => {
   const data = await getAllUsers({})
   return data
 })
+
+export const createAction = createAsyncThunk(
+  'user/create',
+  async (params: Types.APIParameter.CreateUser, thunkAPI) => {
+    const data = await createUser(params)
+    return data
+  }
+)
+
+export const updateAction = createAsyncThunk(
+  'user/update',
+  async (params: Types.APIParameter.UpdateUser, thunkAPI) => {
+    const data = await updateUser(params)
+    return data
+  }
+)
 
 const userSlice = createSlice({
   name: 'user',
@@ -25,14 +41,43 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAll.pending, (state) => {
+      .addCase(getAllAction.pending, (state) => {
         state.loading = 'pending'
       })
-      .addCase(getAll.fulfilled, (state, action) => {
+      .addCase(getAllAction.fulfilled, (state, action) => {
         state.loading = 'done'
         state.users = action.payload
       })
-      .addCase(getAll.rejected, (state, action) => {
+      .addCase(getAllAction.rejected, (state, action) => {
+        state.loading = 'error'
+        state.message = action.error.message
+      })
+
+    builder
+      .addCase(createAction.pending, (state) => {
+        state.loading = 'pending'
+      })
+      .addCase(createAction.fulfilled, (state, action) => {
+        state.loading = 'done'
+        state.users.push(action.payload)
+      })
+      .addCase(createAction.rejected, (state, action) => {
+        state.loading = 'error'
+        state.message = action.error.message
+      })
+
+    builder
+      .addCase(updateAction.pending, (state) => {
+        state.loading = 'pending'
+      })
+      .addCase(updateAction.fulfilled, (state, action) => {
+        state.loading = 'done'
+        state.users = state.users.map((e) => {
+          if (e._id !== action.payload._id) return e
+          return action.payload
+        })
+      })
+      .addCase(updateAction.rejected, (state, action) => {
         state.loading = 'error'
         state.message = action.error.message
       })
