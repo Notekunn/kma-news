@@ -5,12 +5,13 @@
   "types": "dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.24.0"
+    "axios": "^0.24.0",
+    "shared-types": "file:.yalc/shared-types"
   },
   "scripts": {
     "watch": "tsc -w",
     "build": "tsc",
-    "pub": "npx yalc push"
+    "pub": "yarn build && npx yalc push"
   },
   "files": [
     "/dist"
