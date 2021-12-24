@@ -1,11 +1,14 @@
-import { loginWithEmail, getProfile } from 'shared-api'
+import { loginWithEmail, getProfile, Types } from 'shared-api'
 import { RootState } from '@/app/store'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-export const login = createAsyncThunk('auth/login', async (_: ThunkParameter.Login, thunkAPI) => {
-  const result = await loginWithEmail(_.email, _.password)
-  return result
-})
+export const login = createAsyncThunk(
+  'auth/login',
+  async (_: Types.APIParameter.Login, thunkAPI) => {
+    const result = await loginWithEmail(_)
+    return result
+  }
+)
 export const profile = createAsyncThunk('auth/profile', async (_, thunkAPI) => {
   const data = await getProfile()
   return data

@@ -1,7 +1,7 @@
 import client from '../axiosClient'
-import { APIResponse } from '../types'
+import { APIResponse, APIParameter } from '../types'
 
-export const loginWithEmail = (email: string, password: string) => {
+export const loginWithEmail = ({ email, password }: APIParameter.Login) => {
   return client.post('/auth/login', { email, password }) as Promise<APIResponse.Login>
 }
 
