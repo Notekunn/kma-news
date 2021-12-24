@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { ProTable, ProTableColumns, ProTableDataSource } from '@/components/ProTable'
 import { IUser } from 'shared-types'
 import { Tag } from 'antd'
@@ -6,6 +7,7 @@ import { AddModal } from '@components/AddModal'
 import { EditModal } from '@components/EditModal'
 // import { AddUserForm } from '../components/AddUserForm'
 // import { EditUserForm } from '../components/EditUserForm'
+import { getAll, selectUsers } from '../userSlice'
 const columns: ProTableColumns<IUser> = [
   {
     key: 'name',
@@ -32,17 +34,21 @@ const columns: ProTableColumns<IUser> = [
   },
 ]
 
-const data: ProTableDataSource<IUser> = []
-
 const UserManager: React.FC = () => {
   const [modalShowing, setModalShowing] = useState<'none' | 'add' | 'edit'>('none')
   const [editingID, setEditingID] = useState('')
+  const dispatch = useAppDispatch()
+  const users = useAppSelector(selectUsers)
+  useEffect(() => {
+    dispatch(getAll())
+    return () => {}
+  }, [dispatch])
   return (
     <>
       <ProTable<IUser>
         tableName="Quản lý người dùng"
         columns={columns}
-        items={data}
+        items={users || []}
         toggleAdd={() => setModalShowing('add')}
         toggleEdit={(id) => {
           setModalShowing('edit')
