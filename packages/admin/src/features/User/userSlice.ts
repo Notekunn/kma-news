@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { IUser, ObjectWithID, LoadingState } from 'shared-types'
-import { getAllUsers, updateUser, createUser, Types } from 'shared-api'
+import { getAllUsers, updateUser, createUser, deleteUser, Types } from 'shared-api'
 import { RootState } from '@/app/store'
 
 interface UserSliceState {
@@ -34,6 +34,11 @@ export const updateAction = createAsyncThunk(
     return data
   }
 )
+
+export const deleteAction = createAsyncThunk('user/delete', async (_id: string, thunkAPI) => {
+  const data = await deleteUser(_id)
+  return data
+})
 
 const userSlice = createSlice({
   name: 'user',
@@ -78,6 +83,19 @@ const userSlice = createSlice({
         })
       })
       .addCase(updateAction.rejected, (state, action) => {
+        state.loading = 'error'
+        state.message = action.error.message
+      })
+
+    builder
+      .addCase(deleteAction.pending, (state) => {
+        state.loading = 'pending'
+      })
+      .addCase(deleteAction.fulfilled, (state, action) => {
+        state.loading = 'done'
+        state.users = state.users.filter((e) => e._id !== action.meta.arg)
+      })
+      .addCase(deleteAction.rejected, (state, action) => {
         state.loading = 'error'
         state.message = action.error.message
       })

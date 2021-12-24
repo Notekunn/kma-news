@@ -7,7 +7,14 @@ import { AddModal } from '@components/AddModal'
 import { EditModal } from '@components/EditModal'
 import { AddUserForm } from '../components/AddUserForm'
 import { EditUserForm } from '../components/EditUserForm'
-import { getAllAction, selectUsers, selectLoading, updateAction, createAction } from '../userSlice'
+import {
+  selectUsers,
+  selectLoading,
+  getAllAction,
+  createAction,
+  updateAction,
+  deleteAction,
+} from '../userSlice'
 const columns: ProTableColumns<IUser> = [
   {
     key: 'name',
@@ -62,6 +69,7 @@ const UserManager: React.FC = () => {
           setModalShowing('edit')
           setEditingID(id)
         }}
+        onDelete={(_id) => dispatch(deleteAction(_id))}
       />
       <AddModal<IUser>
         visible={modalShowing === 'add'}
