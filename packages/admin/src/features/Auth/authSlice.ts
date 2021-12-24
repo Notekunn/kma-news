@@ -1,4 +1,4 @@
-import { loginWithEmail, getProfile, Types } from 'shared-api'
+import { loginWithEmail, getProfile, Types, logout } from 'shared-api'
 import { RootState } from '@/app/store'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { LoadingState } from 'shared-types'
@@ -15,6 +15,13 @@ export const profile = createAsyncThunk('auth/profile', async (_, thunkAPI) => {
   return data
 })
 
+export const logoutAction = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+  const refresh_token = localStorage.getItem('refresh_token')
+  if (!refresh_token) return null
+  const data = await logout(refresh_token)
+  return data
+})
+
 export interface AuthState {
   loading: LoadingState
   loggedIn: boolean
@@ -25,7 +32,7 @@ const initialState: AuthState = {
   loading: 'idle',
   loggedIn: !!localStorage.getItem('access_token'),
 }
-export const authSlice = createSlice({
+const authSlice = createSlice({
   name: 'auth',
   reducers: {},
   initialState,
@@ -55,6 +62,20 @@ export const authSlice = createSlice({
       .addCase(profile.rejected, (state, action) => {
         state.loading = 'error'
         state.message = action.error.message
+      })
+      .addCase(logoutAction.pending, (state) => {
+        state.loading = 'pending'
+      })
+      .addCase(logoutAction.fulfilled, (state, action) => {
+        state.loading = 'done'
+        state.message = 'Logout success'
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
+      })
+      .addCase(logoutAction.rejected, (state, action) => {
+        state.loading = 'error'
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
       })
   },
 })

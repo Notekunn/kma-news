@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { Form, Input, Button, Checkbox, Spin, Alert } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
@@ -20,10 +20,10 @@ export const LoginForm = React.memo(() => {
     },
     [dispatch]
   )
-  if (loggedIn) {
-    navigate('/')
-    return null
-  }
+  useEffect(() => {
+    if (!!loggedIn) navigate('/', { replace: true })
+    return () => {}
+  }, [loggedIn, navigate])
   return (
     <Spin size="large" spinning={loading === 'pending'}>
       {loading === 'error' && (
