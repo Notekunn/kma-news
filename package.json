@@ -17,6 +17,7 @@
     "link-types": "yarn backend link shared-types && yarn crawler link shared-types && yarn shared-api link shared-types && yarn admin link shared-types",
     "link-api": "yarn admin link shared-api && yarn frontend link shared-api",
     "link-all": "yarn link-register && yarn link-types && yarn link-api",
-    "postinstall": "yarn shared-api build && yarn link-all"
+    "pub-local": "yarn shared-types pub & yarn shared-api pub",
+    "postinstall": "yarn pub-local"
   }
 }

@@ -40,8 +40,8 @@ export * from './token'
 export * from './category'
 export * from './post'
 
-export type ObjectWithID<T = {}> = {
-  _id: Types.ObjectId | string
+export type ObjectWithID<T extends Object = {}> = {
+  _id: string
 } & T
 
 export type LoadingState = 'idle' | 'pending' | 'done' | 'error'

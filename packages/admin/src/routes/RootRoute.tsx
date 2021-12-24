@@ -5,12 +5,13 @@ import { LoadingGlobal } from '@components/LoadingGlobal'
 import { BlankLayout } from '@/layouts/BlankLayout'
 import { SecurityLayout } from '@/layouts/SecurityLayout'
 const LoginPage = React.lazy(() => import('@/features/Auth/pages/LoginPage'))
+const UserManager = React.lazy(() => import('@/features/User/pages/UserManager'))
 export const RootRoute = () => {
   return (
     <Suspense fallback={<LoadingGlobal />}>
       <Routes>
         <Route path="/admin" element={<SecurityLayout />}>
-          <Route path="user" element={<NotFound />} />
+          <Route path="users" element={<UserManager />} />
           <Route path="*" element={<NotFound />} />
         </Route>
         <Route path="/auth" element={<BlankLayout />}>
