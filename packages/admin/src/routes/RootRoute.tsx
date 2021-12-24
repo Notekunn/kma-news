@@ -1,15 +1,15 @@
 import React, { Suspense } from 'react'
 import { Button, Result } from 'antd'
 import { Routes, Route, useNavigate } from 'react-router-dom'
-import { BasicLayout } from '@/layouts/BasicLayout'
 import { LoadingGlobal } from '@components/LoadingGlobal'
 import { BlankLayout } from '@/layouts/BlankLayout'
+import { SecurityLayout } from '@/layouts/SecurityLayout'
 const LoginPage = React.lazy(() => import('@/features/Auth/pages/LoginPage'))
 export const RootRoute = () => {
   return (
     <Suspense fallback={<LoadingGlobal />}>
       <Routes>
-        <Route path="/admin" element={<BasicLayout />}>
+        <Route path="/admin" element={<SecurityLayout />}>
           <Route path="user" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
         </Route>
@@ -17,7 +17,7 @@ export const RootRoute = () => {
           <Route path="login" element={<LoginPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
-        <Route path="/" element={<BasicLayout />} />
+        <Route path="/" element={<SecurityLayout />} />
       </Routes>
     </Suspense>
   )

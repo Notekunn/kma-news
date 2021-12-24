@@ -3,7 +3,7 @@ import { Form, Input, Button, Checkbox, Spin, Alert } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { login, selectLoading, selectMessage, selectLoggedIn } from '../authSlice'
+import { loginAction, selectLoading, selectMessage, selectLoggedIn } from '../authSlice'
 import './LoginForm.css'
 export const LoginForm = React.memo(() => {
   const dispatch = useAppDispatch()
@@ -16,7 +16,7 @@ export const LoginForm = React.memo(() => {
       let email = fields.email.trim(),
         password = fields.password.trim()
       if (!email.length && !password.length) return
-      dispatch(login({ email, password }))
+      dispatch(loginAction({ email, password }))
     },
     [dispatch]
   )
