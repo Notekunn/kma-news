@@ -42,7 +42,7 @@ const Login: React.FC<LoginPopupProps> = React.memo((props) => {
               </div>
               <div className="auth-form__group">
                 <input
-                  type="text"
+                  type="password"
                   className="auth-form__group-input "
                   placeholder="Nhập mật khẩu của bạn"
                   value={password}

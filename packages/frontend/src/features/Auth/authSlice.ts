@@ -44,7 +44,8 @@ const authSlice = createSlice({
       .addCase(loginAction.fulfilled, (state, action) => {
         state.loading = 'done'
         state.loggedIn = true
-        const { access_token, refresh_token } = action.payload
+        const { access_token, refresh_token, user } = action.payload
+        state.profile = user
         localStorage.setItem('access_token', access_token)
         localStorage.setItem('refresh_token', refresh_token)
       })

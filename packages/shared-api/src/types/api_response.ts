@@ -1,25 +1,26 @@
 import { IUser, ObjectWithID } from 'shared-types'
 
+type UserWithoutPassword = Exclude<IUser, 'password'>
 export namespace APIResponse {
   export interface Login {
     access_token: string
     refresh_token: string
     tokenExpiration: string
     refreshTokenExpiration: string
-    user: ObjectWithID<Pick<IUser, 'name' | 'email' | 'role' | 'avatarURL'>>
+    user: ObjectWithID<UserWithoutPassword>
   }
 
   export interface RefreshToken {
     access_token: string
     tokenExpiration: string
-    user: ObjectWithID<Pick<IUser, 'name' | 'email' | 'role' | 'avatarURL'>>
+    user: ObjectWithID<UserWithoutPassword>
   }
 
   export interface Logout {
     message: string
   }
 
-  export interface Profile extends ObjectWithID<IUser> {}
+  export interface Profile extends ObjectWithID<UserWithoutPassword> {}
 
   interface LocationReport {
     name: string
