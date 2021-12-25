@@ -10,13 +10,6 @@ RUN yarn install
 
 COPY . .
 
-# RUN yarn build
+RUN yarn build
 
-COPY crontab /etc/cron.d/crawl-cron
-
-RUN chmod 0644 /etc/cron.d/crawl-cron && touch /var/log/cron.log && crontab /etc/cron.d/crawl-cron
-
-# RUN echo "cron" >> /etc/bash.bashrc
-
-# CMD /bin/bash
-CMD echo "Start crawler" && crontab /etc/cron.d/crawl-cron && cron && tail -f /var/log/cron.log
+CMD [ "node", "./build/index.js" ]

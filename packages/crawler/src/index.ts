@@ -1,11 +1,12 @@
 import mongoose from 'mongoose'
 import express from 'express'
+import { crawlQueue, crawlLastedQueue } from './queue'
 import { ExpressAdapter } from '@bull-board/express'
 import { createBullBoard } from '@bull-board/api'
 import { BullAdapter } from '@bull-board/api/bullAdapter'
 import logger from './logger'
-import { crawlQueue, crawlLastedQueue } from './queue'
-
+import Client from './client'
+const client = Client.getInstance().client
 const serverAdapter = new ExpressAdapter()
 
 createBullBoard({
@@ -13,9 +14,11 @@ createBullBoard({
   serverAdapter,
 })
 
-function main() {
+async function main() {
+  await client.connect()
   logger(`🚀 Start crawl news ....`)
-
+  // Thêm các tác vụ crawl lasted new
+  // cron tab chạy 1 phút 1 lần
   crawlLastedQueue.add('vnexpress', '', {
     repeat: {
       cron: '* * * * *',
@@ -32,7 +35,6 @@ function main() {
     },
   })
 }
-// setInterval(main, 60 * 1000)
 
 async function connectDatabase() {
   await mongoose.connect(

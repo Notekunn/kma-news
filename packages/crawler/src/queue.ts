@@ -9,6 +9,10 @@ const baochinhphu = new BaoChinhPhu()
 const vietnamnet = new VietNamNet()
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379'
+
+import Client from './client'
+const client = Client.getInstance().client
+
 // Tạo 1 queue nhận url để xử lý
 export const crawlQueue = new Queue<string>('crawler', REDIS_URL, {
   settings: {},
@@ -53,23 +57,21 @@ crawlQueue
 crawlLastedQueue.process('vnexpress', function (job, done) {
   vnexpress
     .getLastedNews()
-    .then((e) =>
-      done(null, {
-        host: 'vnexpress',
-        data: e,
-      })
-    )
+    .then(vnexpress.lastedLinkFilter)
+    .then((e) => done(null, e))
     .catch((e) => done(e))
 })
 crawlLastedQueue.process('baochinhphu', function (job, done) {
   baochinhphu
     .getLastedNews()
+    .then(baochinhphu.lastedLinkFilter)
     .then((e) => done(null, e))
     .catch((e) => done(e))
 })
 crawlLastedQueue.process('vietnamnet', function (job, done) {
   vietnamnet
     .getLastedNews()
+    .then(vietnamnet.lastedLinkFilter)
     .then((e) => done(null, e))
     .catch((e) => done(e))
 })
