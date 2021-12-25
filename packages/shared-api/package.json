@@ -5,8 +5,7 @@
   "types": "dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.24.0",
-    "shared-types": "file:.yalc/shared-types"
+    "axios": "^0.24.0"
   },
   "scripts": {
     "watch": "tsc -w",

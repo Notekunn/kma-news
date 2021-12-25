@@ -14,18 +14,11 @@ export default class BaoChinhPhu extends BaseService {
   }
   async getLastedNews() {
     const feed = await parser.parseURL(RSS_URL)
-    return feed.items.map((e) => {
-      return {
-        title: e.title || '',
-        link: e.link || '',
-        contentSnippet: e.contentSnippet || '',
-        pubDate: e.isoDate || e.pubDate || '',
-      }
-    })
+    return feed.items.map((e) => e.link || '')
   }
   async getNewDetail(url: string) {
     const { data: $ } = await this.api.get<CheerioAPI>(url)
-    const title = $('.article-header > h1').text()
+    const title = this.formatText($('.article-header > h1').text())
     const description = $('.summary > p').text()
     const paragraphs: IParagraph[] = []
     const content = $('.article-body').children()

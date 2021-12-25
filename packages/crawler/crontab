@@ -1,2 +1,0 @@
-*/5 * * * * /usr/local/bin/node /home/node/app/build/index.js >> /var/log/cron.log 2>&1
-# Crawl moi 5 phut. Nho de file end la LF
