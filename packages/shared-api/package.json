@@ -9,8 +9,7 @@
   },
   "scripts": {
     "watch": "tsc -w",
-    "build": "tsc",
-    "pub": "yarn build && npx yalc push"
+    "build": "tsc"
   },
   "files": [
     "/dist"
