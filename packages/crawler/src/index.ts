@@ -4,35 +4,35 @@ import { ExpressAdapter } from '@bull-board/express'
 import { createBullBoard } from '@bull-board/api'
 import { BullAdapter } from '@bull-board/api/bullAdapter'
 import logger from './logger'
-import VNExpress from './services/vnexpress'
-const crawled_links: string[] = []
-import queue from './queue'
-
-const vnexpress = new VNExpress()
+import { crawlQueue, crawlLastedQueue } from './queue'
 
 const serverAdapter = new ExpressAdapter()
 
-const { addQueue, removeQueue, setQueues, replaceQueues } = createBullBoard({
-  queues: [new BullAdapter(queue)],
+createBullBoard({
+  queues: [new BullAdapter(crawlQueue), new BullAdapter(crawlLastedQueue)],
   serverAdapter,
 })
 
-async function main() {
+function main() {
   logger(`🚀 Start crawl news ....`)
-  logger('⚓ Start crawl vnexpress...')
-  //   queue.clean(1000, 'completed')
-  const data = await vnexpress.getLastedNews()
-  for (let i = 0; i < data.length; i++) {
-    const { link } = data[i]
-    if (!crawled_links.includes(link)) {
-      crawled_links.push(link)
-      queue.add('vnexpress', link)
-    }
-  }
 
-  logger('⚓ Done crawl vnexpress...')
+  crawlLastedQueue.add('vnexpress', '', {
+    repeat: {
+      cron: '* * * * *',
+    },
+  })
+  crawlLastedQueue.add('baochinhphu', '', {
+    repeat: {
+      cron: '* * * * *',
+    },
+  })
+  crawlLastedQueue.add('vietnamnet', '', {
+    repeat: {
+      cron: '* * * * *',
+    },
+  })
 }
-setInterval(main, 60 * 1000)
+// setInterval(main, 60 * 1000)
 
 async function connectDatabase() {
   await mongoose.connect(
@@ -44,14 +44,16 @@ async function connectDatabase() {
 }
 
 connectDatabase().catch((e) => {
-  console.log('🤦‍♂️Connect database error:', e.message)
+  console.log('🤦‍♂️ Connect database error:', e.message)
 })
 
 const app = express()
 
 serverAdapter.setBasePath('/admin')
 app.use('/admin', serverAdapter.getRouter())
+
 const PORT = process.env.PORT || 5000
+
 app.listen(PORT, () => {
   console.log('🚀 Crawler is running on port', PORT)
 })

@@ -14,12 +14,7 @@ export default class VNExpress extends BaseService {
   async getLastedNews() {
     const feed = await parser.parseURL(RSS_URL)
     return feed.items.map((e) => {
-      return {
-        title: e.title || '',
-        link: e.link || '',
-        contentSnippet: e.contentSnippet || '',
-        pubDate: e.isoDate || e.pubDate || '',
-      }
+      return e.link || ''
     })
   }
   async getNewDetail(url: string) {

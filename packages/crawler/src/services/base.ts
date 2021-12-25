@@ -16,7 +16,7 @@ export default abstract class BaseService {
       },
     })
   }
-  abstract getLastedNews(): Promise<ShortDetailNews[]>
+  abstract getLastedNews(): Promise<string[]>
   abstract getNewDetail(url: string): Promise<IPost>
   async updateDatabase(post: IPost) {
     const postData = await PostModel.findOneAndUpdate(
