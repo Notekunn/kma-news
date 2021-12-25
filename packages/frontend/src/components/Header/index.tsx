@@ -1,16 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AiOutlineUser, AiOutlineMenu } from 'react-icons/ai'
 import { BsPhone, BsSearch } from 'react-icons/bs'
 import { useState } from 'react'
 import { DropMenuItem } from './DropMenuItem'
 import { Link } from 'react-router-dom'
 import Login from '@/features/Auth/components/Login'
-import { AuthDropDown } from '@/features/Auth/components/AuthDropDown'
+import { AuthDropDown } from '@/features/Auth/components/AuthDropDown/'
+import { useProfile } from '@/hooks/useProfile'
 // import Login from './Login'
 const Header = () => {
   const [activeDropMenu, setActiveDropMenu] = useState(false)
-  const [activeLogin, setActiveLogin] = useState(false)
-  const [activeUserDrop, setActiveUserDrop] = useState(false)
+  const [loginVisible, toggleLogin] = useState(false)
+  const [userMenuVisible, toggleUserMenu] = useState(false)
+  const [profile] = useProfile()
+  useEffect(() => {
+    // Nếu đăng nhập thành công
+    if (!!profile) {
+      toggleLogin(false)
+      toggleUserMenu(false)
+    }
+  }, [profile])
   return (
     <div className="header">
       <div className="col-9 header-top">
@@ -50,20 +59,28 @@ const Header = () => {
           </div>
         </div>
         <div className="header-top-right">
-          {/* <div className="logo-user" onClick={() => setActiveLogin(!activeLogin)}>
-            <AiOutlineUser size="25px" />
-          </div>
-          <Login visible={activeLogin} toggleVisible={setActiveLogin} /> */}
-          <div className="header-top__user" onClick={() => setActiveUserDrop(!activeUserDrop)}>
-            <img
-              src="https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg"
-              alt=""
-              className="header-top__image"
-            />
-            <div className="header-top__user-name">Trần Đức Cường</div>
-          </div>
-          <AuthDropDown visible={activeUserDrop} toggleVisible={setActiveUserDrop} />
-          <a href="">
+          {profile ? (
+            <>
+              <div className="header-top__user" onClick={() => toggleUserMenu(!userMenuVisible)}>
+                <img
+                  src={profile.avatarURL || 'https://i.pravatar.cc/800'}
+                  alt=""
+                  className="header-top__image"
+                />
+                <div className="header-top__user-name">{profile.name}</div>
+              </div>
+              <AuthDropDown visible={userMenuVisible} toggleVisible={toggleUserMenu} />
+            </>
+          ) : (
+            <>
+              <div className="logo-user" onClick={() => toggleLogin(!loginVisible)}>
+                <AiOutlineUser size="25px" />
+              </div>
+              <Login visible={loginVisible} toggleVisible={toggleLogin} />
+            </>
+          )}
+
+          <a href="#!">
             <BsPhone size="25px" className="header-icon header-icon--phone" />
           </a>
         </div>

@@ -35,7 +35,7 @@ export const myInfo: IController = errorWrapper(async (req, res, next) => {
 
 export const getOne: IController<IUser> = errorWrapper(async (req, res, next) => {
   const { id } = req.params
-  const user = await UserModel.findById(id)
+  const user = await UserModel.findById(id).select(['_id', 'email', 'name', 'role', 'avatarURL'])
   if (!user) throw new NotFoundExeption('User not found')
   res.send(user)
 })
@@ -68,7 +68,7 @@ export const update: IController<IUser, 'id'> = errorWrapper(async (req, res, ne
       ...value,
     },
     { new: true }
-  )
+  ).select(['_id', 'email', 'name', 'role', 'avatarURL'])
   if (!data) throw new NotFoundExeption('User not found')
   res.send(data)
 })

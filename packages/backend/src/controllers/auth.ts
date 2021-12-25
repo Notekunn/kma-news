@@ -74,8 +74,13 @@ export const login: IController<Pick<IUser, 'email' | 'password'>> = errorWrappe
       access_token: token,
       tokenExpiration,
       refresh_token: refreshToken,
-      refreshTokenExpiration,
-      userId: user.id,
+      user: {
+        _id: user._id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        avatarURL: user.avatarURL,
+      },
     })
   }
 )
@@ -98,6 +103,12 @@ export const refreshToken: IController<{ refresh_token: string }> = errorWrapper
 
     const { email, id } = jwt.verify(refreshToken, REFRESH_SECRET) as ITokenPayload
 
+    const user = await UserModel.findOne({
+      email: email,
+    }).select(['_id', 'email', 'name', 'role', 'avatarURL'])
+
+    if (user?.id !== id) throw new HttpException(403, 'Refresh token is invalid')
+
     const tokenExpiration = moment.tz(TIMEZONE).add(ACCESS_TOKEN_LIVE, 'seconds').toDate()
     const token = jwt.sign({ email, id }, SECRET, {
       expiresIn: ACCESS_TOKEN_LIVE,
@@ -105,7 +116,7 @@ export const refreshToken: IController<{ refresh_token: string }> = errorWrapper
     res.send({
       access_token: token,
       tokenExpiration,
-      userId: id,
+      user,
     })
   },
   (error) => {

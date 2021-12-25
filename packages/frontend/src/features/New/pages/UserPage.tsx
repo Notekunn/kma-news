@@ -7,11 +7,11 @@ import { MdSaveAlt } from 'react-icons/md'
 import { BiExit } from 'react-icons/bi'
 import '../components/userPage.css'
 import { Link } from 'react-router-dom'
-import { UserPageOffer } from '../components/UserPageOffer'
-import { UserPageFavorite } from '../components/UserPageFavorite'
-import { UserPageRecent } from '../components/UserPageRecent'
+// import { UserPageOffer } from '../components/UserPageOffer'
+// import { UserPageFavorite } from '../components/UserPageFavorite'
+// import { UserPageRecent } from '../components/UserPageRecent'
 import { UserPageFollow } from '../components/UserPageFollow'
-import { UserPageFolder } from '../components/UserPageFolder'
+// import { UserPageFolder } from '../components/UserPageFolder'
 export const UserPage = () => {
   return (
     <div className="container">
