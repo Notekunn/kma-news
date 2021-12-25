@@ -19,16 +19,16 @@ connectDatabase().catch((e) => {
 })
 
 function main() {
-  // vnexpress
-  //   .getNewDetail(
-  //     'https://vnexpress.net/chinh-phu-yeu-cau-khan-truong-mo-duong-bay-quoc-te-4406799.html'
-  //   )
-  //   .then(console.log)
-  //   baochinhphu
-  //     .getNewDetail(
-  //       'http://baochinhphu.vn/xa-hoi/khong-phai-cach-ly-y-te-voi-nguoi-nhap-canh-lam-viec-duoi-14-ngay/457101.vgp'
-  //     )
-  //     .then(console.log)
+  vnexpress
+    .getNewDetail(
+      'https://vnexpress.net/chinh-phu-yeu-cau-khan-truong-mo-duong-bay-quoc-te-4406799.html'
+    )
+    .then(console.log)
+  baochinhphu
+    .getNewDetail(
+      'http://baochinhphu.vn/xa-hoi/khong-phai-cach-ly-y-te-voi-nguoi-nhap-canh-lam-viec-duoi-14-ngay/457101.vgp'
+    )
+    .then(console.log)
   vietnamnet
     .getNewDetail(
       'https://vietnamnet.vn/vn/phap-luat/ho-so-vu-an/pha-an-hang-nghin-bao-thuoc-la-lau-duoi-vo-boc-phong-chong-dich-covid-19-803982.html'

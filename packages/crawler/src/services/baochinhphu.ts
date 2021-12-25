@@ -4,7 +4,7 @@ import RssParser from 'rss-parser'
 import { IParagraph, IParagraphImage, IPost } from 'shared-types'
 import { text } from 'cheerio/lib/api/manipulation'
 
-export const RSS_URL = 'http://baochinhphu.vn/rss/'
+export const RSS_URL = 'http://baochinhphu.vn/Rss/Feed.aspx?EventID=115'
 
 const parser = new RssParser({})
 
