@@ -39,6 +39,7 @@ export * from './user'
 export * from './token'
 export * from './category'
 export * from './post'
+export * from './comment'
 
 export type ObjectWithID<T extends Object = {}> = {
   _id: string
