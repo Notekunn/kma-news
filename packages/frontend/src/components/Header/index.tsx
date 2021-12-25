@@ -1,14 +1,16 @@
 import React from 'react'
 import { AiOutlineUser, AiOutlineMenu } from 'react-icons/ai'
-import { BsSearch } from 'react-icons/bs'
+import { BsPhone, BsSearch } from 'react-icons/bs'
 import { useState } from 'react'
 import { DropMenuItem } from './DropMenuItem'
 import { Link } from 'react-router-dom'
 import Login from '@/features/Auth/components/Login'
+import { AuthDropDown } from '@/features/Auth/components/AuthDropDown'
 // import Login from './Login'
 const Header = () => {
   const [activeDropMenu, setActiveDropMenu] = useState(false)
   const [activeLogin, setActiveLogin] = useState(false)
+  const [activeUserDrop, setActiveUserDrop] = useState(false)
   return (
     <div className="header">
       <div className="col-9 header-top">
@@ -48,10 +50,22 @@ const Header = () => {
           </div>
         </div>
         <div className="header-top-right">
-          <div className="logo-user" onClick={() => setActiveLogin(!activeLogin)}>
+          {/* <div className="logo-user" onClick={() => setActiveLogin(!activeLogin)}>
             <AiOutlineUser size="25px" />
           </div>
-          <Login visible={activeLogin} toggleVisible={setActiveLogin} />
+          <Login visible={activeLogin} toggleVisible={setActiveLogin} /> */}
+          <div className="header-top__user" onClick={() => setActiveUserDrop(!activeUserDrop)}>
+            <img
+              src="https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg"
+              alt=""
+              className="header-top__image"
+            />
+            <div className="header-top__user-name">Trần Đức Cường</div>
+          </div>
+          <AuthDropDown visible={activeUserDrop} toggleVisible={setActiveUserDrop} />
+          <a href="">
+            <BsPhone size="25px" className="header-icon header-icon--phone" />
+          </a>
         </div>
       </div>
       <div className="header-body">
