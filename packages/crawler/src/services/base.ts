@@ -58,9 +58,14 @@ export default abstract class BaseService {
   }
   async getCategoryId(categoryName: string) {
     const category = await CategoryModel.findOneAndUpdate(
-      { title: categoryName },
+      {
+        title: {
+          $regex: new RegExp(categoryName, 'i'),
+        },
+      },
       {
         slug: BaseService.stringToSlug(categoryName),
+        title: categoryName,
       },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     )

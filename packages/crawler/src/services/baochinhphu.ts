@@ -2,9 +2,8 @@ import BaseService from './base'
 import type { CheerioAPI } from 'cheerio'
 import RssParser from 'rss-parser'
 import { IParagraph, IParagraphImage, IPost } from 'shared-types'
-import { text } from 'cheerio/lib/api/manipulation'
 
-export const RSS_URL = 'http://baochinhphu.vn/Rss/Feed.aspx?EventID=115'
+export const RSS_URL = 'http://baochinhphu.vn/Rss/Feed.aspx'
 
 const parser = new RssParser({})
 
@@ -49,7 +48,7 @@ export default class BaoChinhPhu extends BaseService {
       (<IParagraphImage>paragraphs.find((e) => e.type === 'image'))?.imageUrl?.[0] || ''
     const result: IPost = {
       title: this.formatText(title),
-      slug: BaseService.stringToSlug(title),
+      slug: BaseService.stringToSlug(title) + '-' + publishedTime.getTime().toString().slice(7),
       thumbnailUrl,
       categories: [],
       description,
