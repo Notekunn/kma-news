@@ -58,21 +58,36 @@ crawlLastedQueue.process('vnexpress', function (job, done) {
   vnexpress
     .getLastedNews()
     .then(vnexpress.lastedLinkFilter)
-    .then((e) => done(null, e))
+    .then((e) =>
+      done(null, {
+        host: 'vnexpress',
+        data: e,
+      })
+    )
     .catch((e) => done(e))
 })
 crawlLastedQueue.process('baochinhphu', function (job, done) {
   baochinhphu
     .getLastedNews()
     .then(baochinhphu.lastedLinkFilter)
-    .then((e) => done(null, e))
+    .then((e) =>
+      done(null, {
+        host: 'baochinhphu',
+        data: e,
+      })
+    )
     .catch((e) => done(e))
 })
 crawlLastedQueue.process('vietnamnet', function (job, done) {
   vietnamnet
     .getLastedNews()
     .then(vietnamnet.lastedLinkFilter)
-    .then((e) => done(null, e))
+    .then((e) =>
+      done(null, {
+        host: 'vietnamnet',
+        data: e,
+      })
+    )
     .catch((e) => done(e))
 })
 
