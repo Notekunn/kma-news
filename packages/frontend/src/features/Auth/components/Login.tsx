@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useAppDispatch } from '@/app/hooks'
-import { login, profile } from '../authSlice'
+import { loginAction } from '../authSlice'
 import './auth.css'
 export interface LoginPopupProps {
   visible: boolean
@@ -12,7 +12,7 @@ const Login: React.FC<LoginPopupProps> = React.memo((props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const handleSubmit = () => {
-    dispatch(login({ email, password }))
+    dispatch(loginAction({ email, password }))
   }
 
   return (
@@ -56,11 +56,7 @@ const Login: React.FC<LoginPopupProps> = React.memo((props) => {
                 type="button"
                 className="auth-btn auth-btn--regis"
                 value="Đăng kí"
-                onClick={() => {
-                  for (let i = 0; i < 10; i++) {
-                    dispatch(profile())
-                  }
-                }}
+                onClick={() => {}}
               />
               <input
                 type="button"
