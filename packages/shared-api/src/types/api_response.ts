@@ -6,13 +6,13 @@ export namespace APIResponse {
     refresh_token: string
     tokenExpiration: string
     refreshTokenExpiration: string
-    userId: string
+    user: ObjectWithID<Pick<IUser, 'name' | 'email' | 'role' | 'avatarURL'>>
   }
 
   export interface RefreshToken {
     access_token: string
     tokenExpiration: string
-    userId: string
+    user: ObjectWithID<Pick<IUser, 'name' | 'email' | 'role' | 'avatarURL'>>
   }
 
   export interface Logout {

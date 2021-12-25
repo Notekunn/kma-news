@@ -13,7 +13,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
     const { email, id } = jwt.verify(token, SECRET) as JwtPayload
     const user = await UserModel.findOne({
       email,
-    })
+    }).select(['_id', 'email', 'name', 'role', 'avatarURL'])
     if (!user || id != user._id) {
       return next(new HttpException(403, 'Invalid token'))
     }
