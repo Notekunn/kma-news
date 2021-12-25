@@ -25,7 +25,7 @@ export default class BaoChinhPhu extends BaseService {
   }
   async getNewDetail(url: string) {
     const { data: $ } = await this.api.get<CheerioAPI>(url)
-    const title = $('.article-header > h1').text()
+    const title = this.formatText($('.article-header > h1').text())
     const description = $('.summary > p').text()
     const paragraphs: IParagraph[] = []
     const content = $('.article-body').children()
