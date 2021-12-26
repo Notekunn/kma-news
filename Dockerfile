@@ -38,7 +38,7 @@ ENV NODE_ENV production
 
 ###########################################
 
-FROM nginx:stable-alpine as nginx
+FROM nginx:latest as static_product
 
 ARG BUILD_CONTEXT=backend
 
