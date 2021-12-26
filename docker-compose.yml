@@ -9,7 +9,8 @@ services:
             target: base
         environment:
             PORT: 9999
-            DATABASE_URL: mongodb://admin:admin@db:27017/app?authSource=admin
+            DATABASE_URL: "mongodb://${DB_USERNAME}:${DB_PASSWORD}@db:27017/${DB_NAME}?auth\
+                Source=admin"
             SECRET: secret_for_token,
             REFRESH_SECRET: secret_for_refresh_token
         depends_on:
@@ -19,17 +20,17 @@ services:
         volumes:
             - ./packages/backend/src:/home/node/app/src
         ports:
-            - 9999:9999
-            - 9229:9229
+            - "${BACKEND_PORT}:9999"
+            - "9229:9229"
         networks:
             - app-network
         command: [ "yarn", "start" ]
     db:
         image: mongo
         environment:
-            - MONGO_INITDB_DATABASE=app
-            - MONGO_INITDB_ROOT_USERNAME=admin
-            - MONGO_INITDB_ROOT_PASSWORD=admin
+            - "MONGO_INITDB_DATABASE=${DB_NAME}"
+            - "MONGO_INITDB_ROOT_USERNAME=${DB_USERNAME}"
+            - "MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}"
         volumes:
             - appdata:/data/db
         ports:
