@@ -2,27 +2,61 @@ version: '3.4'
 
 services:
     backend:
-        image: backend
+        image: kma-news-backend
+        container_name: kma-news-backend
+
         build:
-            context: packages/backend
-            dockerfile: ./Dockerfile
-            target: production
+            context: .
+            dockerfile: Dockerfile
+            target: product
         environment:
-            NODE_ENV: production
+
+            NODE_ENV: development
             PORT: 9999
-        stdin_open: true
-        tty: true
+            DATABASE_URL: mongodb://admin:admin@db:27017/app?authSource=admin
+            SECRET: secret_for_token,
+            REFRESH_SECRET: secret_for_refresh_token
+            TIMEZONE: Asia/Ho_Chi_Minh
+        depends_on:
+            - db
         expose:
             - 9999
         ports:
             - 9999:9999
-            - 9229:9229
         networks:
-            - app-network
-        command: [ "node", "build/index.js" ]
+            - db-network
+            - redis-network
+        command: yarn backend deploy
+    db:
+        image: mongo
+        container_name: kma-news-db
+        environment:
+            - MONGO_INITDB_DATABASE=app
+            - MONGO_INITDB_ROOT_USERNAME=admin
+            - MONGO_INITDB_ROOT_PASSWORD=admin
+        volumes:
+            - appdata:/data/db
+        ports:
+            - 27017:27017
+        restart: always
+        networks:
+            - db-network
+    cache:
+        image: redis:5-alpine
+        container_name: kma-news-cache
+        volumes:
+            - appcache:/data
+        networks:
+            - redis-network
+        restart: unless-stopped
+        ports:
+            - 6379:6379
 
 volumes:
     appdata: null
+    appcache: null
 networks:
-    app-network:
+    db-network:
+        driver: bridge
+    redis-network:
         driver: bridge

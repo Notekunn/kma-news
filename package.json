@@ -20,6 +20,6 @@
     "pub-api": "yarn shared-api build && yarn shared-api link --force && yarn link-api",
     "link-all": "yarn link-register && yarn link-types && yarn link-api",
     "pub-all": "yarn pub-types && yarn pub-api",
-    "postinstall": "yarn pub-all"
+    "postinstall": ""
   }
 }

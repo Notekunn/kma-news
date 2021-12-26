@@ -4,11 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tscpaths -p tsconfig.json -s ./src -o ./build",
     "watch": "tsc -w",
     "start": "nodemon src/index.ts",
     "seed": "node --nolazy -r ts-node/register src/seeds/index.ts",
-    "dev": "node --nolazy -r ts-node/register src/index.ts"
+    "dev": "node --nolazy -r ts-node/register src/index.ts",
+    "deploy": "node build/index.js"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -20,6 +21,7 @@
     "nodemon": "^2.0.15",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.12.0",
+    "tscpaths": "^0.0.9",
     "typescript": "^4.5.3"
   },
   "dependencies": {
