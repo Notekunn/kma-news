@@ -4,7 +4,6 @@ services:
     backend:
         image: kma-news-backend
         container_name: kma-news-backend
-
         build:
             context: .
             dockerfile: Dockerfile
@@ -13,8 +12,9 @@ services:
 
             NODE_ENV: development
             PORT: 9999
-            DATABASE_URL: mongodb://admin:admin@db:27017/app?authSource=admin
-            SECRET: secret_for_token,
+            DATABASE_URL: "mongodb://${DB_USERNAME}:${DB_PASSWORD}@db:27017/${DB_NAME}?auth\
+                Source=admin"
+            SECRET: secret_for_token
             REFRESH_SECRET: secret_for_refresh_token
             TIMEZONE: Asia/Ho_Chi_Minh
         depends_on:
@@ -22,18 +22,41 @@ services:
         expose:
             - 9999
         ports:
-            - 9999:9999
+            - "${BACKEND_PORT}:9999"
         networks:
             - db-network
             - redis-network
+            - app-network
         command: yarn backend deploy
+
+    frontend:
+        image: kma-news-frontend
+        container_name: kma-news-frontend
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: nginx
+            args:
+                - BUILD_CONTEXT=frontend
+        volumes:
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf
+        environment:
+            - "REACT_APP_API_URL=${API_URL}"
+        expose:
+            - 80
+        ports:
+            - 1222:80
+        networks:
+            - app-network
+        command: [ "nginx", "-g", "daemon off;" ]
+
     db:
         image: mongo
         container_name: kma-news-db
         environment:
-            - MONGO_INITDB_DATABASE=app
-            - MONGO_INITDB_ROOT_USERNAME=admin
-            - MONGO_INITDB_ROOT_PASSWORD=admin
+            - "MONGO_INITDB_DATABASE=${DB_NAME}"
+            - "MONGO_INITDB_ROOT_USERNAME=${DB_USERNAME}"
+            - "MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}"
         volumes:
             - appdata:/data/db
         ports:
@@ -52,6 +75,18 @@ services:
         ports:
             - 6379:6379
 
+    nginx-proxy:
+        build: nginx
+        depends_on:
+            - backend
+            - frontend
+        volumes:
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+        ports:
+            - 80:80
+        networks:
+            - app-network
+
 volumes:
     appdata: null
     appcache: null
@@ -59,4 +94,6 @@ networks:
     db-network:
         driver: bridge
     redis-network:
+        driver: bridge
+    app-network:
         driver: bridge
