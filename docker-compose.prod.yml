@@ -9,20 +9,22 @@ services:
             dockerfile: Dockerfile
             target: product
         environment:
-
             NODE_ENV: development
-            PORT: 9999
+            PORT: 8080
             DATABASE_URL: "mongodb://${DB_USERNAME}:${DB_PASSWORD}@db:27017/${DB_NAME}?auth\
                 Source=admin"
             SECRET: secret_for_token
             REFRESH_SECRET: secret_for_refresh_token
             TIMEZONE: Asia/Ho_Chi_Minh
+            VIRTUAL_HOST: "${BACKEND_HOST}"
+            LETSENCRYPT_HOST: "${BACKEND_HOST}"
+
         depends_on:
             - db
         expose:
-            - 9999
+            - 8080
         ports:
-            - "${BACKEND_PORT}:9999"
+            - "${BACKEND_PORT}:8080"
         networks:
             - db-network
             - redis-network
@@ -39,7 +41,9 @@ services:
             args:
                 BUILD_CONTEXT: frontend
         environment:
-            - "REACT_APP_API_URL=${API_URL}"
+            REACT_APP_API_URL: "https://${BACKEND_HOST}"
+            VIRTUAL_HOST: "${FRONTEND_HOST}"
+            LETSENCRYPT_HOST: "${FRONTEND_HOST}"
         expose:
             - 80
         ports:
@@ -88,29 +92,47 @@ services:
         ports:
             - 6379:6379
 
-    nginx-certbot:
-        image: jonasal/nginx-certbot:latest
-        restart: unless-stopped
-        environment:
-            - CERTBOT_EMAIL:clonebmn2itt@gmail.com
-        env_file:
-            - ./nginx-certbot.env
-        depends_on:
-            - frontend
-            - backend
+    nginx-proxy:
+        image: nginxproxy/nginx-proxy:alpine
+        container_name: nginx-proxy
         ports:
-            - 80:80
-            - 443:443
+            - "80:80"
+            - "443:443"
         volumes:
-            - nginx_secrets:/etc/letsencrypt
-            - ./user_conf.d:/etc/nginx/user_conf.d
-        networks:
-            - app-network
+            - conf:/etc/nginx/conf.d
+            - vhost:/etc/nginx/vhost.d
+            - html:/usr/share/nginx/html
+            - dhparam:/etc/nginx/dhparam
+            - certs:/etc/nginx/certs:ro
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+        labels:
+            - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+        
+    acme-companion:
+        image: nginxproxy/acme-companion
+        container_name: nginx-proxy-acme
+        depends_on:
+            - "nginx-proxy"
+        volumes:
+            - conf:/etc/nginx/conf.d
+            - vhost:/etc/nginx/vhost.d
+            - html:/usr/share/nginx/html
+            - dhparam:/etc/nginx/dhparam
+            - certs:/etc/nginx/certs
+            - acme:/etc/acme.sh
+            - /var/run/docker.sock:/var/run/docker.sock:ro
 
 volumes:
     appdata: null
     appcache: null
     nginx_secrets: null
+    data: null
+    conf: null
+    vhost: null
+    html: null
+    dhparam: null
+    certs: null
+    acme: null
 
 networks:
     db-network:
