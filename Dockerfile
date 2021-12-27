@@ -3,6 +3,7 @@ FROM node:16-slim as base
 ARG BUILD_CONTEXT=backend
 
 ENV TIMEZONE=Asia/Ho_Chi_Minh
+
 ENV NODE_ENV development
 
 WORKDIR /home/node/app
@@ -14,6 +15,12 @@ COPY ["package.json", "./"]
 COPY ./packages/shared-types ./packages/shared-types
 
 COPY ./packages/shared-api ./packages/shared-api
+
+ARG API_URL=http//localhost:800/
+
+ENV REACT_APP_API_URL=${API_URL}
+
+RUN echo "Api url ${API_URL}"
 
 # Link 2 shared repo
 RUN yarn install && yarn shared-types build && yarn shared-types link && \
@@ -32,9 +39,11 @@ COPY ./packages/${BUILD_CONTEXT} ./packages/${BUILD_CONTEXT}
 ###########################################
 FROM base as product
 
-RUN yarn ${BUILD_CONTEXT} build
+ARG BUILD_CONTEXT=backend
 
 ENV NODE_ENV production
+
+RUN yarn ${BUILD_CONTEXT} build
 
 ###########################################
 

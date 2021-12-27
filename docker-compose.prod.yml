@@ -18,6 +18,7 @@ services:
             TIMEZONE: Asia/Ho_Chi_Minh
             VIRTUAL_HOST: "${BACKEND_HOST}"
             LETSENCRYPT_HOST: "${BACKEND_HOST}"
+            VIRTUAL_PORT: 8080
 
         depends_on:
             - db
@@ -40,14 +41,16 @@ services:
             target: static_product
             args:
                 BUILD_CONTEXT: frontend
+                API_URL: "https://${BACKEND_HOST}"
         environment:
             REACT_APP_API_URL: "https://${BACKEND_HOST}"
             VIRTUAL_HOST: "${FRONTEND_HOST}"
             LETSENCRYPT_HOST: "${FRONTEND_HOST}"
+            VIRTUAL_PORT: 80
         expose:
             - 80
         ports:
-            - 3000:80
+            - "${FRONTEND_PORT}:80"
         networks:
             - app-network
         command: [ "nginx", "-g", "daemon off;" ]
@@ -62,7 +65,7 @@ services:
     #         args:
     #             BUILD_CONTEXT: admin
     #     environment:
-    #         - "REACT_APP_API_URL=${API_URL}"
+    #         REACT_APP_API_URL: "https://${BACKEND_HOST}"
     #     networks:
     #         - app-network
     #     command: [ "nginx", "-g", "daemon off;" ]
@@ -95,6 +98,9 @@ services:
     nginx-proxy:
         image: nginxproxy/nginx-proxy:alpine
         container_name: nginx-proxy
+        depends_on:
+            - backend
+            - frontend
         ports:
             - "80:80"
             - "443:443"
@@ -105,6 +111,8 @@ services:
             - dhparam:/etc/nginx/dhparam
             - certs:/etc/nginx/certs:ro
             - /var/run/docker.sock:/tmp/docker.sock:ro
+        networks:
+            - app-network
         labels:
             - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
         
@@ -121,6 +129,8 @@ services:
             - certs:/etc/nginx/certs
             - acme:/etc/acme.sh
             - /var/run/docker.sock:/var/run/docker.sock:ro
+        networks:
+            - app-network
 
 volumes:
     appdata: null
