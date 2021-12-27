@@ -26,10 +26,11 @@ export const login: IController<Pick<IUser, 'email' | 'password'>> = errorWrappe
     const user = await UserModel.findOne({
       email: value?.email,
     })
+
     if (!user || !user.checkPassword(value?.password || '')) {
       throw new HttpException(401, 'Email/Password is not correct')
     }
-    client.set(`user_${user._id}`, JSON.stringify(user))
+
     const payload: ITokenPayload = {
       email: user.email,
       id: user._id,
