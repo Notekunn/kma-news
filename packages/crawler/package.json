@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "node --inspect=0.0.0.0:9228 --nolazy -r ts-node/register src/index.ts",
-    "test": "node --inspect=0.0.0.0:9227 --nolazy -r ts-node/register src/demo.ts"
+    "test": "node --inspect=0.0.0.0:9227 --nolazy -r ts-node/register src/demo.ts",
+    "deploy": "node build/index.js"
   },
   "devDependencies": {
     "@types/bull": "^3.15.7",

@@ -9,6 +9,9 @@ import Client from './client'
 const client = Client.getInstance().client
 const serverAdapter = new ExpressAdapter()
 
+console.log(process.env.REDIS_URL);
+
+
 createBullBoard({
   queues: [new BullAdapter(crawlQueue), new BullAdapter(crawlLastedQueue)],
   serverAdapter,
