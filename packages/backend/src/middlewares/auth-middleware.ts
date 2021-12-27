@@ -17,7 +17,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
     const cached = await client.get(`user_${id}`)
     // Cache hit
     if (cached) {
-      req.context = JSON.parse(cached)
+      req.context = new UserModel(JSON.parse(cached))
       return next()
     }
     // Cache miss
