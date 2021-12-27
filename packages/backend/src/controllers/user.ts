@@ -4,6 +4,7 @@ import { UserModel } from '@/models/user'
 import { errorWrapper } from '@/services/error-wrapper'
 import HttpException from '@/exceptions/HttpException'
 import NotFoundExeption from '@/exceptions/NotFoundExeption'
+import client from '@/redis'
 
 export const getAll: IController = async (req, res) => {
   const users = await UserModel.find({})

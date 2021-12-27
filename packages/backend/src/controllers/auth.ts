@@ -6,6 +6,7 @@ import { UserModel } from '@/models/user'
 import { TokenModel } from '@/models/token'
 import { errorWrapper } from '@/services/error-wrapper'
 import HttpException from '@/exceptions/HttpException'
+import client from '@/redis'
 
 const SECRET = process.env.SECRET || 'secret_key_for_jwt'
 const REFRESH_SECRET = process.env.REFRESH_SECRET || 'secret_key_for_refresh'
@@ -28,6 +29,7 @@ export const login: IController<Pick<IUser, 'email' | 'password'>> = errorWrappe
     if (!user || !user.checkPassword(value?.password || '')) {
       throw new HttpException(401, 'Email/Password is not correct')
     }
+    client.set(`user_${user._id}`, JSON.stringify(user))
     const payload: ITokenPayload = {
       email: user.email,
       id: user._id,
@@ -133,7 +135,7 @@ export const logout: IController<{ refresh_token: string }> = errorWrapper(
     // Phải viết thêm hàm kiểm tra refresh token
     // Sau này sẽ lấy từ cookie thay vì body
     if (!refreshToken) throw new HttpException(401, 'Refresh token is required')
-    const token = await TokenModel.updateOne(
+    const token = await TokenModel.findOneAndUpdate(
       {
         token: refreshToken,
       },
@@ -143,6 +145,7 @@ export const logout: IController<{ refresh_token: string }> = errorWrapper(
         },
       }
     )
+    client.del(`user_${token?.user._id}`)
     res.send({
       message: 'Logout success',
     })

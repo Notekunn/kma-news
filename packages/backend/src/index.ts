@@ -4,7 +4,7 @@ import helmet from 'helmet'
 import cors from 'cors'
 import routes from './routes'
 import errorHandler from './middlewares/error-handler'
-
+import client from './redis'
 const app = express()
 
 const { PORT = 8888 } = process.env
@@ -27,7 +27,14 @@ async function connectDatabase() {
   )
   console.log('🔥Connect database success!')
 }
+async function connectRedis() {
+  await client.connect()
+  console.log('🚀Connect redis success!')
+}
 
 connectDatabase().catch((e) => {
-  console.log('🤦‍♂️Connect database error:', e.message)
+  console.log('❌Connect database error:', e.message)
+})
+connectRedis().catch((e) => {
+  console.log('❌Connect cache server error:', e.message)
 })

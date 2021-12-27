@@ -8,7 +8,8 @@
   "env": {
     "TIMEZONE": "Asia/Ho_Chi_Minh",
     "ACCESS_TOKEN_LIVE": "600",
-    "REFRESH_TOKEN_LIVE": "86400"
+    "REFRESH_TOKEN_LIVE": "86400",
+    "REDIS_URL": "redis://localhost:6379"
   },
   "delay": "2500"
 }
