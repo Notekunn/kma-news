@@ -18,16 +18,19 @@ export default class BaoChinhPhu extends BaseService {
   async getNewDetail(url: string) {
     const { data: $ } = await this.api.get<CheerioAPI>(url)
     const title = this.formatText($('.article-header > h1').text())
-    const description = $('.summary > p').text()
+    const description = this.formatText($('.summary').text())
     const paragraphs: IParagraph[] = []
     const content = $('.article-body').children()
     const publishedTime = this.formatTime($('.article-header .meta').text())
     for (const el of content) {
       if (el.tagName == 'p') {
-        paragraphs.push({
-          type: 'text',
-          content: this.formatText($(el).text()),
-        })
+        if ($(el).attr('class')) {
+        } else {
+          paragraphs.push({
+            type: 'text',
+            content: this.formatText($(el).text()),
+          })
+        }
       }
       if (el.tagName == 'table') {
         const elem = $(el)
@@ -38,12 +41,11 @@ export default class BaoChinhPhu extends BaseService {
           paragraphs.push({
             type: 'image',
             imageUrl: [imageUrl],
-            description: imageDescription,
+            description: this.formatText(imageDescription),
           })
         }
       }
     }
-    paragraphs.shift()
     const thumbnailUrl =
       (<IParagraphImage>paragraphs.find((e) => e.type === 'image'))?.imageUrl?.[0] || ''
     const result: IPost = {

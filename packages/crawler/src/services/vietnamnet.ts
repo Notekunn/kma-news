@@ -18,7 +18,7 @@ export default class VietNamNet extends BaseService {
   async getNewDetail(url: string) {
     const { data: $ } = await this.api.get<CheerioAPI>(url)
     const title = $('.ArticleDetail > h1').text()
-    const description = $('#ArticleContent > .ArticleLead > p').text()
+    const description = this.formatText($('#ArticleContent > .ArticleLead > p').text())
     const paragraphs: IParagraph[] = []
     const content = $('#ArticleContent').children()
     const publishedTime = this.formatTime($('.ArticleDate').text())
@@ -37,7 +37,7 @@ export default class VietNamNet extends BaseService {
           paragraphs.push({
             type: 'image',
             imageUrl: [imageUrl],
-            description: imageDescription,
+            description: this.formatText(imageDescription),
           })
         }
       }
