@@ -20,7 +20,7 @@ export default class VNExpress extends BaseService {
   async getNewDetail(url: string) {
     const { data: $ } = await this.api.get<CheerioAPI>(url)
     const title = $('.title-detail').text()
-    const description = $('.description').text()
+    const description = this.formatText($('.description').text())
     const data = $('.fck_detail').children()
     const publishedTime = this.formatTime($('span.date').text())
 
@@ -40,7 +40,7 @@ export default class VNExpress extends BaseService {
           paragraphs.push({
             type: 'image',
             imageUrl: [imageUrl],
-            description: imageDescription,
+            description: this.formatText(imageDescription),
           })
       }
     }
