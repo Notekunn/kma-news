@@ -29,3 +29,5 @@ docker compose up --build backend
 ```bash
 docker compose run seed
 ```
+
+- Khi renew letencrypt nhớ tắt auto https đi 

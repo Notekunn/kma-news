@@ -1,17 +1,19 @@
 import { UserModel } from '@/models/user'
-import { User } from 'shared-types
+import { IUser } from 'shared-types'
 
 export async function run() {
-  const users: User[] = [
+  const users: IUser[] = [
     {
-      email: 'user1@gmail.com',
-      name: 'User 1',
+      email: 'admin@gmail.com',
+      name: 'Admin',
       password: 'password',
+      role: 'admin',
     },
     {
       email: 'user2@gmail.com',
       name: 'User 2',
       password: 'password',
+      role: 'user',
     },
   ]
   try {
