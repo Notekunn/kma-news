@@ -10,8 +10,8 @@ import client from '@/redis'
 
 const SECRET = process.env.SECRET || 'secret_key_for_jwt'
 const REFRESH_SECRET = process.env.REFRESH_SECRET || 'secret_key_for_refresh'
-const ACCESS_TOKEN_LIVE = parseInt(process.env.ACCESS_TOKEN_LIVE || '' + 30 * 60)
-const REFRESH_TOKEN_LIVE = parseInt(process.env.REFRESH_TOKEN_LIVE || '' + 7 * 24 * 60 * 60)
+const ACCESS_TOKEN_TTL = parseInt(process.env.ACCESS_TOKEN_TTL || '' + 30 * 60)
+const REFRESH_TOKEN_TTL = parseInt(process.env.REFRESH_TOKEN_TTL || '' + 7 * 24 * 60 * 60)
 const TIMEZONE = process.env.TIMEZONE || 'Asia/Ho_Chi_Minh'
 
 const loginValidator = joi.object<Pick<IUser, 'email' | 'password'>>({
@@ -36,13 +36,13 @@ export const login: IController<Pick<IUser, 'email' | 'password'>> = errorWrappe
       id: user._id,
     }
 
-    const tokenExpiration = moment.tz(TIMEZONE).add(ACCESS_TOKEN_LIVE, 'seconds').toDate()
+    const tokenExpiration = moment.tz(TIMEZONE).add(ACCESS_TOKEN_TTL, 'seconds').toDate()
     const token = jwt.sign(payload, SECRET, {
-      expiresIn: ACCESS_TOKEN_LIVE,
+      expiresIn: ACCESS_TOKEN_TTL,
     })
-    const refreshTokenExpiration = moment.tz(TIMEZONE).add(REFRESH_TOKEN_LIVE, 'seconds').toDate()
+    const refreshTokenExpiration = moment.tz(TIMEZONE).add(REFRESH_TOKEN_TTL, 'seconds').toDate()
     const refreshToken = jwt.sign(payload, REFRESH_SECRET, {
-      expiresIn: REFRESH_TOKEN_LIVE,
+      expiresIn: REFRESH_TOKEN_TTL,
     })
     // Vô hiệu hóa token cũ
     await TokenModel.updateMany(
@@ -112,9 +112,9 @@ export const refreshToken: IController<{ refresh_token: string }> = errorWrapper
 
     if (user?.id !== id) throw new HttpException(403, 'Refresh token is invalid')
 
-    const tokenExpiration = moment.tz(TIMEZONE).add(ACCESS_TOKEN_LIVE, 'seconds').toDate()
+    const tokenExpiration = moment.tz(TIMEZONE).add(ACCESS_TOKEN_TTL, 'seconds').toDate()
     const token = jwt.sign({ email, id }, SECRET, {
-      expiresIn: ACCESS_TOKEN_LIVE,
+      expiresIn: ACCESS_TOKEN_TTL,
     })
     res.send({
       access_token: token,
