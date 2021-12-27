@@ -4,6 +4,7 @@ import { UserModel } from '@/models/user'
 import { errorWrapper } from '@/services/error-wrapper'
 import HttpException from '@/exceptions/HttpException'
 import NotFoundExeption from '@/exceptions/NotFoundExeption'
+import client from '@/redis'
 
 export const getAll: IController = async (req, res) => {
   const users = await UserModel.find({})
@@ -39,6 +40,7 @@ export const getOne: IController<IUser> = errorWrapper(async (req, res, next) =>
   if (!user) throw new NotFoundExeption('User not found')
   res.send(user)
 })
+
 const updateValidator = joi.object<IUser>({
   name: joi.string(),
   password: joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
@@ -70,6 +72,7 @@ export const update: IController<IUser, 'id'> = errorWrapper(async (req, res, ne
     { new: true }
   ).select(['_id', 'email', 'name', 'role', 'avatarURL'])
   if (!data) throw new NotFoundExeption('User not found')
+  client.del(`user_${data._id}`)
   res.send(data)
 })
 
