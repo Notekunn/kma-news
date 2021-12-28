@@ -12,8 +12,8 @@ export const createUser = (params: APIParameter.CreateUser) => {
 }
 
 export const updateUser = (params: APIParameter.UpdateUser) => {
-  const { _id, ...rest } = params
-  return client.patch(`/users/${_id}`, rest) as Promise<APIResponse.UpdateUser>
+  const { _id, ...fieldToUpdate } = params
+  return client.patch(`/users/${_id}`, fieldToUpdate) as Promise<APIResponse.UpdateUser>
 }
 
 export const deleteUser = (_id: string) => {

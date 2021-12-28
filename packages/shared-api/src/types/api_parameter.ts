@@ -1,4 +1,4 @@
-import { IUser } from 'shared-types'
+import { IPost, IUser } from 'shared-types'
 export namespace APIParameter {
   export interface Login {
     email: string
@@ -18,4 +18,10 @@ export namespace APIParameter {
   export interface CreateUser extends Partial<Exclude<IUser, 'avatarURL'>> {}
 
   export interface GetAllPosts extends Pagination {}
+
+  export interface UpdatePost extends Partial<IPost> {
+    _id: string
+  }
+
+  export interface CreatePost extends Partial<IPost> {}
 }

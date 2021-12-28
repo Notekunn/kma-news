@@ -50,11 +50,11 @@ export namespace APIResponse {
 
   export type GetAllUsers = GetMany<UserWithoutPassword>
 
-  export interface CreateUser extends UserWithoutPassword {}
+  export interface CreateUser extends ObjectWithID<UserWithoutPassword> {}
 
-  export interface UpdateUser extends UserWithoutPassword {}
+  export interface UpdateUser extends ObjectWithID<UserWithoutPassword> {}
 
-  export interface DeleteUser extends UserWithoutPassword {}
+  export interface DeleteUser extends ObjectWithID<UserWithoutPassword> {}
 
   export type GetAllPosts = GetMany<
     Pick<
@@ -64,4 +64,10 @@ export namespace APIResponse {
   >
 
   export interface GetOnePost extends ObjectWithID<IPost> {}
+
+  export interface UpdatePost extends ObjectWithID<IPost> {}
+
+  export interface CreatePost extends ObjectWithID<IPost> {}
+
+  export interface DeletePost extends ObjectWithID<IPost> {}
 }
