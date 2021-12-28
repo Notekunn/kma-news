@@ -1,4 +1,4 @@
-import { loginWithEmail, getProfile, Types, logout, getAllUsers } from 'shared-api'
+import { loginWithEmail, getProfile, Types, logout } from 'shared-api'
 import { RootState } from '@/app/store'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { LoadingState } from 'shared-types'
@@ -11,7 +11,6 @@ export const loginAction = createAsyncThunk(
   }
 )
 export const profileAction = createAsyncThunk('auth/profile', async (_, thunkAPI) => {
-  console.log(await getAllUsers({}))
   const data = await getProfile()
   return data
 })
@@ -45,7 +44,8 @@ const authSlice = createSlice({
       .addCase(loginAction.fulfilled, (state, action) => {
         state.loading = 'done'
         state.loggedIn = true
-        const { access_token, refresh_token } = action.payload
+        const { access_token, refresh_token, user } = action.payload
+        state.profile = user
         localStorage.setItem('access_token', access_token)
         localStorage.setItem('refresh_token', refresh_token)
       })
