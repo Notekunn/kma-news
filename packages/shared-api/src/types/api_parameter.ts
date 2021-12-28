@@ -16,7 +16,6 @@ export namespace APIParameter {
   }
 
   export interface CreateUser extends Partial<Exclude<IUser, 'avatarURL'>> {}
-<<<<<<< HEAD
 
   export interface GetAllPosts extends Pagination {}
 
@@ -38,10 +37,8 @@ export namespace APIParameter {
   }
 
   export interface GetAllCategories extends Pagination {}
-=======
   export interface InforPage {
     id: string
     slug: string
   }
->>>>>>> 1dbbf28 (redux-renderPage)
 }
