@@ -21,9 +21,7 @@ const initialState: renderState = {
   },
   loading: 'idle',
 }
-export const renderPage = createAsyncThunk('reading/rederPage', async (url) => {
-  const data = await renderPage()
-})
+export const renderPage = createAsyncThunk('reading/rederPage', async (url) => {})
 
 export const readingPageSlice = createSlice({
   name: 'renderPage',
