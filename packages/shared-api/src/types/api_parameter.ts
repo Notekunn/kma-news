@@ -24,4 +24,10 @@ export namespace APIParameter {
   }
 
   export interface CreatePost extends Partial<IPost> {}
+
+  export interface CreateCategory {}
+
+  export interface UpdateCategory {}
+
+  export interface GetAllCategories extends Pagination {}
 }

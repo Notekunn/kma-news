@@ -15,7 +15,12 @@ export const SecurityLayout: React.FC = (props) => {
 
   useEffect(() => {
     if (loading === 'error' || (loading === 'done' && !profile)) {
-      navigate('/auth/login')
+      const redirect_url = window.location.pathname
+      navigate('/auth/login', {
+        state: {
+          redirect_url,
+        },
+      })
     }
   }, [loading, navigate, profile])
   return <BasicLayout />

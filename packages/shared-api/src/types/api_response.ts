@@ -1,4 +1,4 @@
-import { IUser, ObjectWithID, IPost } from 'shared-types'
+import { IUser, ObjectWithID, IPost, ICategory } from 'shared-types'
 
 type UserWithoutPassword = Exclude<IUser, 'password'>
 export namespace APIResponse {
@@ -70,4 +70,8 @@ export namespace APIResponse {
   export interface CreatePost extends ObjectWithID<IPost> {}
 
   export interface DeletePost extends ObjectWithID<IPost> {}
+
+  export interface CreateCategory extends ObjectWithID<ICategory> {}
+
+  export type GetAllCategories = GetMany<ICategory>
 }
