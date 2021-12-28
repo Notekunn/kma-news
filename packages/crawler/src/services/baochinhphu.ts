@@ -3,7 +3,7 @@ import type { CheerioAPI } from 'cheerio'
 import RssParser from 'rss-parser'
 import { IParagraph, IParagraphImage, IPost } from 'shared-types'
 
-export const RSS_URL = 'http://baochinhphu.vn/Rss/Feed.aspx'
+export const RSS_URL = 'https://baochinhphu.vn/Rss/Feed.aspx?EventID=115'
 
 const parser = new RssParser({})
 

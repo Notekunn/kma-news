@@ -3,26 +3,25 @@ import type { CheerioAPI } from 'cheerio'
 import RssParser from 'rss-parser'
 import { IParagraph, IParagraphImage, IPost } from 'shared-types'
 
-export const RSS_URL = 'https://vietnamnet.vn/rss/tin-moi-nhat.rss'
+export const RSS_URL = 'https://tienphong.vn/rss/home.rss'
 
 const parser = new RssParser({})
 
-export default class VietNamNet extends BaseService {
+export default class TienPhong extends BaseService {
   constructor() {
     super()
   }
   async getLastedNews() {
     const feed = await parser.parseURL(RSS_URL)
-    console.log(feed)
     return feed.items.map((e) => e.link || '')
   }
   async getNewDetail(url: string) {
     const { data: $ } = await this.api.get<CheerioAPI>(url)
-    const title = $('.ArticleDetail > h1').text()
-    const description = this.formatText($('#ArticleContent > .ArticleLead > p').text())
+    const title = $('.cms-title').text()
+    const description = this.formatText($('.cms-desc').text())
     const paragraphs: IParagraph[] = []
-    const content = $('#ArticleContent').children()
-    const publishedTime = this.formatTime($('.ArticleDate').text())
+    const content = $('.cms-body').children()
+    const publishedTime = this.formatTime($('.time').text())
     for (const el of content) {
       if (el.tagName == 'p') {
         if ($(el).attr('class')) {
@@ -35,8 +34,8 @@ export default class VietNamNet extends BaseService {
       }
       if (el.tagName == 'table') {
         const elem = $(el)
-        const imageUrl = elem.find('img').attr('src')
-        const imageDescription = elem.find('.image_desc').text() || ''
+        const imageUrl = elem.find('tr td img').attr('data-src')
+        const imageDescription = elem.find('.caption > p').text() || ''
         if (imageUrl) {
           paragraphs.push({
             type: 'image',
@@ -55,20 +54,12 @@ export default class VietNamNet extends BaseService {
       categories: [],
       description,
       status: 'publish',
-      source: 'vietnamnet.vn',
-      owner: 'Lam Sơn',
+      source: 'tienphong.vn',
+      owner: this.formatText($('.article__author span').text()),
       publishedAt: publishedTime,
       paragraphs,
     }
-    const last = paragraphs.splice(-1)
-    if (last.length != 1) return result
-    if (last[0].type === 'text') {
-      result.owner = last[0].content
-      result.paragraphs = paragraphs
-    } else {
-      result.paragraphs = [...paragraphs, ...last]
-    }
-    const category = $('.top-cate-head-title').find('a')
+    const category = $('.main-cate ').find('a')
     const categories = [...category].map((e) => this.formatText($(e).text()))
     const categoriesId = (await Promise.all(categories.map(this.getCategoryId))).filter((e) => !!e)
     result.categories = categoriesId
