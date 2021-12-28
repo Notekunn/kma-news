@@ -1,7 +1,8 @@
-import { IUser, ObjectWithID } from 'shared-types'
+import { IUser, ObjectWithID, IPost } from 'shared-types'
 
 type UserWithoutPassword = Exclude<IUser, 'password'>
 export namespace APIResponse {
+  export type GetMany<T> = ObjectWithID<T>[]
   export interface Login {
     access_token: string
     refresh_token: string
@@ -47,11 +48,20 @@ export namespace APIResponse {
   export type Covid19 = Record<'internal' | 'world', LocationData> &
     Record<'locations', Array<LocationData & Record<'name', string>>>
 
-  export type GetAllUsers = ObjectWithID<IUser>[]
+  export type GetAllUsers = GetMany<UserWithoutPassword>
 
-  export interface CreateUser extends ObjectWithID<IUser> {}
+  export interface CreateUser extends UserWithoutPassword {}
 
-  export interface UpdateUser extends ObjectWithID<IUser> {}
+  export interface UpdateUser extends UserWithoutPassword {}
 
-  export interface DeleteUser extends ObjectWithID<IUser> {}
+  export interface DeleteUser extends UserWithoutPassword {}
+
+  export type GetAllPosts = GetMany<
+    Pick<
+      IPost,
+      'title' | 'slug' | 'description' | 'categories' | 'source' | 'thumbnailUrl' | 'publishedAt'
+    >
+  >
+
+  export interface GetOnePost extends ObjectWithID<IPost> {}
 }

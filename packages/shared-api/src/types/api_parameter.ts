@@ -16,4 +16,6 @@ export namespace APIParameter {
   }
 
   export interface CreateUser extends Partial<Exclude<IUser, 'avatarURL'>> {}
+
+  export interface GetAllPosts extends Pagination {}
 }
