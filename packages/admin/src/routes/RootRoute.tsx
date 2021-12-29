@@ -6,12 +6,14 @@ import { BlankLayout } from '@/layouts/BlankLayout'
 import { SecurityLayout } from '@/layouts/SecurityLayout'
 const LoginPage = React.lazy(() => import('@/features/Auth/pages/LoginPage'))
 const UserManager = React.lazy(() => import('@/features/User/pages/UserManager'))
+const CategoryManager = React.lazy(() => import('@/features/Category/pages/CategoryManager'))
 export const RootRoute = () => {
   return (
     <Suspense fallback={<LoadingGlobal />}>
       <Routes>
         <Route path="/admin" element={<SecurityLayout />}>
           <Route path="users" element={<UserManager />} />
+          <Route path="categories" element={<CategoryManager />} />
           <Route path="*" element={<NotFound />} />
         </Route>
         <Route path="/auth" element={<BlankLayout />}>
