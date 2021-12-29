@@ -38,7 +38,7 @@ const categorySlice = createSlice({
 })
 
 export const selectData = (state: RootState) => state.category.data
-export const selectLoading = (state: RootState) => state.category.data
+export const selectLoading = (state: RootState) => state.category.loading
 export const selectMessage = (state: RootState) => state.category.message
 
 export default categorySlice.reducer
