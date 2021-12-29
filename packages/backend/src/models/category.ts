@@ -18,12 +18,16 @@ const categorySchema = new mongoose.Schema<ICategoryDocument>(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'category',
     },
-    ancestors: [
+    children: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'category',
       },
     ],
+    level: {
+      type: Number,
+      default: 1,
+    },
   },
   {
     versionKey: false,

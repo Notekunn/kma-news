@@ -11,6 +11,9 @@ const swaggerOption = {
       {
         url: `http://localhost:${PORT}`,
       },
+      {
+        url: `https://api.kma-news.tech`,
+      },
     ],
   },
   apis: ['./src/docs/*.yml', './src/routes/*.ts'],
