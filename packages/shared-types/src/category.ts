@@ -5,8 +5,6 @@ export interface ICategory {
   slug: string
   description?: string
   parrent?: Types.ObjectId
-  children: Types.ObjectId[]
-  level: number
 }
 
 export interface ICategoryModel extends Model<ICategory> {}
