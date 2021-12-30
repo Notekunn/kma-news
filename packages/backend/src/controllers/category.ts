@@ -102,7 +102,7 @@ const updateValidator = joi.object({
   title: joi.string(),
   slug: joi.string().pattern(new RegExp('^[a-zA-Z0-9-]+$')),
   description: joi.string(),
-  parrentId: joi.string(),
+  parrentId: joi.string().allow(null),
 })
 
 export const update: IController<ICategory, 'id'> = errorWrapper(async (req, res, next) => {
@@ -110,13 +110,28 @@ export const update: IController<ICategory, 'id'> = errorWrapper(async (req, res
   const { error, value } = updateValidator.validate(req.body)
   if (error || !value) throw error
   const { parrentId, ...fieldToChange } = value
+  if (parrentId !== undefined) {
+    fieldToChange['$set'] = {
+      parrent: parrentId,
+    }
+  }
   const category = await CategoryModel.findByIdAndUpdate(id, fieldToChange, { new: true })
   if (!category) throw new NotFoundExeption('Category not found')
   // Đổi parrent id
+  res.send(category)
 })
 
-export const updateChildrenCategory = async (parentId: string, level: number) => {
-  const data = await CategoryModel.updateMany({
-    $parent: {},
-  })
-}
+export const remove: IController = errorWrapper(async (req, res, next) => {
+  const { id } = req.params
+  const category = await CategoryModel.findByIdAndDelete(id)
+  if (!category) throw new NotFoundExeption('Category not found')
+  await CategoryModel.updateMany(
+    {
+      parrent: category._id,
+    },
+    {
+      parrent: category.parrent || null,
+    }
+  )
+  res.send(category)
+})
