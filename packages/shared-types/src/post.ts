@@ -18,6 +18,7 @@ export interface IPost {
   title: string
   slug: string
   description: string
+  url: string
   paragraphs: Array<IParagraph>
   thumbnailUrl: string
   source?: string

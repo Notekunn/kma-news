@@ -8,7 +8,7 @@ interface renderState {
   loading: 'idle' | 'pending' | 'done' | 'error'
   message?: string
 }
-
+const getOnePost = (url: string | void) => {}
 const initialState: renderState = {
   data: {
     title: '',
@@ -21,7 +21,10 @@ const initialState: renderState = {
   },
   loading: 'idle',
 }
-export const renderPage = createAsyncThunk('reading/rederPage', async (url) => {})
+export const renderPage = createAsyncThunk('reading/rederPage', async (url, ThunkApi) => {
+  const data = await getOnePost(url)
+  return data
+})
 
 export const readingPageSlice = createSlice({
   name: 'renderPage',
@@ -42,8 +45,8 @@ export const readingPageSlice = createSlice({
       })
   },
 })
-export const selectData = (state: RootState) => state.covid19.data
-export const selectLoading = (state: RootState) => state.covid19.loading
-export const selectError = (state: RootState) => state.covid19.error
+export const selectData = (state: RootState) => state.renderPage.data
+export const selectLoading = (state: RootState) => state.renderPage.loading
+export const selectError = (state: RootState) => state.renderPage.message
 
 export default readingPageSlice.reducer
