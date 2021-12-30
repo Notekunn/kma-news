@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import message from 'antd/lib/message'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { ProTable, ProTableColumns } from '@/components/ProTable'
 import { IUser } from 'shared-types'
@@ -10,6 +11,7 @@ import { EditUserForm } from '../components/EditUserForm'
 import {
   selectUsers,
   selectLoading,
+  selectMessage,
   getAllAction,
   createAction,
   updateAction,
@@ -47,6 +49,7 @@ const UserManager: React.FC = () => {
   const dispatch = useAppDispatch()
   const users = useAppSelector(selectUsers)
   const loading = useAppSelector(selectLoading)
+  const messageContent = useAppSelector(selectMessage)
   useEffect(() => {
     dispatch(getAllAction())
     return () => {}
@@ -55,6 +58,9 @@ const UserManager: React.FC = () => {
   useEffect(() => {
     if (loading === 'done' && modalShowing !== 'none') {
       setModalShowing('none')
+    }
+    if (loading === 'error') {
+      message.error(messageContent)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading])

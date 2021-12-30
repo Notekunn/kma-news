@@ -10,7 +10,7 @@ export const getTreeCategories = () => {
 }
 
 export const createCategory = (params: APIParameter.CreateCategory) => {
-  return client.patch('/categories/', params) as Promise<APIResponse.CreateCategory>
+  return client.post('/categories/', params) as Promise<APIResponse.CreateCategory>
 }
 
 export const updateCategory = (params: APIParameter.UpdateCategory) => {

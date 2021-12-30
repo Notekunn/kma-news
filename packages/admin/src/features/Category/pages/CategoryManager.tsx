@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react'
+import message from 'antd/lib/message'
 import { ICategory } from 'shared-types'
 import { AddModal } from '@/components/AddModal'
 import { ProTable, ProTableColumns } from '@/components/ProTable'
 import { AddCategoryForm } from '../components/AddCategoryForm'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { getAllAction, selectData, selectLoading } from '../categorySlice'
+import {
+  selectData,
+  selectLoading,
+  selectMessage,
+  getAllAction,
+  createAction,
+  updateAction,
+  deleteAction,
+} from '../categorySlice'
 import { EditModal } from '@/components/EditModal'
 import { EditCategoryForm } from '../components/EditCategoryForm'
 const columns: ProTableColumns<ICategory> = [
@@ -29,10 +38,20 @@ const CategoryManager: React.FC = () => {
   const [editingID, setEditingID] = useState('')
   const categories = useAppSelector(selectData)
   const loading = useAppSelector(selectLoading)
+  const messageContent = useAppSelector(selectMessage)
   const [modalShowing, setModalShowing] = useState<'none' | 'add' | 'edit'>('none')
   useEffect(() => {
     dispatch(getAllAction())
   }, [dispatch])
+  useEffect(() => {
+    if (loading === 'done' && modalShowing !== 'none') {
+      setModalShowing('none')
+    }
+    if (loading === 'error') {
+      message.error(messageContent)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading])
   return (
     <div>
       <ProTable<ICategory>
@@ -44,11 +63,15 @@ const CategoryManager: React.FC = () => {
           setModalShowing('edit')
           setEditingID(id)
         }}
+        onDelete={(id) => dispatch(deleteAction(id))}
       />
       <AddModal<ICategory>
         visible={modalShowing === 'add'}
         hideModal={() => setModalShowing('none')}
-        onSubmit={(form) => {}}
+        onSubmit={(form) => {
+          const { title, description } = form.getFieldsValue()
+          dispatch(createAction({ title, description }))
+        }}
         loading={loading === 'pending'}
       >
         <AddCategoryForm />
@@ -56,7 +79,10 @@ const CategoryManager: React.FC = () => {
       <EditModal<ICategory>
         visible={modalShowing === 'edit'}
         hideModal={() => setModalShowing('none')}
-        onSubmit={(form) => {}}
+        onSubmit={(form) => {
+          const { title, slug, description } = form.getFieldsValue()
+          dispatch(updateAction({ _id: editingID, title, slug, description }))
+        }}
         loading={loading === 'pending'}
         initialValues={categories.find((e) => e._id === editingID)}
       >
