@@ -73,5 +73,17 @@ export namespace APIResponse {
 
   export interface CreateCategory extends ObjectWithID<ICategory> {}
 
+  export interface UpdateCategory extends ObjectWithID<ICategory> {}
+
+  export interface DeleteCategory extends ObjectWithID<ICategory> {}
+
   export type GetAllCategories = GetMany<ICategory>
+
+  interface TreeCategory {
+    title: string
+    slug: string
+    description: string
+    subItem: TreeCategory[]
+  }
+  export type GetTreeCategories = TreeCategory[]
 }

@@ -93,6 +93,18 @@ export const showCategoryByTree = errorWrapper(async (req, res, next) => {
         'subItems.title': 1,
       },
     },
+    {
+      $project: {
+        _id: 1,
+        title: 1,
+        slug: 1,
+        description: 1,
+        'subItems._id': 1,
+        'subItems.title': 1,
+        'subItems.slug': 1,
+        'subItems.description': 1,
+      },
+    },
   ])
 
   res.send(result)
