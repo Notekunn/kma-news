@@ -3,14 +3,18 @@ import logger from './logger'
 import VNExpress from './services/vnexpress'
 import BaoChinhPhu from './services/baochinhphu'
 import VietNamNet from './services/vietnamnet'
+import TienPhong from './services/tienphong'
+import Client from './client'
+import VtcNews from './services/vtcNews'
 
 const vnexpress = new VNExpress()
 const baochinhphu = new BaoChinhPhu()
 const vietnamnet = new VietNamNet()
+const tienphong = new TienPhong()
+const vtcnews = new VtcNews()
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379'
 
-import Client from './client'
 const client = Client.getInstance().client
 
 // Tạo 1 queue nhận url để xử lý
@@ -20,25 +24,39 @@ export const crawlQueue = new Queue<string>('crawler', REDIS_URL, {
 // Tạo queue lấy các tin mới nhất
 export const crawlLastedQueue = new Queue<string>('lasted', REDIS_URL)
 
-crawlQueue.process('vnexpress', function (job, done) {
-  vnexpress
-    .getNewDetail(job.data)
-    .then(vnexpress.updateDatabase)
-    .then((e) => done(null, e))
-    .catch((e) => done(e))
-})
-crawlQueue.process('baochinhphu', function (job, done) {
-  baochinhphu
-    .getNewDetail(job.data)
-    .then(baochinhphu.updateDatabase)
-    .then((e) => done(null, e))
-    .catch((e) => done(e))
-})
+// crawlQueue.process('vnexpress', function (job, done) {
+//   vnexpress
+//     .getNewDetail(job.data)
+//     .then(vnexpress.updateDatabase)
+//     .then((e) => done(null, e))
+//     .catch((e) => done(e))
+// })
+// crawlQueue.process('baochinhphu', function (job, done) {
+//   baochinhphu
+//     .getNewDetail(job.data)
+//     .then(baochinhphu.updateDatabase)
+//     .then((e) => done(null, e))
+//     .catch((e) => done(e))
+// })
 
-crawlQueue.process('vietnamnet', function (job, done) {
-  vietnamnet
+// crawlQueue.process('vietnamnet', function (job, done) {
+//   vietnamnet
+//     .getNewDetail(job.data)
+//     .then(vietnamnet.updateDatabase)
+//     .then((e) => done(null, e))
+//     .catch((e) => done(e))
+// })
+crawlQueue.process('vtcnews', function (job, done) {
+  vtcnews
     .getNewDetail(job.data)
-    .then(vietnamnet.updateDatabase)
+    .then(vtcnews.updateDatabase)
+    .then((e) => done(null, e))
+    .catch((e) => done(e))
+})
+crawlQueue.process('tienphong', function (job, done) {
+  tienphong
+    .getNewDetail(job.data)
+    .then(tienphong.updateDatabase)
     .then((e) => done(null, e))
     .catch((e) => done(e))
 })
@@ -54,37 +72,61 @@ crawlQueue
     logger(`${result.isNew ? 'Store' : 'Update'} post with id`, result._id)
   })
 
-crawlLastedQueue.process('vnexpress', function (job, done) {
-  vnexpress
+// crawlLastedQueue.process('vnexpress', function (job, done) {
+//   vnexpress
+//     .getLastedNews()
+//     .then(vnexpress.lastedLinkFilter)
+//     .then((e) =>
+//       done(null, {
+//         host: 'vnexpress',
+//         data: e,
+//       })
+//     )
+//     .catch((e) => done(e))
+// })
+// crawlLastedQueue.process('baochinhphu', function (job, done) {
+//   baochinhphu
+//     .getLastedNews()
+//     .then(baochinhphu.lastedLinkFilter)
+//     .then((e) =>
+//       done(null, {
+//         host: 'baochinhphu',
+//         data: e,
+//       })
+//     )
+//     .catch((e) => done(e))
+// })
+// crawlLastedQueue.process('vietnamnet', function (job, done) {
+//   vietnamnet
+//     .getLastedNews()
+//     .then(vietnamnet.lastedLinkFilter)
+//     .then((e) =>
+//       done(null, {
+//         host: 'vietnamnet',
+//         data: e,
+//       })
+//     )
+//     .catch((e) => done(e))
+// })
+crawlLastedQueue.process('vtcnews', function (job, done) {
+  vtcnews
     .getLastedNews()
-    .then(vnexpress.lastedLinkFilter)
+    .then(vtcnews.lastedLinkFilter)
     .then((e) =>
       done(null, {
-        host: 'vnexpress',
+        host: 'tienphong',
         data: e,
       })
     )
     .catch((e) => done(e))
 })
-crawlLastedQueue.process('baochinhphu', function (job, done) {
-  baochinhphu
+crawlLastedQueue.process('tienphong', function (job, done) {
+  tienphong
     .getLastedNews()
-    .then(baochinhphu.lastedLinkFilter)
+    .then(tienphong.lastedLinkFilter)
     .then((e) =>
       done(null, {
-        host: 'baochinhphu',
-        data: e,
-      })
-    )
-    .catch((e) => done(e))
-})
-crawlLastedQueue.process('vietnamnet', function (job, done) {
-  vietnamnet
-    .getLastedNews()
-    .then(vietnamnet.lastedLinkFilter)
-    .then((e) =>
-      done(null, {
-        host: 'vietnamnet',
+        host: 'tienphong',
         data: e,
       })
     )

@@ -1,10 +1,14 @@
 import VNExpress from './services/vnexpress'
 import BaoChinhPhu from './services/baochinhphu'
 import VietNamNet from './services/vietnamnet'
+import TienPhong from './services/tienphong'
 import mongoose from 'mongoose'
+import VtcNews from './services/vtcNews'
+const tienphong = new TienPhong()
 const baochinhphu = new BaoChinhPhu()
 const vnexpress = new VNExpress()
 const vietnamnet = new VietNamNet()
+const vtcnews = new VtcNews()
 async function connectDatabase() {
   await mongoose.connect(
     process.env.DATABASE_URL ||
