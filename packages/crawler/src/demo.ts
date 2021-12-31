@@ -24,9 +24,7 @@ function main() {
   //     'https://baochinhphu.vn/Tin-noi-bat/Nang-cao-hinh-anh-uy-tin-nghe-nghiep-dia-vi-cua-luat-su/457245.vgp'
   //   )
   //   .then(console.log)
-  vietnamnet
-    .getNewDetail(
-      'http://vietnamnet.vn/vn/oto-xe-may/danh-gia-xe/thu-dam-tan-nat-xem-suv-dien-bmw-ix-an-toan-o-muc-nao-804548.html'
-    )
+  vnexpress
+    .getNewDetail('https://vnexpress.net/viet-nam-phat-hien-ca-nhiem-omicron-dau-tien-4409186.html')
     .then(console.log)
 }
