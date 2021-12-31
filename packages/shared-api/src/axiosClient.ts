@@ -45,17 +45,18 @@ axiosClient.interceptors.response.use(
           })
       }
     }
+    const status = error?.response?.status && `[${error.response.status}] `
     if (error?.response?.data?.message) {
-      return Promise.reject(error.response.data.message)
+      return Promise.reject(status + error.response.data.message)
     }
     if (error?.response?.data?.error?.message) {
-      return Promise.reject(error.response.data.error.message)
+      return Promise.reject(status + error.response.data.error.message)
     }
     if (error?.response?.data?.error?.errors) {
-      return Promise.reject(error.response.data.error.errors)
+      return Promise.reject(status + error.response.data.error.errors)
     }
     if (error?.response?.data?.error) {
-      return Promise.reject(error.response.data.error)
+      return Promise.reject(status + error.response.data.error)
     }
     return Promise.reject(error)
   }

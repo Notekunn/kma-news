@@ -7,7 +7,8 @@ import {
   selectLoadingProfile,
   selectLoggedIn,
 } from '@/features/Auth/authSlice'
-import message from 'antd/lib/message'
+import Result from 'antd/lib/result'
+import Button from 'antd/lib/button'
 import { BasicLayout } from './BasicLayout'
 
 export const SecurityLayout: React.FC = (props) => {
@@ -32,11 +33,15 @@ export const SecurityLayout: React.FC = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingProfile, loggedIn, navigate])
-  useEffect(() => {
-    if (profile?.role === 'user') {
-      message.error('Bạn không có quyền truy cập trang này')
-      return
-    }
-  }, [profile])
+  if (profile?.role === 'user')
+    return (
+      <Result
+        status="403"
+        title="403"
+        subTitle="Sorry, you are not authorized to access this page."
+        extra={<Button type="primary">Logout</Button>}
+      />
+    )
+  if (!profile) return null
   return <BasicLayout />
 }
