@@ -21,7 +21,7 @@ export const LoginForm = React.memo(() => {
     [dispatch]
   )
   useEffect(() => {
-    if (!!loggedIn) navigate('/', { replace: true })
+    if (!!loggedIn) navigate('/')
     return () => {}
   }, [loggedIn, navigate])
   return (
