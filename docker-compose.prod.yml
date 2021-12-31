@@ -2,12 +2,8 @@ version: '3.4'
 
 services:
     backend:
-        image: kma-news-backend
+        image: notekunn/kma-news-backend
         container_name: kma-news-backend
-        build:
-            context: .
-            dockerfile: Dockerfile
-            target: product
         environment:
             NODE_ENV: development
             PORT: 8080
@@ -36,15 +32,8 @@ services:
         command: yarn backend deploy
 
     frontend:
-        image: kma-news-frontend
+        image: notekunn/kma-news-frontend
         container_name: kma-news-frontend
-        build:
-            context: .
-            dockerfile: Dockerfile
-            target: static_product
-            args:
-                BUILD_CONTEXT: frontend
-                API_URL: "https://${BACKEND_HOST}"
         environment:
             REACT_APP_API_URL: "https://${BACKEND_HOST}"
             VIRTUAL_HOST: "${FRONTEND_HOST}"
@@ -59,15 +48,8 @@ services:
         command: [ "nginx", "-g", "daemon off;" ]
 
     admin:
-        image: kma-news-admin
+        image: notekunn/kma-news-admin
         container_name: kma-news-admin
-        build:
-            context: .
-            dockerfile: Dockerfile
-            target: static_product
-            args:
-                BUILD_CONTEXT: admin
-                API_URL: "https://${BACKEND_HOST}"
         environment:
             REACT_APP_API_URL: "https://${BACKEND_HOST}"
             VIRTUAL_HOST: "${ADMIN_HOST}"
@@ -106,16 +88,11 @@ services:
         ports:
             - 6379:6379
     crawler:
+        image: notekunn/kma-news-crawler
         container_name: kma-news-crawler
         depends_on:
             - db
             - cache
-        build:
-            context: .
-            dockerfile: Dockerfile
-            target: product
-            args:
-                BUILD_CONTEXT: crawler
         environment:
             DATABASE_URL: "mongodb://${DB_USERNAME}:${DB_PASSWORD}@db:27017/${DB_NAME}?auth\
                 Source=admin"
