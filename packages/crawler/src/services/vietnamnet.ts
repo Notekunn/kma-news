@@ -58,6 +58,7 @@ export default class VietNamNet extends BaseService {
       source: 'vietnamnet.vn',
       owner: 'Lam Sơn',
       publishedAt: publishedTime,
+      sourceURL: url,
       paragraphs,
     }
     const last = paragraphs.splice(-1)

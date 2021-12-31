@@ -56,6 +56,7 @@ export default class VtcNews extends BaseService {
       source: 'vtc.vn',
       owner: this.formatText($('.author-make > .uppercase').text()),
       publishedAt: publishedTime,
+      sourceURL: url,
       paragraphs,
     }
     const category = $('.ms-navigation').find('li > a.active')

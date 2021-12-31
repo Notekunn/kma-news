@@ -57,6 +57,7 @@ export default class TienPhong extends BaseService {
       source: 'tienphong.vn',
       owner: this.formatText($('.article__author span').text()),
       publishedAt: publishedTime,
+      sourceURL: url,
       paragraphs,
     }
     const category = $('.main-cate ').find('a')

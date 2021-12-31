@@ -58,6 +58,7 @@ export default class BaoChinhPhu extends BaseService {
       source: 'baochinhphu.vn',
       owner: 'Lam Sơn',
       publishedAt: publishedTime,
+      sourceURL: url,
       paragraphs,
     }
     const last = paragraphs.splice(-1)
