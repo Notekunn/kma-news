@@ -1,3 +1,4 @@
+import moment from 'moment'
 import mongoose from 'mongoose'
 import { IPostDocument, IParagraph } from 'shared-types'
 import BaseService from '../services/base'
@@ -70,7 +71,7 @@ const postSchema = new mongoose.Schema<IPostDocument>(
   }
 )
 postSchema.pre('save', function (next) {
-  this.slug = BaseService.stringToSlug(this.title)
+  this.slug = this.generateSlug()
   this.paragraphs = this.paragraphs.map((e) => {
     if (e.type === 'text') {
       return {
@@ -86,4 +87,12 @@ postSchema.pre('save', function (next) {
   })
   next()
 })
+postSchema.methods.generateSlug = function () {
+  let slug = BaseService.stringToSlug(this.title)
+  if (this.publishedAt) {
+    slug += '-'
+    slug += new Date(this.publishedAt).getTime().toString().slice(0, -3)
+  }
+  return slug
+}
 export const PostModel = mongoose.model('post', postSchema)

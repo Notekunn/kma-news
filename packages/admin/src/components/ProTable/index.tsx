@@ -53,7 +53,7 @@ export const ProTable = function <T extends Object>(props: ProTableProps<ObjectW
   const fullColumn = columns.concat(actionColumn)
   return (
     <div>
-      <div
+      {/* <div
         style={{
           background: '#FFF',
           padding: '24px 24px 12px',
@@ -74,7 +74,7 @@ export const ProTable = function <T extends Object>(props: ProTableProps<ObjectW
           <Button type="primary">Query</Button>
           <Button type="link">Expland</Button>
         </Space>
-      </div>
+      </div> */}
       <div style={{ background: '#ffff', paddingLeft: '10px', paddingRight: '10px' }}>
         <div style={{ padding: '10px', display: 'flex', justifyContent: 'space-between' }}>
           <h3>{tableName}</h3>
@@ -91,7 +91,7 @@ export const ProTable = function <T extends Object>(props: ProTableProps<ObjectW
             </Button>
           </div>
         </div>
-        <Table<ObjectWithID<T>> columns={fullColumn} dataSource={items} rowKey="id" />
+        <Table<ObjectWithID<T>> columns={fullColumn} dataSource={items} rowKey="_id" />
       </div>
     </div>
   )
