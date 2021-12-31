@@ -17,13 +17,8 @@ const categorySchema = new mongoose.Schema<ICategoryDocument>(
     parrent: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'category',
+      default: null,
     },
-    ancestors: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'category',
-      },
-    ],
   },
   {
     versionKey: false,

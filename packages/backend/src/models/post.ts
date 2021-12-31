@@ -70,7 +70,7 @@ const postSchema = new mongoose.Schema<IPostDocument>(
   }
 )
 postSchema.pre('save', function (next) {
-  this.slug = stringToSlug(this.title)
+  this.slug = this.generateSlug()
   this.paragraphs = this.paragraphs.map((e) => {
     if (e.type === 'text') {
       return {
@@ -86,4 +86,13 @@ postSchema.pre('save', function (next) {
   })
   next()
 })
+
+postSchema.methods.generateSlug = function () {
+  let slug = stringToSlug(this.title)
+  if (this.publishedAt) {
+    slug += '-'
+    slug += new Date(this.publishedAt).getTime().toString().slice(0, -3)
+  }
+  return slug
+}
 export const PostModel = mongoose.model('post', postSchema)

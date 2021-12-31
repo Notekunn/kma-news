@@ -1,4 +1,4 @@
-import { loginWithEmail, getProfile, Types, logout, getAllUsers } from 'shared-api'
+import { loginWithEmail, getProfile, Types, logout } from 'shared-api'
 import { RootState } from '@/app/store'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { LoadingState } from 'shared-types'
@@ -11,7 +11,6 @@ export const loginAction = createAsyncThunk(
   }
 )
 export const profileAction = createAsyncThunk('auth/profile', async (_, thunkAPI) => {
-  console.log(await getAllUsers({}))
   const data = await getProfile()
   return data
 })
@@ -28,10 +27,12 @@ export interface AuthState {
   loggedIn: boolean
   profile?: Types.APIResponse.Profile
   message?: string
+  loadingProfile: LoadingState
 }
 const initialState: AuthState = {
   loading: 'idle',
   loggedIn: !!localStorage.getItem('access_token'),
+  loadingProfile: 'idle',
 }
 const authSlice = createSlice({
   name: 'auth',
@@ -45,7 +46,8 @@ const authSlice = createSlice({
       .addCase(loginAction.fulfilled, (state, action) => {
         state.loading = 'done'
         state.loggedIn = true
-        const { access_token, refresh_token } = action.payload
+        const { access_token, refresh_token, user } = action.payload
+        state.profile = user
         localStorage.setItem('access_token', access_token)
         localStorage.setItem('refresh_token', refresh_token)
       })
@@ -53,17 +55,20 @@ const authSlice = createSlice({
         state.loading = 'error'
         state.message = action.error.message
       })
+    builder
       .addCase(profileAction.pending, (state) => {
-        state.loading = 'pending'
+        state.loadingProfile = 'pending'
       })
       .addCase(profileAction.fulfilled, (state, action) => {
-        state.loading = 'done'
+        state.loadingProfile = 'done'
         state.profile = action.payload
       })
       .addCase(profileAction.rejected, (state, action) => {
-        state.loading = 'error'
+        state.loggedIn = false
+        state.loadingProfile = 'error'
         state.message = action.error.message
       })
+    builder
       .addCase(logoutAction.pending, (state) => {
         state.loading = 'pending'
       })
@@ -89,5 +94,6 @@ export const selectLoading = (state: RootState) => state.auth.loading
 export const selectLoggedIn = (state: RootState) => state.auth.loggedIn
 export const selectProfile = (state: RootState) => state.auth.profile
 export const selectMessage = (state: RootState) => state.auth.message
+export const selectLoadingProfile = (state: RootState) => state.auth.message
 
 export default authSlice.reducer

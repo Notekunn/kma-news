@@ -1,13 +1,29 @@
-import { IUser, ObjectWithID } from 'shared-types'
+import { IUser, ObjectWithID, IPost, ICategory } from 'shared-types'
 
 type UserWithoutPassword = Exclude<IUser, 'password'>
 export namespace APIResponse {
+  export type GetMany<T> = ObjectWithID<T>[]
   export interface Login {
     access_token: string
     refresh_token: string
     tokenExpiration: string
     refreshTokenExpiration: string
     user: ObjectWithID<UserWithoutPassword>
+  }
+  interface paragraph {
+    type: 'text' | 'image'
+    content?: string
+    description?: string
+  }
+  export interface InforRenderPage {
+    title: string
+    slug: string
+    category: string
+    description: string
+    source: string
+    owner: string
+    publishAt: Date
+    [paragraphs: number]: paragraph
   }
 
   export interface RefreshToken {
@@ -47,11 +63,42 @@ export namespace APIResponse {
   export type Covid19 = Record<'internal' | 'world', LocationData> &
     Record<'locations', Array<LocationData & Record<'name', string>>>
 
-  export type GetAllUsers = ObjectWithID<IUser>[]
+  export type GetAllUsers = GetMany<UserWithoutPassword>
 
-  export interface CreateUser extends ObjectWithID<IUser> {}
+  export interface CreateUser extends ObjectWithID<UserWithoutPassword> {}
 
-  export interface UpdateUser extends ObjectWithID<IUser> {}
+  export interface UpdateUser extends ObjectWithID<UserWithoutPassword> {}
 
-  export interface DeleteUser extends ObjectWithID<IUser> {}
+  export interface DeleteUser extends ObjectWithID<UserWithoutPassword> {}
+
+  export type GetAllPosts = GetMany<
+    Pick<
+      IPost,
+      'title' | 'slug' | 'description' | 'categories' | 'source' | 'thumbnailUrl' | 'publishedAt'
+    >
+  >
+
+  export interface GetOnePost extends ObjectWithID<IPost> {}
+
+  export interface UpdatePost extends ObjectWithID<IPost> {}
+
+  export interface CreatePost extends ObjectWithID<IPost> {}
+
+  export interface DeletePost extends ObjectWithID<IPost> {}
+
+  export interface CreateCategory extends ObjectWithID<ICategory> {}
+
+  export interface UpdateCategory extends ObjectWithID<ICategory> {}
+
+  export interface DeleteCategory extends ObjectWithID<ICategory> {}
+
+  export type GetAllCategories = GetMany<ICategory>
+
+  interface TreeCategory {
+    title: string
+    slug: string
+    description: string
+    subItem: TreeCategory[]
+  }
+  export type GetTreeCategories = TreeCategory[]
 }

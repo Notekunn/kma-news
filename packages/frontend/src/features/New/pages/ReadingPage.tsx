@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import BoxVideo from '../components/BoxVideo'
 import BoxHot from '../components/BoxHot'
 import { IoIosArrowForward } from 'react-icons/io'
@@ -8,11 +8,41 @@ import { VscTag } from 'react-icons/vsc'
 import { GoReport } from 'react-icons/go'
 import { HiOutlineDocumentDuplicate, HiOutlineKey } from 'react-icons/hi'
 import { BoxNews } from '../components/BoxNews'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { selectData, renderPage } from '../slice/readingPageSlice'
+import { useParams } from 'react-router-dom'
+import { FrameImage } from '../components/FrameImage'
+interface Props {
+  slug: string
+}
+interface ImageInfor {
+  id: number
+  url: string
+  description?: string
+}
 
-interface Props {}
-const ReadingPage: React.FC<Props> = (props) => {
+const ReadingPage = () => {
+  const [imgState, setImgState] = useState<ImageInfor[]>([])
+  const [idState, setIdState] = useState(0)
+  const [visiable, toggleVisiable] = useState(false)
+  const dispatch = useAppDispatch()
+  const data = useAppSelector(selectData)
+  const { slug } = useParams()
+  useEffect(() => {
+    dispatch(renderPage())
+  }, [dispatch])
   return (
     <>
+      {visiable ? (
+        <FrameImage
+          arrImg={imgState}
+          id={idState}
+          visiable={visiable}
+          toggleVisiable={toggleVisiable}
+        />
+      ) : (
+        ''
+      )}
       <div className="container container--positions">
         <div className="col-9 container-main ">
           <div className="indexPath">
@@ -25,10 +55,7 @@ const ReadingPage: React.FC<Props> = (props) => {
               <div className="news-content">
                 <div className="news">
                   <div className="page-title">
-                    <h1 className="page-title-content">
-                      Tổng Bí thư: Xây dựng trường phái ngoại giao mang đậm bản sắc 'cây tre Việt
-                      Nam'
-                    </h1>
+                    <h1 className="page-title-content">{data.title}</h1>
                   </div>
                   <div className="page-extension">
                     <img
@@ -37,34 +64,43 @@ const ReadingPage: React.FC<Props> = (props) => {
                       alt="VOV"
                     />
                     <AiOutlineStar className="page-extension-icon--like" />
-                    <h3 className="page-extension-font">14/12/21 12:22 GMT+7</h3>
+                    <h3 className="page-extension-font">{data.publishedAt}</h3>
                     <h3 className="page-extension-font">7 đăng lại</h3>
                     <h3 className="page-extension-font">63 liên quan</h3>
                     <div className="page-extension-origin">
                       <HiOutlineDocumentDuplicate className="page-extension-icon--origin" />
-                      <h3 className="page-extension-font">Gốc</h3>
+                      <h3 className="page-extension-font">
+                        <a href=""></a>
+                      </h3>
                     </div>
                   </div>
-                  <div className="page-desc">
-                    Theo Tổng Bí thư, bản sắc 'cây tre Việt Nam' đó là: Mềm mại, khôn khéo, nhưng
-                    rất kiên cường, quyết liệt; linh hoạt, sáng tạo nhưng rất bản lĩnh, kiên định,
-                    can trường trước mọi thử thách, khó khăn vì độc lập dân tộc, vì tự do, hạnh phúc
-                    của nhân dân.
-                  </div>
+                  <div className="page-desc">{data.description}</div>
+                  {data.paragraphs.forEach((el) => {
+                    if (el.type === 'text') {
+                      return <p className="page-word">{el.content}</p>
+                    } else
+                      return (
+                        <p className="page-img">
+                          <img src={el.imageUrl[0]} alt="" className="page-img-content" />
+                        </p>
+                      )
+                  })}
                   <p className="page-word">
                     Sáng 14/12 tại Hà Nội, Bộ Chính trị, Ban Bí thư tổ chức Hội nghị đối ngoại toàn
                     quốc triển khai thực hiện Nghị quyết Đại hội lần thứ XIII của Đảng theo hình
                     thức trực tiếp kết hợp trực tuyến. Tổng Bí thư Nguyễn Phú Trọng tới dự và có bài
                     phát biểu quan trọng chỉ đạo tại hội nghị.
                   </p>
-                  <p className="page-img">
-                    <a href="/" className="page-img-link">
-                      <img
-                        src="https://photo-baomoi.zadn.vn/w700_r1/2021_12_14_65_30791999/96a6e0125150b80ee141.jpg"
-                        alt=""
-                        className="page-img-content"
-                      />
-                    </a>
+                  <p className="page-img" onClick={() => toggleVisiable(true)}>
+                    {/* <a href="" className="page-img-link"> */}
+                    <img
+                      src="https://photo-baomoi.zadn.vn/w700_r1/2021_12_14_65_30791999/96a6e0125150b80ee141.jpg"
+                      alt=""
+                      className="page-img-content"
+                    />
+                    {/* </a> */}
+
+                    {/* <FrameImage /> */}
                   </p>
                   <p className="page-caption">
                     Tổng Bí thư Nguyễn Phú Trọng, Chủ tịch nước Nguyễn Xuân Phúc, Thủ tướng Phạm

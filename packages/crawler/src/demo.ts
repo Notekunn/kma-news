@@ -28,14 +28,7 @@ function main() {
   //     'https://baochinhphu.vn/Tin-noi-bat/Nang-cao-hinh-anh-uy-tin-nghe-nghiep-dia-vi-cua-luat-su/457245.vgp'
   //   )
   //   .then(console.log)
-  // tienphong
-  //   .getNewDetail(
-  //     'https://tienphong.vn/nha-bao-nguoi-maori-co-hinh-xam-tren-mat-dau-tien-tro-thanh-mc-dan-ban-tin-gio-vang-post1405172.tpo'
-  //   )
-  //   .then(console.log)
-  vtcnews
-    .getNewDetail(
-      'https://vtc.vn/vu-di-ghe-hanh-ha-be-gai-8-tuoi-den-chet-tiet-lo-tu-nguoi-giup-viec-ar654422.html'
-    )
+  vnexpress
+    .getNewDetail('https://vnexpress.net/viet-nam-phat-hien-ca-nhiem-omicron-dau-tien-4409186.html')
     .then(console.log)
 }

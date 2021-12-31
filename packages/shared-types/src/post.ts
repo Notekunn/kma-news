@@ -18,6 +18,7 @@ export interface IPost {
   title: string
   slug: string
   description: string
+  url: string
   paragraphs: Array<IParagraph>
   thumbnailUrl: string
   source?: string
@@ -30,7 +31,9 @@ export interface IPost {
 
 export interface IPostModel extends Model<IPost> {}
 
-export interface IPostDocument extends IPost, Document {}
+export interface IPostDocument extends IPost, Document {
+  generateSlug: () => string
+}
 
 export interface IParagraphTextModel extends Model<IParagraphText> {}
 

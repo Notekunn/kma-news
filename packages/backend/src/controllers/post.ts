@@ -30,6 +30,17 @@ export const getAll: IController = errorWrapper(async (req, res, next) => {
     .limit(limit)
     .populate('categories', ['title', 'slug'])
     .sort({ publishedAt: -1 })
+    .select([
+      'title',
+      'slug',
+      'description',
+      'categories',
+      'thumbnailUrl',
+      'source',
+      'publishedAt',
+      // 'status',
+      // 'owner',
+    ])
   res.json(data)
 })
 

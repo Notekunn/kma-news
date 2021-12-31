@@ -10,6 +10,10 @@ router.get('/tree', categoryController.showCategoryByTree)
 
 router.post('/', authMiddleware, guardMiddleware('admin'), categoryController.create)
 
+router.patch('/:id', authMiddleware, guardMiddleware('admin'), categoryController.update)
+
+router.delete('/:id', authMiddleware, guardMiddleware('admin'), categoryController.remove)
+
 // router.post('/sub', authMiddleware, guardMiddleware('admin'), categoryController.addSubItem)
 
 export default router
