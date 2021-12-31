@@ -13,47 +13,42 @@ interface FrameImageProps {
   visiable: boolean
   toggleVisiable: (visiable: boolean) => void
 }
-
+const DEFAULT_FRAME: Array<ImageInfor> = [
+  {
+    id: 1,
+    url: 'https://photo-baomoi.zadn.vn/w700_r1/2021_12_29_329_41351980/cd0f7b07c4452d1b7454.jpg',
+    description:
+      'Tổng Bí thư Nguyễn Phú Trọng, Chủ tịch nước Nguyễn Xuân Phúc, Thủ tướng Phạm Minh Chính, Thường trực Ban Bí thư Võ Văn Thưởng dự Hội nghị đối ngoại toàn quốc triển khai thực hiện Nghị quyết Đại hội lần thứ XIII của Đảng.',
+  },
+  {
+    id: 2,
+    url: 'https://photo-baomoi.zadn.vn/w1000_r1/2021_12_29_329_41351980/d6261717b855510b0844.jpg',
+    description:
+      'Tổng Bí thư Nguyễn Phú Trọng, Chủ tịch nước Nguyễn Xuân Phúc, Thủ tướng Phạm Minh Chính, Thường trực Ban Bí thư Võ Văn Thưởng dự Hội nghị đối ngoại toàn quốc triển khai thực hiện Nghị quyết Đại hội lần thứ XIII của Đảng.',
+  },
+  {
+    id: 3,
+    url: 'https://photo-baomoi.zadn.vn/w1000_r1/2021_12_29_329_41351980/0d89cbb864fa8da4d4eb.jpg',
+    description:
+      'Tổng Bí thư Nguyễn Phú Trọng, Chủ tịch nước Nguyễn Xuân Phúc, Thủ tướng Phạm Minh Chính, Thường trực Ban Bí thư Võ Văn Thưởng dự Hội nghị đối ngoại toàn quốc triển khai thực hiện Nghị quyết Đại hội lần thứ XIII của Đảng.',
+  },
+]
 export const FrameImage: React.FC<FrameImageProps> = (props) => {
   // export const FrameImage = () => {
   const [fullState, setFullState] = useState(false)
-  const { id, visiable, toggleVisiable } = props
+  const { id, visiable, toggleVisiable, arrImg } = props
   const [idCurrent, setIdCurrent] = useState(3)
-
-  const arrImg: Array<ImageInfor> = [
-    {
-      id: 1,
-      url: 'https://photo-baomoi.zadn.vn/w700_r1/2021_12_29_329_41351980/cd0f7b07c4452d1b7454.jpg',
-      description:
-        'Tổng Bí thư Nguyễn Phú Trọng, Chủ tịch nước Nguyễn Xuân Phúc, Thủ tướng Phạm Minh Chính, Thường trực Ban Bí thư Võ Văn Thưởng dự Hội nghị đối ngoại toàn quốc triển khai thực hiện Nghị quyết Đại hội lần thứ XIII của Đảng.',
-    },
-    {
-      id: 2,
-      url: 'https://photo-baomoi.zadn.vn/w1000_r1/2021_12_29_329_41351980/d6261717b855510b0844.jpg',
-      description:
-        'Tổng Bí thư Nguyễn Phú Trọng, Chủ tịch nước Nguyễn Xuân Phúc, Thủ tướng Phạm Minh Chính, Thường trực Ban Bí thư Võ Văn Thưởng dự Hội nghị đối ngoại toàn quốc triển khai thực hiện Nghị quyết Đại hội lần thứ XIII của Đảng.',
-    },
-    {
-      id: 3,
-      url: 'https://photo-baomoi.zadn.vn/w1000_r1/2021_12_29_329_41351980/0d89cbb864fa8da4d4eb.jpg',
-      description:
-        'Tổng Bí thư Nguyễn Phú Trọng, Chủ tịch nước Nguyễn Xuân Phúc, Thủ tướng Phạm Minh Chính, Thường trực Ban Bí thư Võ Văn Thưởng dự Hội nghị đối ngoại toàn quốc triển khai thực hiện Nghị quyết Đại hội lần thứ XIII của Đảng.',
-    },
-  ]
-  const index = arrImg.findIndex((el) => el.id === idCurrent)
+  const index = Math.max(
+    arrImg.findIndex((el) => el.id === idCurrent),
+    0
+  )
   const data: ImageInfor = arrImg[index]
-  //   const data: ImageInfor = {
-  //     id: 1,
-  //     url: 'https://photo-baomoi.zadn.vn/w700_r1/2021_12_29_329_41351980/cd0f7b07c4452d1b7454.jpg',
-  //     description:
-  //       'Tổng Bí thư Nguyễn Phú Trọng, Chủ tịch nước Nguyễn Xuân Phúc, Thủ tướng Phạm Minh Chính, Thường trực Ban Bí thư Võ Văn Thưởng dự Hội nghị đối ngoại toàn quốc triển khai thực hiện Nghị quyết Đại hội lần thứ XIII của Đảng.',
-  //   }
   const handlePage = (params: boolean) => {
-    if (params == true) {
-      if (idCurrent == arrImg.length) setIdCurrent(1)
+    if (params === true) {
+      if (idCurrent === arrImg.length) setIdCurrent(1)
       else setIdCurrent(idCurrent + 1)
     } else {
-      if (idCurrent == 1) setIdCurrent(arrImg.length)
+      if (idCurrent === 1) setIdCurrent(arrImg.length)
       else setIdCurrent(idCurrent - 1)
     }
   }

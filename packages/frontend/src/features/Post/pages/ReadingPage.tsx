@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useMemo, useEffect, useState } from 'react'
 import BoxVideo from '../components/BoxVideo'
 import BoxHot from '../components/BoxHot'
 import { IoIosArrowForward } from 'react-icons/io'
@@ -12,11 +12,7 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { selectData, getPostAction } from '../postSlice'
 import { useParams } from 'react-router-dom'
 import { FrameImage } from '../components/FrameImage'
-interface ImageInfor {
-  id: number
-  url: string
-  description?: string
-}
+import { IParagraphImage } from 'shared-types'
 interface ImageDetail {
   id: number
   url: string
@@ -24,21 +20,31 @@ interface ImageDetail {
 }
 
 const ReadingPage = () => {
-  const [imgState, setImgState] = useState<ImageInfor[]>([])
   const { slug } = useParams<'slug'>()
   const [idState, setIdState] = useState(0)
   const [visible, toggleVisible] = useState(false)
-  const [showingImage, setShowingImage] = useState<ImageDetail | null>(null)
   const dispatch = useAppDispatch()
   const data = useAppSelector(selectData)
   useEffect(() => {
     if (slug) dispatch(getPostAction(slug))
   }, [dispatch, slug])
+  const allImages = useMemo(() => {
+    return data?.paragraphs
+      .filter((e) => e.type === 'image')
+      .map((e, i) => {
+        const paragraph = e as IParagraphImage
+        return {
+          id: i + 1,
+          url: paragraph.imageUrl[0],
+          description: paragraph.description,
+        }
+      }) as ImageDetail[]
+  }, [data])
   return (
     <>
-      {visible && (
+      {visible && allImages.length > 0 && (
         <FrameImage
-          arrImg={imgState}
+          arrImg={allImages}
           id={idState}
           visiable={visible}
           toggleVisiable={toggleVisible}
@@ -82,7 +88,7 @@ const ReadingPage = () => {
 
                     return (
                       <>
-                        <p className="page-img">
+                        <p className="page-img" onClick={() => toggleVisible(true)}>
                           <img src={paragraph.imageUrl[0]} alt="" className="page-img-content" />
                         </p>
                         <p className="page-caption">{paragraph.description}</p>
