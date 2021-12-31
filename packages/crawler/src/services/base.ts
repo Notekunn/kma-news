@@ -22,7 +22,7 @@ export default abstract class BaseService {
   abstract getNewDetail(url: string): Promise<IPost>
   async updateDatabase(post: IPost) {
     const postData = await PostModel.findOneAndUpdate(
-      { slug: post.slug },
+      { sourceURL: post.sourceURL },
       {
         ...post,
       },

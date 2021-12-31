@@ -56,6 +56,7 @@ export default class VNExpress extends BaseService {
       source: 'vnexpress.net',
       owner: 'Đức Cường',
       publishedAt: publishedTime,
+      sourceURL: url,
       paragraphs,
     }
     const last = paragraphs.splice(-1)

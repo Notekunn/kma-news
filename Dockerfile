@@ -24,8 +24,7 @@ RUN echo "Api url ${API_URL}"
 
 # Link 2 shared repo
 RUN yarn install && yarn shared-types build && yarn shared-types link && \
-    yarn shared-api link shared-types && yarn shared-api link shared-types \
-    && yarn shared-api link
+    yarn shared-api link shared-types --force && yarn shared-api build && yarn shared-api link
 
 # Copy package repo muon build
 COPY ./packages/${BUILD_CONTEXT}/package.json ./packages/${BUILD_CONTEXT}/package.json
@@ -42,6 +41,8 @@ FROM base as product
 ARG BUILD_CONTEXT=backend
 
 ENV NODE_ENV production
+
+ENV GENERATE_SOURCEMAP false
 
 RUN yarn ${BUILD_CONTEXT} build
 

@@ -3,9 +3,9 @@ import { Route, Routes } from 'react-router-dom'
 import { BasicLayout } from '@/layouts/BasicLayout'
 import Home from '@/features/HomePage/pages/HomePage'
 import Topic from '@/features/Topic/pages/Topic'
-import ReadingPage from '@/features/New/pages/ReadingPage'
-import { HotTopicPage } from '@/features/New/pages/HotTopicPage'
-import { UserPage } from '@/features/New/pages/UserPage'
+import ReadingPage from '@/features/Post/pages/ReadingPage'
+import { HotTopicPage } from '@/features/Post/pages/HotTopicPage'
+import { UserPage } from '@/features/Post/pages/UserPage'
 export const RootRouter = () => {
   return (
     <div>
