@@ -9,10 +9,15 @@ import { GoReport } from 'react-icons/go'
 import { HiOutlineDocumentDuplicate, HiOutlineKey } from 'react-icons/hi'
 import { BoxNews } from '../components/BoxNews'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { selectData, getPostAction } from '../newSlice'
+import { selectData, getPostAction } from '../postSlice'
 import { useParams } from 'react-router-dom'
 import { FrameImage } from '../components/FrameImage'
 interface ImageInfor {
+  id: number
+  url: string
+  description?: string
+}
+interface ImageDetail {
   id: number
   url: string
   description?: string
@@ -22,7 +27,8 @@ const ReadingPage = () => {
   const [imgState, setImgState] = useState<ImageInfor[]>([])
   const { slug } = useParams<'slug'>()
   const [idState, setIdState] = useState(0)
-  const [visiable, toggleVisiable] = useState(false)
+  const [visible, toggleVisible] = useState(false)
+  const [showingImage, setShowingImage] = useState<ImageDetail | null>(null)
   const dispatch = useAppDispatch()
   const data = useAppSelector(selectData)
   useEffect(() => {
@@ -30,15 +36,13 @@ const ReadingPage = () => {
   }, [dispatch, slug])
   return (
     <>
-      {visiable ? (
+      {visible && (
         <FrameImage
           arrImg={imgState}
           id={idState}
-          visiable={visiable}
-          toggleVisiable={toggleVisiable}
+          visiable={visible}
+          toggleVisiable={toggleVisible}
         />
-      ) : (
-        ''
       )}
       <div className="container container--positions">
         <div className="col-9 container-main ">

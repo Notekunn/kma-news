@@ -11,12 +11,12 @@ const initialState: ReadingPageState = {
   data: undefined,
   loading: 'idle',
 }
-export const getPostAction = createAsyncThunk('new/fetchOne', async (arg: string, ThunkApi) => {
+export const getPostAction = createAsyncThunk('post/fetchOne', async (arg: string, ThunkApi) => {
   const data = await getOnePost(arg)
   return data
 })
 
-const newSlice = createSlice({
+const postSlice = createSlice({
   name: 'new',
   initialState,
   reducers: {},
@@ -35,8 +35,8 @@ const newSlice = createSlice({
       })
   },
 })
-export const selectData = (state: RootState) => state.new.data
-export const selectLoading = (state: RootState) => state.new.loading
-export const selectError = (state: RootState) => state.new.message
+export const selectData = (state: RootState) => state.post.data
+export const selectLoading = (state: RootState) => state.post.loading
+export const selectError = (state: RootState) => state.post.message
 
-export default newSlice.reducer
+export default postSlice.reducer
