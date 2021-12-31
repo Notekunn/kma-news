@@ -9,12 +9,9 @@ import { GoReport } from 'react-icons/go'
 import { HiOutlineDocumentDuplicate, HiOutlineKey } from 'react-icons/hi'
 import { BoxNews } from '../components/BoxNews'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { selectData, renderPage } from '../slice/readingPageSlice'
+import { selectData, getPostAction } from '../newSlice'
 import { useParams } from 'react-router-dom'
 import { FrameImage } from '../components/FrameImage'
-interface Props {
-  slug: string
-}
 interface ImageInfor {
   id: number
   url: string
@@ -23,14 +20,14 @@ interface ImageInfor {
 
 const ReadingPage = () => {
   const [imgState, setImgState] = useState<ImageInfor[]>([])
+  const { slug } = useParams<'slug'>()
   const [idState, setIdState] = useState(0)
   const [visiable, toggleVisiable] = useState(false)
   const dispatch = useAppDispatch()
   const data = useAppSelector(selectData)
-  const { slug } = useParams()
   useEffect(() => {
-    dispatch(renderPage())
-  }, [dispatch])
+    if (slug) dispatch(getPostAction(slug))
+  }, [dispatch, slug])
   return (
     <>
       {visiable ? (
@@ -55,7 +52,7 @@ const ReadingPage = () => {
               <div className="news-content">
                 <div className="news">
                   <div className="page-title">
-                    <h1 className="page-title-content">{data.title}</h1>
+                    <h1 className="page-title-content">{data?.title}</h1>
                   </div>
                   <div className="page-extension">
                     <img
@@ -64,7 +61,7 @@ const ReadingPage = () => {
                       alt="VOV"
                     />
                     <AiOutlineStar className="page-extension-icon--like" />
-                    <h3 className="page-extension-font">{data.publishedAt}</h3>
+                    <h3 className="page-extension-font">{data?.publishedAt}</h3>
                     <h3 className="page-extension-font">7 đăng lại</h3>
                     <h3 className="page-extension-font">63 liên quan</h3>
                     <div className="page-extension-origin">
@@ -74,8 +71,8 @@ const ReadingPage = () => {
                       </h3>
                     </div>
                   </div>
-                  <div className="page-desc">{data.description}</div>
-                  {data.paragraphs.forEach((el) => {
+                  <div className="page-desc">{data?.description}</div>
+                  {data?.paragraphs.forEach((el) => {
                     if (el.type === 'text') {
                       return <p className="page-word">{el.content}</p>
                     } else
