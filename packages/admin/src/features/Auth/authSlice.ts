@@ -27,10 +27,12 @@ export interface AuthState {
   loggedIn: boolean
   profile?: Types.APIResponse.Profile
   message?: string
+  loadingProfile: LoadingState
 }
 const initialState: AuthState = {
   loading: 'idle',
   loggedIn: !!localStorage.getItem('access_token'),
+  loadingProfile: 'idle',
 }
 const authSlice = createSlice({
   name: 'auth',
@@ -53,17 +55,20 @@ const authSlice = createSlice({
         state.loading = 'error'
         state.message = action.error.message
       })
+    builder
       .addCase(profileAction.pending, (state) => {
-        state.loading = 'pending'
+        state.loadingProfile = 'pending'
       })
       .addCase(profileAction.fulfilled, (state, action) => {
-        state.loading = 'done'
+        state.loadingProfile = 'done'
         state.profile = action.payload
       })
       .addCase(profileAction.rejected, (state, action) => {
-        state.loading = 'error'
+        state.loggedIn = false
+        state.loadingProfile = 'error'
         state.message = action.error.message
       })
+    builder
       .addCase(logoutAction.pending, (state) => {
         state.loading = 'pending'
       })
@@ -89,5 +94,6 @@ export const selectLoading = (state: RootState) => state.auth.loading
 export const selectLoggedIn = (state: RootState) => state.auth.loggedIn
 export const selectProfile = (state: RootState) => state.auth.profile
 export const selectMessage = (state: RootState) => state.auth.message
+export const selectLoadingProfile = (state: RootState) => state.auth.message
 
 export default authSlice.reducer

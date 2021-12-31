@@ -1,27 +1,47 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { profileAction, selectProfile, selectLoading } from '@/features/Auth/authSlice'
+import {
+  profileAction,
+  selectProfile,
+  selectLoadingProfile,
+  selectLoggedIn,
+} from '@/features/Auth/authSlice'
+import Result from 'antd/lib/result'
+import Button from 'antd/lib/button'
 import { BasicLayout } from './BasicLayout'
 
 export const SecurityLayout: React.FC = (props) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const profile = useAppSelector(selectProfile)
-  const loading = useAppSelector(selectLoading)
+  const loadingProfile = useAppSelector(selectLoadingProfile)
+  const loggedIn = useAppSelector(selectLoggedIn)
+  const redirect_url = window.location.pathname
   useEffect(() => {
     dispatch(profileAction())
-  }, [dispatch])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
-    if (loading === 'error' || (loading === 'done' && !profile)) {
-      const redirect_url = window.location.pathname
+    if (loadingProfile === 'error' || !loggedIn) {
       navigate('/auth/login', {
         state: {
           redirect_url,
         },
       })
     }
-  }, [loading, navigate, profile])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadingProfile, loggedIn, navigate])
+  if (profile?.role === 'user')
+    return (
+      <Result
+        status="403"
+        title="403"
+        subTitle="Sorry, you are not authorized to access this page."
+        extra={<Button type="primary">Logout</Button>}
+      />
+    )
+  if (!profile) return null
   return <BasicLayout />
 }
