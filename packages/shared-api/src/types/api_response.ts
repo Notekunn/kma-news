@@ -10,6 +10,21 @@ export namespace APIResponse {
     refreshTokenExpiration: string
     user: ObjectWithID<UserWithoutPassword>
   }
+  interface paragraph {
+    type: 'text' | 'image'
+    content?: string
+    description?: string
+  }
+  export interface InforRenderPage {
+    title: string
+    slug: string
+    category: string
+    description: string
+    source: string
+    owner: string
+    publishAt: Date
+    [paragraphs: number]: paragraph
+  }
 
   export interface RefreshToken {
     access_token: string
