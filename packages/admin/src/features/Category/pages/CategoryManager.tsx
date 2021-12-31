@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useMemo, useEffect } from 'react'
 import message from 'antd/lib/message'
 import { ICategory } from 'shared-types'
-import { AddModal } from '@/components/AddModal'
 import { ProTable, ProTableColumns } from '@/components/ProTable'
-import { AddCategoryForm } from '../components/AddCategoryForm'
-import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { connect } from 'react-redux'
+import { AppDispatch, RootState } from '@/app/store'
 import {
   selectData,
   selectLoading,
@@ -13,8 +12,15 @@ import {
   createAction,
   updateAction,
   deleteAction,
+  selectModalAction,
+  selectSelectedId,
+  toggleAdd,
+  toggleEdit,
+  toggleNone,
 } from '../categorySlice'
+import { AddModal } from '@/components/AddModal'
 import { EditModal } from '@/components/EditModal'
+import { AddCategoryForm } from '../components/AddCategoryForm'
 import { EditCategoryForm } from '../components/EditCategoryForm'
 const columns: ProTableColumns<ICategory> = [
   {
@@ -33,63 +39,103 @@ const columns: ProTableColumns<ICategory> = [
     title: 'Mô tả',
   },
 ]
-const CategoryManager: React.FC = () => {
-  const dispatch = useAppDispatch()
-  const [editingID, setEditingID] = useState('')
-  const categories = useAppSelector(selectData)
-  const loading = useAppSelector(selectLoading)
-  const messageContent = useAppSelector(selectMessage)
-  const [modalShowing, setModalShowing] = useState<'none' | 'add' | 'edit'>('none')
+const mapStateToProps = (state: RootState) => ({
+  categories: selectData(state),
+  loading: selectLoading(state),
+  messageContent: selectMessage(state),
+  modalAction: selectModalAction(state),
+  selectedID: selectSelectedId(state),
+})
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  fetchCategories: () => dispatch(getAllAction()),
+  createCategory: (arg: Parameters<typeof createAction>[0]) => dispatch(createAction(arg)),
+  updateCategory: (arg: Parameters<typeof updateAction>[0]) => dispatch(updateAction(arg)),
+  deleteCategory: (arg: string) => dispatch(deleteAction(arg)),
+  toggleAdd: () => dispatch(toggleAdd()),
+  toggleEdit: (id: string) => dispatch(toggleEdit(id)),
+  toggleNone: () => dispatch(toggleNone()),
+})
+type CategoryManagerProps = {
+  loading: ReturnType<typeof selectLoading>
+  categories: ReturnType<typeof selectData>
+  messageContent: ReturnType<typeof selectMessage>
+  selectedID: ReturnType<typeof selectSelectedId>
+  modalAction: ReturnType<typeof selectModalAction>
+} & ReturnType<typeof mapDispatchToProps>
+
+const CategoryManager: React.FC<CategoryManagerProps> = (props) => {
+  const {
+    loading,
+    categories,
+    messageContent,
+    selectedID,
+    modalAction,
+    fetchCategories,
+    toggleAdd,
+    toggleEdit,
+    toggleNone,
+    createCategory,
+    updateCategory,
+    deleteCategory,
+  } = props
   useEffect(() => {
-    dispatch(getAllAction())
-  }, [dispatch])
+    fetchCategories()
+  }, [fetchCategories])
   useEffect(() => {
-    if (loading === 'done' && modalShowing !== 'none') {
-      setModalShowing('none')
-    }
     if (loading === 'error') {
       message.error(messageContent)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading])
+  const edittingItem = useMemo(() => {
+    return categories.find((e) => e._id === selectedID)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedID])
   return (
     <div>
       <ProTable<ICategory>
         tableName="Quản lý thể loại"
         columns={columns}
         items={categories || []}
-        toggleAdd={() => setModalShowing('add')}
-        toggleEdit={(id) => {
-          setModalShowing('edit')
-          setEditingID(id)
-        }}
-        onDelete={(id) => dispatch(deleteAction(id))}
+        toggleAdd={toggleAdd}
+        toggleEdit={toggleEdit}
+        onDelete={deleteCategory}
       />
-      <AddModal<ICategory>
-        visible={modalShowing === 'add'}
-        hideModal={() => setModalShowing('none')}
-        onSubmit={(form) => {
-          const { title, description } = form.getFieldsValue()
-          dispatch(createAction({ title, description }))
-        }}
-        loading={loading === 'pending'}
-      >
-        <AddCategoryForm />
-      </AddModal>
-      <EditModal<ICategory>
-        visible={modalShowing === 'edit'}
-        hideModal={() => setModalShowing('none')}
-        onSubmit={(form) => {
-          const { title, slug, description } = form.getFieldsValue()
-          dispatch(updateAction({ _id: editingID, title, slug, description }))
-        }}
-        loading={loading === 'pending'}
-        initialValues={categories.find((e) => e._id === editingID)}
-      >
-        <EditCategoryForm />
-      </EditModal>
+      {modalAction === 'add' && (
+        <AddModal<ICategory>
+          visible
+          hideModal={toggleNone}
+          onSubmit={(form) => {
+            const { title, description } = form.getFieldsValue()
+            createCategory({ title, description })
+          }}
+          loading={loading === 'pending'}
+        >
+          <AddCategoryForm />
+        </AddModal>
+      )}
+      {modalAction === 'edit' && (
+        <EditModal<ICategory>
+          visible={modalAction === 'edit'}
+          hideModal={toggleNone}
+          onSubmit={(form) => {
+            const { title, slug, description } = form.getFieldsValue()
+            if (!selectedID) {
+              message.error('Vui lòng chọn trước khi edit')
+              return
+            }
+            updateCategory({ _id: selectedID, title, slug, description })
+          }}
+          loading={loading === 'pending'}
+          initialValues={edittingItem}
+        >
+          <EditCategoryForm />
+        </EditModal>
+      )}
     </div>
   )
 }
 
-export default CategoryManager
+const CategoryManagerWithConnect = connect(mapStateToProps, mapDispatchToProps)(CategoryManager)
+export default CategoryManagerWithConnect

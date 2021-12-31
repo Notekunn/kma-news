@@ -21,7 +21,8 @@ function EditModalWithGeneric<T extends {} = any>(
       title={title || 'Chỉnh sửa'}
       okText="Update"
       cancelText="Cancel"
-      //   destroyOnClose
+      destroyOnClose
+      // forceRender={true}
       confirmLoading={loading}
       onCancel={hideModal}
       onOk={() => onSubmit(form)}

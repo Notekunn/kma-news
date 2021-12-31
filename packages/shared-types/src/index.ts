@@ -46,3 +46,5 @@ export type ObjectWithID<T extends Object = {}> = {
 } & T
 
 export type LoadingState = 'idle' | 'pending' | 'done' | 'error'
+
+export type ModalState = 'edit' | 'add' | 'none'

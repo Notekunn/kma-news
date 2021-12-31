@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { LoadingState } from 'shared-types'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
+import { LoadingState, ModalState } from 'shared-types'
 import { Types, getAllCategories, createCategory, updateCategory, deleteCategory } from 'shared-api'
 import { RootState } from '@/app/store'
 
@@ -29,17 +29,32 @@ interface CategoryState {
   data: Types.APIResponse.GetAllCategories
   loading: LoadingState
   message?: string
+  modalAction: ModalState
+  selectedId: string | null
 }
 
 const initialState: CategoryState = {
   data: [],
   loading: 'idle',
+  modalAction: 'none',
+  selectedId: null,
 }
-
 const categorySlice = createSlice({
   name: 'category',
   initialState,
-  reducers: {},
+  reducers: {
+    toggleAdd: (state) => {
+      state.modalAction = 'add'
+    },
+    toggleEdit: (state, action: PayloadAction<string>) => {
+      state.modalAction = 'edit'
+      state.selectedId = action.payload
+    },
+    toggleNone: (state) => {
+      state.modalAction = 'none'
+      state.selectedId = null
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllAction.pending, (state) => {
@@ -60,6 +75,7 @@ const categorySlice = createSlice({
       .addCase(createAction.fulfilled, (state, action) => {
         state.loading = 'done'
         state.data.push(action.payload)
+        state.modalAction = 'none'
       })
       .addCase(createAction.rejected, (state, action) => {
         state.loading = 'error'
@@ -75,6 +91,7 @@ const categorySlice = createSlice({
           if (e._id !== action.payload._id) return e
           return action.payload
         })
+        state.modalAction = 'none'
       })
       .addCase(updateAction.rejected, (state, action) => {
         state.loading = 'error'
@@ -95,8 +112,12 @@ const categorySlice = createSlice({
   },
 })
 
+export const { toggleAdd, toggleEdit, toggleNone } = categorySlice.actions
+
 export const selectData = (state: RootState) => state.category.data
 export const selectLoading = (state: RootState) => state.category.loading
 export const selectMessage = (state: RootState) => state.category.message
+export const selectModalAction = (state: RootState) => state.category.modalAction
+export const selectSelectedId = (state: RootState) => state.category.selectedId
 
 export default categorySlice.reducer
