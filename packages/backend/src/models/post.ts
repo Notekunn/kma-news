@@ -41,6 +41,9 @@ const postSchema = new mongoose.Schema<IPostDocument>(
     source: {
       type: String,
     },
+    sourceURL: {
+      type: String,
+    },
     owner: {
       type: String,
     },
