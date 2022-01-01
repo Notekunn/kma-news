@@ -5,7 +5,7 @@ services:
         image: notekunn/kma-news-backend
         container_name: kma-news-backend
         environment:
-            NODE_ENV: development
+            NODE_ENV: production
             PORT: 8080
             DATABASE_URL: "mongodb://${DB_USERNAME}:${DB_PASSWORD}@db:27017/${DB_NAME}?auth\
                 Source=admin"

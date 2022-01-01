@@ -8,9 +8,13 @@ import client from './redis'
 const app = express()
 
 const { PORT = 8888 } = process.env
-
 app.use(helmet())
-app.use(cors())
+app.use(
+  cors({
+    origin: '*',
+    credentials: true,
+  })
+)
 app.use(express.json())
 app.use('/', routes)
 
