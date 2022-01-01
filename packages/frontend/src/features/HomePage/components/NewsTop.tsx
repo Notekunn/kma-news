@@ -6,6 +6,15 @@ import { Link } from 'react-router-dom'
 interface TopNewsProps {
   data: Types.APIResponse.GetAllPosts
 }
+interface newSource {
+  logo?: string
+  time?: string
+}
+interface NewDataSource {
+  img?: string
+  description?: string
+  newsSource?: newSource
+}
 
 interface ItemNewsProps {
   data: any
