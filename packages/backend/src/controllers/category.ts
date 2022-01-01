@@ -5,6 +5,7 @@ import { errorWrapper } from '@/services/error-wrapper'
 import { Types } from 'mongoose'
 import NotFoundExeption from '@/exceptions/NotFoundExeption'
 import client from '@/redis'
+import HttpException from '@/exceptions/HttpException'
 export const getAll: IController = errorWrapper(async (req, res, next) => {
   const data = await CategoryModel.find({})
     .populate('parrent', ['title', 'slug'])
@@ -46,44 +47,32 @@ export const create: IController = errorWrapper(async (req, res, next) => {
   res.send(data)
 })
 
+const getTreeValidator = joi.object({
+  page: joi.number().integer().min(1).default(1),
+  limit: joi.number().integer().min(1).default(10),
+  show_all: joi.boolean().default(false),
+})
+
 export const showCategoryByTree = errorWrapper(async (req, res, next) => {
-  // Show đến level 4
-  // const result = await CategoryModel.find({
-  //   level: 1,
-  // })
-  //   .populate({
-  //     path: 'children',
-  //     select: ['title', 'slug', 'description'],
-  //     sort: {
-  //       title: 1,
-  //     },
-  //     populate: {
-  //       path: 'children',
-  //       select: ['title', 'slug', 'description'],
-  //       sort: {
-  //         title: 1,
-  //       },
-  //       populate: {
-  //         path: 'children',
-  //         select: ['title', 'slug', 'description'],
-  //         sort: {
-  //           title: 1,
-  //         },
-  //       },
-  //     },
-  //   })
-  //   .select(['title', 'slug', 'description'])
-  //   .sort({ title: 1 })
-  const cachedResultRaw = await client.get('tree_categories')
-  if (cachedResultRaw) {
-    res.send(JSON.parse(cachedResultRaw))
-    return
+  const user = req.context
+  const { error, value } = getTreeValidator.validate(req.query)
+  if (error || !value) throw error
+  if (value.show_all && !user?.validRole('admin')) {
+    throw new HttpException(403, 'Không có quyền truy cập')
   }
+  // Nếu không show all thì đọc thử từ cache ra
+  if (!value.show_all) {
+    const cachedResultRaw = await client.get('tree_categories')
+    if (cachedResultRaw) {
+      res.send(JSON.parse(cachedResultRaw))
+      return
+    }
+  }
+  const matchFilter = value.show_all ? { parrent: null } : { parrent: null, isShow: true }
+
   const result = await CategoryModel.aggregate([
     {
-      $match: {
-        parrent: null,
-      },
+      $match: matchFilter,
     },
     {
       $graphLookup: {
@@ -106,23 +95,29 @@ export const showCategoryByTree = errorWrapper(async (req, res, next) => {
         title: 1,
         slug: 1,
         description: 1,
+        isShow: 1,
         'subItems._id': 1,
         'subItems.title': 1,
         'subItems.slug': 1,
         'subItems.description': 1,
+        'subItems.isShow': 1,
       },
     },
     {
-      $limit: 20,
+      $skip: (value.page - 1) * value.limit,
+    },
+    {
+      $limit: value.limit,
     },
   ])
-  await client.set('tree_categories', JSON.stringify(result), {
-    EX: 24 * 60 * 60,
-  })
-
+  // Nếu không show all thì lưu vào cache
+  if (!value.show_all) {
+    await client.set('tree_categories', JSON.stringify(result), {
+      EX: 24 * 60 * 60,
+    })
+  }
   res.send(result)
 })
-
 const updateValidator = joi.object({
   title: joi.string(),
   slug: joi.string().pattern(new RegExp('^[a-zA-Z0-9-]+$')),

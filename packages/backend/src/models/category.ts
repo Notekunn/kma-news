@@ -18,6 +18,7 @@ const categorySchema = new mongoose.Schema<ICategoryDocument>(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'category',
       default: null,
+      index: true,
     },
     isShow: {
       type: Boolean,

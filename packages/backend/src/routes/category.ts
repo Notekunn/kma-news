@@ -1,4 +1,4 @@
-import { authMiddleware } from '@/middlewares/auth-middleware'
+import { authMiddleware, nonAuthMiddleware } from '@/middlewares/auth-middleware'
 import { guardMiddleware } from '@/middlewares/guard-middleware'
 import { Router } from 'express'
 import * as categoryController from '../controllers/category'
@@ -6,7 +6,7 @@ const router = Router()
 
 router.get('/', categoryController.getAll)
 
-router.get('/tree', categoryController.showCategoryByTree)
+router.get('/tree', nonAuthMiddleware, categoryController.showCategoryByTree)
 
 router.post('/', authMiddleware, guardMiddleware('admin'), categoryController.create)
 

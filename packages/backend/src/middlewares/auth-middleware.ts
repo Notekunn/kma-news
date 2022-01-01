@@ -39,3 +39,41 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
     next(new HttpException(401, 'Unauthorized access'))
   }
 }
+/**
+ * Middleware kiểm tra user nếu có
+ * @param req request
+ * @param res response
+ * @param next next param
+ * @returns
+ */
+export const nonAuthMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+  const authHeader = req.headers.authorization || ''
+  const [, token] = authHeader.split(' ')
+  if (!authHeader.startsWith('Bearer') || !token) return next()
+  try {
+    const { email, id } = jwt.verify(token, SECRET) as JwtPayload
+    const cached = await client.get(`user_${id}`)
+    // Cache hit
+    if (cached) {
+      req.context = new UserModel(JSON.parse(cached))
+      return next()
+    }
+    // Cache miss
+    const user = await UserModel.findOne({
+      email,
+    }).select(['_id', 'email', 'name', 'role', 'avatarURL'])
+
+    if (!user || id != user._id) {
+      return next(new HttpException(403, 'Invalid token'))
+    }
+    req.context = user
+    // Write aside
+    client.set(`user_${id}`, JSON.stringify(user), {
+      EX: CACHE_TTL * 60,
+    })
+
+    next()
+  } catch (error) {
+    next()
+  }
+}
