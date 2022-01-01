@@ -1,5 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+
+interface TopNewsProps {}
+
 interface newSource {
   logo?: string
   time?: string
@@ -65,7 +68,7 @@ const ItemNews: React.FC<ItemNewsProps> = ({ children, data }) => {
   )
 }
 
-export const TopNews = () => {
+export const TopNews: React.FC<TopNewsProps> = () => {
   return (
     <>
       <div className="section">
