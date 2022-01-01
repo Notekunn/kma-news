@@ -31,7 +31,7 @@ export const homeSlice = createSlice({
         state.loading = 'pending'
       })
       .addCase(fetchNewFeedAction.fulfilled, (state, action) => {
-        state.data.concat(action.payload)
+        state.data = action.payload
         state.loading = 'done'
       })
       .addCase(fetchNewFeedAction.rejected, (state, action) => {
