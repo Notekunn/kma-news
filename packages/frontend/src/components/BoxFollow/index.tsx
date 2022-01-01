@@ -1,15 +1,14 @@
 import React from 'react'
-import { MdFollowTheSigns } from 'react-icons/md'
 import { Link } from 'react-router-dom'
+import './index.css'
 
-export const BoxFollow = () => {
+const BoxFollow = () => {
   return (
     <div className="box-follow">
       <div className="box-follow__logo">
         <Link to="">
           <img
-            src="	https://photo-baomoi.zadn.vn/6d8571b593f67aa823e7.png
-"
+            src="https://photo-baomoi.zadn.vn/6d8571b593f67aa823e7.png"
             alt=""
             className="box-follow__logo-m"
           />
@@ -22,3 +21,4 @@ export const BoxFollow = () => {
     </div>
   )
 }
+export default BoxFollow

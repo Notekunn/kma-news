@@ -1,17 +1,17 @@
 import React, { useMemo, useEffect, useState } from 'react'
-import BoxVideo from '../components/BoxVideo'
-import BoxHot from '../components/BoxHot'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import BoxVideo from '@/components/BoxVideo'
+import BoxHot from '@/components/BoxHot'
+import BoxNews from '@/components/BoxNews'
 import { IoIosArrowForward } from 'react-icons/io'
 import { AiOutlineStar } from 'react-icons/ai'
 import { BiLike } from 'react-icons/bi'
 import { VscTag } from 'react-icons/vsc'
 import { GoReport } from 'react-icons/go'
 import { HiOutlineDocumentDuplicate, HiOutlineKey } from 'react-icons/hi'
-import { BoxNews } from '../components/BoxNews'
-import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { selectData, getPostAction } from '../postSlice'
 import { useParams } from 'react-router-dom'
-import { FrameImage } from '../components/FrameImage'
+import { FullScreenImage } from '../components/FullScreenImage'
 import { IParagraphImage } from 'shared-types'
 interface ImageDetail {
   id: number
@@ -21,7 +21,6 @@ interface ImageDetail {
 
 const ReadingPage = () => {
   const { slug } = useParams<'slug'>()
-  const [idState, setIdState] = useState(0)
   const [visible, toggleVisible] = useState(false)
   const dispatch = useAppDispatch()
   const data = useAppSelector(selectData)
@@ -43,12 +42,7 @@ const ReadingPage = () => {
   return (
     <>
       {visible && allImages.length > 0 && (
-        <FrameImage
-          arrImg={allImages}
-          id={idState}
-          visiable={visible}
-          toggleVisiable={toggleVisible}
-        />
+        <FullScreenImage arrImg={allImages} visible={visible} toggleVisible={toggleVisible} />
       )}
       <div className="container container--positions">
         <div className="col-9 container-main ">
@@ -77,7 +71,7 @@ const ReadingPage = () => {
                     <div className="page-extension-origin">
                       <HiOutlineDocumentDuplicate className="page-extension-icon--origin" />
                       <h3 className="page-extension-font">
-                        <a href=""></a>
+                        <a href="/#">s</a>
                       </h3>
                     </div>
                   </div>

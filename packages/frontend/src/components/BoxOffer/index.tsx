@@ -1,10 +1,10 @@
 import React from 'react'
-
-export const BoxOffer = () => {
+import './index.css'
+const BoxOffer = () => {
   return (
     <div className="box-offer">
       <div className="box-offer__frame-img">
-        <a href="">
+        <a href="/#">
           <img
             src="https://i.ytimg.com/vi/sYDmUyCj9JY/maxresdefault.jpg"
             alt=""
@@ -14,7 +14,7 @@ export const BoxOffer = () => {
       </div>
       <div className="box-offer__content">
         <div className="box-offer__title">
-          <a href="">Lào Cai: Tạm giữ hàng nghìn bao thuốc lá ngoại âsasas lậu</a>
+          <a href="/#">Lào Cai: Tạm giữ hàng nghìn bao thuốc lá ngoại âsasas lậu</a>
         </div>
         <div className="box-exten">
           <img
@@ -24,9 +24,9 @@ export const BoxOffer = () => {
           />
           <div className="box-exten--time">1 giờ</div>
           <div className="box-exten--involve">
-            <a href="">11 liên quân</a>
+            <a href="/#">11 liên quân</a>
           </div>
-          <a href="" className="">
+          <a href="/#" className="">
             <img
               src="https://baomoi-static.zadn.vn/favicons/favicon-32x32.png"
               alt="logo"
@@ -38,3 +38,4 @@ export const BoxOffer = () => {
     </div>
   )
 }
+export default BoxOffer

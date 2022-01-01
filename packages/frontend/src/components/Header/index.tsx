@@ -144,8 +144,13 @@ const Header = () => {
           style={activeDropMenu ? { visibility: 'visible', opacity: '1' } : {}}
         >
           <ul className="col-9 drop-menu-list">
-            {treeCategory.map((e) => (
-              <CategoryGroup title={e.title} slug={e.slug} subItems={e.subItems} />
+            {treeCategory.map((e, i) => (
+              <CategoryGroup
+                title={e.title}
+                slug={e.slug}
+                subItems={e.subItems}
+                key={`tree-group-${i}`}
+              />
             ))}
           </ul>
         </div>

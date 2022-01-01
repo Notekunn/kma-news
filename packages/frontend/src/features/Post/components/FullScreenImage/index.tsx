@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { MdOutlineFullscreen, MdOutlineFullscreenExit } from 'react-icons/md'
-import './frameImage.css'
+import './index.css'
 interface ImageInfor {
   id: number
   url: string
@@ -9,34 +9,13 @@ interface ImageInfor {
 }
 interface FrameImageProps {
   arrImg: ImageInfor[]
-  id: number
-  visiable: boolean
-  toggleVisiable: (visiable: boolean) => void
+  visible: boolean
+  toggleVisible: (visible: boolean) => void
 }
-const DEFAULT_FRAME: Array<ImageInfor> = [
-  {
-    id: 1,
-    url: 'https://photo-baomoi.zadn.vn/w700_r1/2021_12_29_329_41351980/cd0f7b07c4452d1b7454.jpg',
-    description:
-      'Tổng Bí thư Nguyễn Phú Trọng, Chủ tịch nước Nguyễn Xuân Phúc, Thủ tướng Phạm Minh Chính, Thường trực Ban Bí thư Võ Văn Thưởng dự Hội nghị đối ngoại toàn quốc triển khai thực hiện Nghị quyết Đại hội lần thứ XIII của Đảng.',
-  },
-  {
-    id: 2,
-    url: 'https://photo-baomoi.zadn.vn/w1000_r1/2021_12_29_329_41351980/d6261717b855510b0844.jpg',
-    description:
-      'Tổng Bí thư Nguyễn Phú Trọng, Chủ tịch nước Nguyễn Xuân Phúc, Thủ tướng Phạm Minh Chính, Thường trực Ban Bí thư Võ Văn Thưởng dự Hội nghị đối ngoại toàn quốc triển khai thực hiện Nghị quyết Đại hội lần thứ XIII của Đảng.',
-  },
-  {
-    id: 3,
-    url: 'https://photo-baomoi.zadn.vn/w1000_r1/2021_12_29_329_41351980/0d89cbb864fa8da4d4eb.jpg',
-    description:
-      'Tổng Bí thư Nguyễn Phú Trọng, Chủ tịch nước Nguyễn Xuân Phúc, Thủ tướng Phạm Minh Chính, Thường trực Ban Bí thư Võ Văn Thưởng dự Hội nghị đối ngoại toàn quốc triển khai thực hiện Nghị quyết Đại hội lần thứ XIII của Đảng.',
-  },
-]
-export const FrameImage: React.FC<FrameImageProps> = (props) => {
+export const FullScreenImage: React.FC<FrameImageProps> = (props) => {
   // export const FrameImage = () => {
   const [fullState, setFullState] = useState(false)
-  const { id, visiable, toggleVisiable, arrImg } = props
+  const { toggleVisible, arrImg } = props
   const [idCurrent, setIdCurrent] = useState(3)
   const index = Math.max(
     arrImg.findIndex((el) => el.id === idCurrent),
@@ -58,7 +37,7 @@ export const FrameImage: React.FC<FrameImageProps> = (props) => {
     setFullState(!fullState)
   }
   const handleOut = () => {
-    toggleVisiable(false)
+    toggleVisible(false)
     if (fullState) document.exitFullscreen()
   }
   return (
