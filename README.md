@@ -32,8 +32,15 @@ docker compose run seed
 
 - Khi renew letencrypt nhớ tắt auto https đi
 
+- Build image và push
+
 ```
 docker-compose -f docker-compose.dev.yml build
-docker tag kma-news-crawler notekunn/kma-news-crawler
-docker push notekunn/kma-news-crawler
+docker compose -f docker-compose.dev.yml push
+```
+
+- Deploy vps
+
+```
+docker compose -f docker-compose.prod.yml up
 ```
