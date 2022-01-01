@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 interface TopNewsProps {}
-
 interface newSource {
   logo?: string
   time?: string
