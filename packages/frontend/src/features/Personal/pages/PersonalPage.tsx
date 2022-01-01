@@ -5,13 +5,8 @@ import { GiBackwardTime } from 'react-icons/gi'
 import { RiMedalLine } from 'react-icons/ri'
 import { MdSaveAlt } from 'react-icons/md'
 import { BiExit } from 'react-icons/bi'
-import '../components/index.css'
+import './index.css'
 import { Link, Outlet } from 'react-router-dom'
-// import { UserPageOffer } from '../components/UserPageOffer'
-// import { UserPageFavorite } from '../components/UserPageFavorite'
-// import { UserPageRecent } from '../components/UserPageRecent'
-// import { UserPageFollow } from '../components/UserPageFollow'
-// import { UserPageFolder } from '../components/UserPageFolder'
 export const PersonalPage = () => {
   return (
     <div className="container">

@@ -1,6 +1,6 @@
 import React from 'react'
 import { BsTrash } from 'react-icons/bs'
-import { BoxRecent } from '../components/BoxRecent'
+import BoxRecent from '@/components/BoxRecent'
 
 export const HistoryPage = () => {
   return (

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import './index.css'
 
-export const BoxFollow = () => {
+const BoxFollow = () => {
   return (
     <div className="box-follow">
       <div className="box-follow__logo">
@@ -20,3 +21,4 @@ export const BoxFollow = () => {
     </div>
   )
 }
+export default BoxFollow

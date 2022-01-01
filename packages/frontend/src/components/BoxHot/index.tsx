@@ -17,18 +17,18 @@ const BoxHot: React.FC<BoxHeaderProps> = (props) => {
           Gặp kình địch ở bán kết, HLV Park Hang-seo bất ngờ kêu một việc khó.Gặp kình địch ở bán
           kết, HLV Park Hang-seo bất ngờ kêu một việc khó
         </div>
-        <div className="box-exten">
+        <div className="boxHot-exten">
           <img
             src="https://photo-baomoi.zadn.vn/c6b35edd839e6ac0338f.png"
             alt="logo bài báo"
             className="box-exten--brand"
           />
-          <div className="box-exten--time">1 giờ</div>
-          <div className="box-exten--involve">11 liên quân</div>
+          <div className="boxHot-exten--time">1 giờ</div>
+          <div className="boxHot-exten--involve">11 liên quân</div>
           <img
             src="https://baomoi-static.zadn.vn/favicons/favicon-32x32.png"
             alt="logo"
-            className="box-logo"
+            className="boxHot-logo"
           />
         </div>
       </div>

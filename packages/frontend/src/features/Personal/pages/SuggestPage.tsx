@@ -1,5 +1,5 @@
 import React from 'react'
-import { BoxOffer } from '../components/BoxOffer'
+import BoxOffer from '@/components/BoxOffer'
 
 export const SuggestPage = () => {
   return (
@@ -7,11 +7,11 @@ export const SuggestPage = () => {
       <div className="user-page__header">
         <div className="user-page__title">Đề xuất</div>
       </div>
-      <BoxOffer />
-      <BoxOffer />
-      <BoxOffer />
-      <BoxOffer />
-      <BoxOffer />
+      {Array(5)
+        .fill(0)
+        .map((_, i) => (
+          <BoxOffer key={`suggest-page-${i}`} />
+        ))}
     </div>
   )
 }

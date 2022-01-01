@@ -1,5 +1,5 @@
 import React from 'react'
-import { BoxFollow } from '../components/BoxFollow'
+import BoxFollow from '@/components/BoxFollow'
 
 export const SubscriptionPage = () => {
   return (

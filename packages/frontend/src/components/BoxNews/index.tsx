@@ -2,7 +2,7 @@ import React from 'react'
 import './index.css'
 interface BoxNewProps {}
 
-export const BoxNews: React.FC<BoxNewProps> = (props) => {
+const BoxNews: React.FC<BoxNewProps> = (props) => {
   return (
     <div className="boxNews">
       <div className="boxNews-photo video-icon">
@@ -34,3 +34,4 @@ export const BoxNews: React.FC<BoxNewProps> = (props) => {
     </div>
   )
 }
+export default BoxNews
