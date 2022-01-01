@@ -98,7 +98,7 @@ export namespace APIResponse {
     title: string
     slug: string
     description: string
-    subItem: TreeCategory[]
+    subItems: TreeCategory[]
   }
   export type GetTreeCategories = TreeCategory[]
 }

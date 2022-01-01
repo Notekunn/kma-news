@@ -4,6 +4,7 @@ import { CategoryModel } from '@/models/category'
 import { errorWrapper } from '@/services/error-wrapper'
 import { Types } from 'mongoose'
 import NotFoundExeption from '@/exceptions/NotFoundExeption'
+import client from '@/redis'
 export const getAll: IController = errorWrapper(async (req, res, next) => {
   const data = await CategoryModel.find({})
     .populate('parrent', ['title', 'slug'])
@@ -41,6 +42,7 @@ export const create: IController = errorWrapper(async (req, res, next) => {
     parrent: parrent?._id || null,
   })
   const data = await category.save()
+  await client.del('tree_categories')
   res.send(data)
 })
 
@@ -72,6 +74,11 @@ export const showCategoryByTree = errorWrapper(async (req, res, next) => {
   //   })
   //   .select(['title', 'slug', 'description'])
   //   .sort({ title: 1 })
+  const cachedResultRaw = await client.get('tree_categories')
+  if (cachedResultRaw) {
+    res.send(JSON.parse(cachedResultRaw))
+    return
+  }
   const result = await CategoryModel.aggregate([
     {
       $match: {
@@ -105,7 +112,13 @@ export const showCategoryByTree = errorWrapper(async (req, res, next) => {
         'subItems.description': 1,
       },
     },
+    {
+      $limit: 20,
+    },
   ])
+  await client.set('tree_categories', JSON.stringify(result), {
+    EX: 24 * 60 * 60,
+  })
 
   res.send(result)
 })
@@ -129,6 +142,7 @@ export const update: IController<ICategory, 'id'> = errorWrapper(async (req, res
   }
   const category = await CategoryModel.findByIdAndUpdate(id, fieldToChange, { new: true })
   if (!category) throw new NotFoundExeption('Category not found')
+  await client.del('tree_categories')
   // Đổi parrent id
   res.send(category)
 })
@@ -137,6 +151,7 @@ export const remove: IController = errorWrapper(async (req, res, next) => {
   const { id } = req.params
   const category = await CategoryModel.findByIdAndDelete(id)
   if (!category) throw new NotFoundExeption('Category not found')
+  await client.del('tree_categories')
   await CategoryModel.updateMany(
     {
       parrent: category._id,
