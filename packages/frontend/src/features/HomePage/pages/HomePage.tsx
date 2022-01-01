@@ -8,9 +8,9 @@ import { ListNewsRight } from '../components/ListNewsRight'
 import { FiMapPin } from 'react-icons/fi'
 import { RiArrowDropDownLine } from 'react-icons/ri'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { dataHomePage } from '../slice/homeSlice'
+import { fetchNewFeedAction } from '../homeSlice'
 import { useEffect } from 'react'
-import { selectData } from '@/features/HomePage/slice/homeSlice'
+import { selectData } from '@/features/HomePage/homeSlice'
 const Home = () => {
   const [activeSelect, setActiveSelect] = useState(false)
   const [activeSelectWeather, setActiveSelectWeather] = useState(false)
@@ -18,7 +18,7 @@ const Home = () => {
   const data = useAppSelector(selectData)
   console.log(data)
   useEffect(() => {
-    dispatch(dataHomePage({}))
+    dispatch(fetchNewFeedAction({}))
   }, [dispatch])
   return (
     <div className="container">
