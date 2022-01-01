@@ -2,7 +2,7 @@ import React from 'react'
 import { BsTrash } from 'react-icons/bs'
 import BoxRecent from '@/components/BoxRecent'
 
-export const HistoryPage = () => {
+const HistoryPage = () => {
   return (
     <div>
       <div className="user-page__header">
@@ -20,3 +20,4 @@ export const HistoryPage = () => {
     </div>
   )
 }
+export default HistoryPage

@@ -1,7 +1,7 @@
 import React from 'react'
 import BoxFollow from '@/components/BoxFollow'
 
-export const SubscriptionPage = () => {
+const SubscriptionPage = () => {
   return (
     <div>
       <div className="user-page__header">
@@ -23,3 +23,4 @@ export const SubscriptionPage = () => {
     </div>
   )
 }
+export default SubscriptionPage

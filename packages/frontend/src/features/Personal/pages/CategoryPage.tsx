@@ -1,5 +1,6 @@
 import React from 'react'
 
-export const CategoryPage: React.FC = () => {
+const CategoryPage: React.FC = () => {
   return <div></div>
 }
+export default CategoryPage

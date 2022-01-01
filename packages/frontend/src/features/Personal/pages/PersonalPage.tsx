@@ -7,7 +7,7 @@ import { MdSaveAlt } from 'react-icons/md'
 import { BiExit } from 'react-icons/bi'
 import './index.css'
 import { Link, Outlet } from 'react-router-dom'
-export const PersonalPage = () => {
+const PersonalPage = () => {
   return (
     <div className="container">
       <div className="col-9 container-main">
@@ -66,3 +66,4 @@ export const PersonalPage = () => {
     </div>
   )
 }
+export default PersonalPage

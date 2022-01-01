@@ -1,7 +1,7 @@
 import React from 'react'
 import BoxOffer from '@/components/BoxOffer'
 
-export const SuggestPage = () => {
+const SuggestPage = () => {
   return (
     <div>
       <div className="user-page__header">
@@ -15,3 +15,4 @@ export const SuggestPage = () => {
     </div>
   )
 }
+export default SuggestPage
