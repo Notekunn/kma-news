@@ -77,7 +77,7 @@ const ReadingPage = () => {
                     <div className="page-extension-origin">
                       <HiOutlineDocumentDuplicate className="page-extension-icon--origin" />
                       <h3 className="page-extension-font">
-                        <a href=""></a>
+                        <a href="\#"></a>
                       </h3>
                     </div>
                   </div>
