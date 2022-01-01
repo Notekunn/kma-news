@@ -11,7 +11,7 @@ import { BoxNews } from '../components/BoxNews'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { selectData, getPostAction } from '../postSlice'
 import { useParams } from 'react-router-dom'
-import { FrameImage } from '../components/FrameImage'
+import { FullScreenImage } from '../components/FullScreenImage'
 import { IParagraphImage } from 'shared-types'
 interface ImageDetail {
   id: number
@@ -43,11 +43,11 @@ const ReadingPage = () => {
   return (
     <>
       {visible && allImages.length > 0 && (
-        <FrameImage
+        <FullScreenImage
           arrImg={allImages}
           id={idState}
-          visiable={visible}
-          toggleVisiable={toggleVisible}
+          visible={visible}
+          toggleVisible={toggleVisible}
         />
       )}
       <div className="container container--positions">
