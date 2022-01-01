@@ -5,8 +5,10 @@ export const getAllCategories = (params: APIParameter.GetAllCategories) => {
   return client.get('/categories/') as Promise<APIResponse.GetAllCategories>
 }
 
-export const getTreeCategories = () => {
-  return client.get('/categories/tree') as Promise<APIResponse.GetTreeCategories>
+export const getTreeCategories = (params: APIParameter.GetTreeCategories = {}) => {
+  return client.get('/categories/tree', {
+    params: params,
+  }) as Promise<APIResponse.GetTreeCategories>
 }
 
 export const createCategory = (params: APIParameter.CreateCategory) => {

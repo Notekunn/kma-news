@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs'
 import { refreshToken } from './api/auth'
 import { APIResponse } from './types'
 const axiosClient = axios.create({
@@ -6,7 +7,7 @@ const axiosClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  paramsSerializer: (params) => JSON.stringify(params),
+  paramsSerializer: (params) => qs.stringify(params),
 })
 
 axiosClient.interceptors.request.use(async (config) => {

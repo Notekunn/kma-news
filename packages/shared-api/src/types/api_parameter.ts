@@ -62,4 +62,8 @@ export namespace APIParameter {
   }
 
   export interface GetAllCategories extends Pagination {}
+
+  export interface GetTreeCategories extends Pagination {
+    show_all?: boolean
+  }
 }
