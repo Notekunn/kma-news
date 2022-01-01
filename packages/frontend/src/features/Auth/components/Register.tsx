@@ -39,7 +39,7 @@ const Regis = () => {
             </div>
           </form>
           <div className="auth-form__socials">
-            <a href="\#" className="auth-socials__btn">
+            <a href="/#" className="auth-socials__btn">
               <img
                 src="https://page.widget.zalo.me/static/images/2.0/Logo.svg"
                 alt=""
@@ -47,7 +47,7 @@ const Regis = () => {
               />
               <p className="auth-socials__name">Đăng nhập bằng Zalo</p>
             </a>
-            <a href="\#" className="auth-socials__btn">
+            <a href="/#" className="auth-socials__btn">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png"
                 alt=""

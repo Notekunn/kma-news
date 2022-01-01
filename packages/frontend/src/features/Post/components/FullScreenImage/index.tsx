@@ -9,14 +9,13 @@ interface ImageInfor {
 }
 interface FrameImageProps {
   arrImg: ImageInfor[]
-  id: number
   visible: boolean
   toggleVisible: (visible: boolean) => void
 }
 export const FullScreenImage: React.FC<FrameImageProps> = (props) => {
   // export const FrameImage = () => {
   const [fullState, setFullState] = useState(false)
-  const { visible, toggleVisible, arrImg } = props
+  const { toggleVisible, arrImg } = props
   const [idCurrent, setIdCurrent] = useState(3)
   const index = Math.max(
     arrImg.findIndex((el) => el.id === idCurrent),

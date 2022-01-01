@@ -21,7 +21,6 @@ interface ImageDetail {
 
 const ReadingPage = () => {
   const { slug } = useParams<'slug'>()
-  const [idState, setIdState] = useState(0)
   const [visible, toggleVisible] = useState(false)
   const dispatch = useAppDispatch()
   const data = useAppSelector(selectData)
@@ -43,12 +42,7 @@ const ReadingPage = () => {
   return (
     <>
       {visible && allImages.length > 0 && (
-        <FullScreenImage
-          arrImg={allImages}
-          id={idState}
-          visible={visible}
-          toggleVisible={toggleVisible}
-        />
+        <FullScreenImage arrImg={allImages} visible={visible} toggleVisible={toggleVisible} />
       )}
       <div className="container container--positions">
         <div className="col-9 container-main ">
@@ -77,7 +71,7 @@ const ReadingPage = () => {
                     <div className="page-extension-origin">
                       <HiOutlineDocumentDuplicate className="page-extension-icon--origin" />
                       <h3 className="page-extension-font">
-                        <a href="\#"></a>
+                        <a href="/#">s</a>
                       </h3>
                     </div>
                   </div>

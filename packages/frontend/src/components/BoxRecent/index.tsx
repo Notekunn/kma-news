@@ -4,7 +4,7 @@ const BoxRecent = () => {
   return (
     <div className="box-recent">
       <div className="box-recent__frame-img">
-        <a href="\#">
+        <a href="/#">
           <img
             src="https://i.ytimg.com/vi/sYDmUyCj9JY/maxresdefault.jpg"
             alt=""
@@ -14,7 +14,7 @@ const BoxRecent = () => {
       </div>
       <div className="box-recent__content">
         <div className="box-recent__title">
-          <a href="\#">Lào Cai: Tạm giữ hàng nghìn bao thuốc lá ngoại âsasas lậu</a>
+          <a href="/#">Lào Cai: Tạm giữ hàng nghìn bao thuốc lá ngoại âsasas lậu</a>
         </div>
         <div className="box-exten">
           <img
@@ -24,9 +24,9 @@ const BoxRecent = () => {
           />
           <div className="box-exten--time">1 giờ</div>
           <div className="box-exten--involve">
-            <a href="\#">11 liên quân</a>
+            <a href="/#">11 liên quân</a>
           </div>
-          <a href="\#" className="">
+          <a href="/#" className="">
             <img
               src="https://baomoi-static.zadn.vn/favicons/favicon-32x32.png"
               alt="logo"
