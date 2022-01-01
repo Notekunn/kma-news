@@ -19,6 +19,10 @@ const categorySchema = new mongoose.Schema<ICategoryDocument>(
       ref: 'category',
       default: null,
     },
+    isShow: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     versionKey: false,

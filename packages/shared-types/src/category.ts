@@ -5,6 +5,7 @@ export interface ICategory {
   slug: string
   description?: string
   parrent?: Types.ObjectId
+  isShow?: boolean // Xem co show tren header hay khong
 }
 
 export interface ICategoryModel extends Model<ICategory> {}

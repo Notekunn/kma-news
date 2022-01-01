@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import covid19Slice from '@/features/covid19/covid19Slice'
 import authSlice from '@/features/Auth/authSlice'
 import postSlice from '@/features/Post/postSlice'
+import categorySlice from '@/features/Category/categorySlice'
 
 console.log(process.env.REACT_APP_API_URL)
 
@@ -10,6 +11,7 @@ export const store = configureStore({
     covid19: covid19Slice,
     auth: authSlice,
     post: postSlice,
+    category: categorySlice,
   },
 })
 
