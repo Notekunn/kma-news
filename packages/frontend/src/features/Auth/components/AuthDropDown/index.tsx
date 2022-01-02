@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { useAppDispatch } from '@/app/hooks'
 import { BsSave2 } from 'react-icons/bs'
 import { GiRibbonMedal, GiBackwardTime } from 'react-icons/gi'
@@ -10,6 +10,26 @@ export interface AuthDropDownProps {
   visible: boolean
   toggleVisible: (visible: boolean) => void
 }
+
+let useClickOutside = (handler) => {
+  let domNode = useRef()
+  useEffect(() => {
+    let maybeHandler = (event) => {
+      if (!domNode.current.contains(event.target)) {
+        handler()
+      }
+    }
+
+    document.addEventListener('mousedown', maybeHandler)
+
+    return () => {
+      document.removeEventListener('mousedown', maybeHandler)
+    }
+  })
+
+  return domNode
+}
+
 export const AuthDropDown: React.FC<AuthDropDownProps> = (props) => {
   const dispatch = useAppDispatch()
   const { visible } = props

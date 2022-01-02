@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { AiOutlineUser, AiOutlineMenu } from 'react-icons/ai'
 import { BsPhone, BsSearch } from 'react-icons/bs'
 import { useState } from 'react'
@@ -9,7 +9,28 @@ import { CategoryGroup } from '@/features/Category/components/CategoryGroup'
 import { getTreeAction, selectData } from '@/features/Category/categorySlice'
 import { selectLoggedIn, selectProfile } from '@/features/Auth/authSlice'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { useClickOutside } from '@/hooks/useClickOutSide'
 // import Login from './Login'
+// let useClickOutside = (handler: () => {}) => {
+//   let domNode = useRef()
+//   type event = keyof GlobalEventHandlersEventMap
+//   useEffect(() => {
+//     let maybeHandler = (event: event) => {
+//       if (!domNode.current.contains(event.target)) {
+//         handler()
+//       }
+//     }
+
+//     document.addEventListener('mousedown', maybeHandler(this.event))
+
+//     return () => {
+//       document.removeEventListener('mousedown', maybeHandler)
+//     }
+//   })
+
+//   return domNode
+// }
+
 const Header = () => {
   const dispatch = useAppDispatch()
   const loggedIn = useAppSelector(selectLoggedIn)
@@ -18,6 +39,14 @@ const Header = () => {
   const [loginVisible, toggleLogin] = useState(false)
   const [userMenuVisible, toggleUserMenu] = useState(false)
   const profile = useAppSelector(selectProfile)
+  const refUser = React.useRef(null)
+  const refDropMenu = React.useRef(null)
+  useClickOutside(() => {
+    toggleUserMenu(false)
+  }, refUser)
+  useClickOutside(() => {
+    setActiveDropMenu(false)
+  }, refDropMenu)
   useEffect(() => {
     // Nếu đăng nhập thành công
     if (!!loggedIn) {
@@ -29,6 +58,9 @@ const Header = () => {
     dispatch(getTreeAction())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  // const domNode = useClickOutside(() => {
+  //   toggleUserMenu(false)
+  // })
   return (
     <div className="header">
       <div className="col-9 header-top">
@@ -69,7 +101,7 @@ const Header = () => {
         </div>
         <div className="header-top-right">
           {profile ? (
-            <>
+            <div ref={refUser}>
               <div className="header-top__user" onClick={() => toggleUserMenu(!userMenuVisible)}>
                 <img
                   src={profile.avatarURL || 'https://i.pravatar.cc/800'}
@@ -78,15 +110,17 @@ const Header = () => {
                 />
                 <div className="header-top__user-name">{profile.name}</div>
               </div>
-              <AuthDropDown visible={userMenuVisible} toggleVisible={toggleUserMenu} />
-            </>
+              <div>
+                <AuthDropDown visible={userMenuVisible} toggleVisible={toggleUserMenu} />
+              </div>
+            </div>
           ) : (
-            <>
+            <div>
               <div className="logo-user" onClick={() => toggleLogin(!loginVisible)}>
                 <AiOutlineUser size="25px" />
               </div>
               <Login visible={loginVisible} toggleVisible={toggleLogin} />
-            </>
+            </div>
           )}
 
           <a href="#!">
@@ -139,20 +173,22 @@ const Header = () => {
             </li>
           </ul>
         </div>
-        <div
-          className="drop-menu"
-          style={activeDropMenu ? { visibility: 'visible', opacity: '1' } : {}}
-        >
-          <ul className="col-9 drop-menu-list">
-            {treeCategory.map((e, i) => (
-              <CategoryGroup
-                title={e.title}
-                slug={e.slug}
-                subItems={e.subItems}
-                key={`tree-group-${i}`}
-              />
-            ))}
-          </ul>
+        <div ref={refDropMenu}>
+          <div
+            className="drop-menu"
+            style={activeDropMenu ? { visibility: 'visible', opacity: '1' } : {}}
+          >
+            <ul className="col-9 drop-menu-list">
+              {treeCategory.map((e, i) => (
+                <CategoryGroup
+                  title={e.title}
+                  slug={e.slug}
+                  subItems={e.subItems}
+                  key={`tree-group-${i}`}
+                />
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
