@@ -1,55 +1,44 @@
+import { Types } from '@/../../shared-api/dist'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
 export interface NewDataSource {
-  img?: string
-  description?: string
-  newSource?: newSource
+  data: Types.APIResponse.GetAllPosts
 }
 
 export interface ItemNewsProps {
-  data?: NewDataSource
+  data: any
 }
-
-export interface NewshorizontalProps {}
-
-interface newSource {
-  logo?: string
-  time?: string
-  numberNewsOther?: string
-}
-
-const dataArray: Array<NewDataSource> = [
-  {
-    img: 'https://photo-baomoi.zadn.vn/w300_r3x2/2021_12_13_23_41180126/7a0d7c16cc54250a7c45.jpg',
-    description: 'Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ',
-    newSource: {
-      logo: 'https://photo-baomoi.zadn.vn/26dc73b3aef047ae1ee1.png',
-      time: '2 giờ',
-      numberNewsOther: '60 liên quan',
-    },
-  },
-]
 
 export const ItemNews: React.FC<ItemNewsProps> = ({ children, data }) => {
   return (
     <div className="item-news-navbar">
       <div className="img-news-navbar">
         <Link to="/">
-          <img src={data?.img} alt="" />
+          <img
+            src={
+              data.thumbnailUrl ||
+              'https://baomoi-static.zadn.vn/web/styles/img/logo-baomoi-gray.png'
+            }
+            alt=""
+          />
         </Link>
       </div>
       <div className="description-item-news">
         <Link to="/">
-          <span>{data?.description}</span>
+          <span>{data.title}</span>
         </Link>
         <div className="news-source">
           <Link to="/">
-            <img className="logo-source" src={data?.newSource?.logo} alt="" />
+            <img
+              className="logo-source"
+              src="https://photo-baomoi.zadn.vn/d59db7f26ab183efdaa0.png"
+              alt=""
+            />
           </Link>
-          <span className="news-time">{data?.newSource?.time}</span>
+          <span className="news-time">2 giờ</span>
           <span className="number-news-other">
-            <Link to="/">{data?.newSource?.numberNewsOther}</Link>
+            <Link to="/">60 liên quan</Link>
           </span>
         </div>
       </div>
@@ -57,11 +46,11 @@ export const ItemNews: React.FC<ItemNewsProps> = ({ children, data }) => {
   )
 }
 
-export const ListNewsRight: React.FC<NewDataSource> = () => {
+export const ListNewsRight: React.FC<NewDataSource> = ({ data }) => {
   return (
     <div className="section">
       <div className="list-news-right">
-        {dataArray.map((e, index) => (
+        {data.map((e, index) => (
           <ItemNews key={index} data={e} />
         ))}
       </div>

@@ -3,7 +3,7 @@ import covid19Slice from '@/features/covid19/covid19Slice'
 import authSlice from '@/features/Auth/authSlice'
 import postSlice from '@/features/Post/postSlice'
 import categorySlice from '@/features/Category/categorySlice'
-import homeSlice from '@/features/HomePage/slice/homeSlice'
+import homeSlice from '@/features/HomePage/homeSlice'
 
 console.log(process.env.REACT_APP_API_URL)
 

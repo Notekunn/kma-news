@@ -8,9 +8,9 @@ import { ListNewsRight } from '../components/ListNewsRight'
 import { FiMapPin } from 'react-icons/fi'
 import { RiArrowDropDownLine } from 'react-icons/ri'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { fetchNewFeedAction } from '../slice/homeSlice'
+import { fetchNewFeedAction } from '../homeSlice'
 import { useEffect } from 'react'
-import { selectData } from '@/features/HomePage/slice/homeSlice'
+import { selectData } from '@/features/HomePage/homeSlice'
 const Home = () => {
   const [activeSelect, setActiveSelect] = useState(false)
   const [activeSelectWeather, setActiveSelectWeather] = useState(false)
@@ -26,7 +26,6 @@ const Home = () => {
           <div className="content">
             <div className="col-8 content-left">
               <TopNews data={data} />
-              {console.log(data)}
               {data.map((e, index) => (
                 <ListNavbar key={index} title={e.title} />
               ))}
@@ -35,7 +34,7 @@ const Home = () => {
               </div>
             </div>
             <div className="col-4 content-right">
-              <ListNewsRight />
+              <ListNewsRight data={data}/>
               <div className="section">
                 <div className="slider">
                   <div className="title-slider">
