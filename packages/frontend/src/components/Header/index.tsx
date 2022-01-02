@@ -9,26 +9,31 @@ import { CategoryGroup } from '@/features/Category/components/CategoryGroup'
 import { getTreeAction, selectData } from '@/features/Category/categorySlice'
 import { selectLoggedIn, selectProfile } from '@/features/Auth/authSlice'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-// import Login from './Login'
+import { useClickOutside } from '@/hooks/useClickOutside'
+
 const Header = () => {
   const dispatch = useAppDispatch()
   const loggedIn = useAppSelector(selectLoggedIn)
   const treeCategory = useAppSelector(selectData)
-  const [activeDropMenu, setActiveDropMenu] = useState(false)
-  const [loginVisible, toggleLogin] = useState(false)
-  const [userMenuVisible, toggleUserMenu] = useState(false)
   const profile = useAppSelector(selectProfile)
+  const [refUser, userMenuVisible, toggleUserMenu] = useClickOutside<HTMLDivElement>(false)
+  const [refDropMenu, activeDropMenu, setActiveDropMenu] = useClickOutside<HTMLDivElement>(false)
+  const [loginVisible, toggleLogin] = useState(false)
+
   useEffect(() => {
     // Nếu đăng nhập thành công
     if (!!loggedIn) {
       toggleLogin(false)
       toggleUserMenu(false)
     }
-  }, [loggedIn])
+  }, [loggedIn, toggleLogin, toggleUserMenu])
   useEffect(() => {
     dispatch(getTreeAction())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  // const domNode = useClickOutside(() => {
+  //   toggleUserMenu(false)
+  // })
   return (
     <div className="header">
       <div className="col-9 header-top">
@@ -69,7 +74,7 @@ const Header = () => {
         </div>
         <div className="header-top-right">
           {profile ? (
-            <>
+            <div ref={refUser}>
               <div className="header-top__user" onClick={() => toggleUserMenu(!userMenuVisible)}>
                 <img
                   src={profile.avatarURL || 'https://i.pravatar.cc/800'}
@@ -78,15 +83,17 @@ const Header = () => {
                 />
                 <div className="header-top__user-name">{profile.name}</div>
               </div>
-              <AuthDropDown visible={userMenuVisible} toggleVisible={toggleUserMenu} />
-            </>
+              <div>
+                <AuthDropDown visible={userMenuVisible} toggleVisible={toggleUserMenu} />
+              </div>
+            </div>
           ) : (
-            <>
+            <div>
               <div className="logo-user" onClick={() => toggleLogin(!loginVisible)}>
                 <AiOutlineUser size="25px" />
               </div>
               <Login visible={loginVisible} toggleVisible={toggleLogin} />
-            </>
+            </div>
           )}
 
           <a href="#!">
@@ -139,20 +146,22 @@ const Header = () => {
             </li>
           </ul>
         </div>
-        <div
-          className="drop-menu"
-          style={activeDropMenu ? { visibility: 'visible', opacity: '1' } : {}}
-        >
-          <ul className="col-9 drop-menu-list">
-            {treeCategory.map((e, i) => (
-              <CategoryGroup
-                title={e.title}
-                slug={e.slug}
-                subItems={e.subItems}
-                key={`tree-group-${i}`}
-              />
-            ))}
-          </ul>
+        <div ref={refDropMenu}>
+          <div
+            className="drop-menu"
+            style={activeDropMenu ? { visibility: 'visible', opacity: '1' } : {}}
+          >
+            <ul className="col-9 drop-menu-list">
+              {treeCategory.map((e, i) => (
+                <CategoryGroup
+                  title={e.title}
+                  slug={e.slug}
+                  subItems={e.subItems}
+                  key={`tree-group-${i}`}
+                />
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

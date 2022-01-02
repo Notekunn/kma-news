@@ -14,7 +14,7 @@ const BoxNews: React.FC<BoxNewProps> = (props) => {
       </div>
       <div className="boxNews-left">
         <div className="boxNews-title">
-          Gặp kình địch ở bán kết, HLV Park Hang-seo bất ngờ kêu một việc khó.
+          Gặp kình địch ở bán kết, HLV Parksdsds Hang-seo bất ngờ kêu một việc khó.
         </div>
         <div className="box-exten">
           <img

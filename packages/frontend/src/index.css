@@ -3,18 +3,18 @@
 @font-face {
   font-family: baomoi;
   src: url('https://baomoi-static.zadn.vn/web/styles/fonts/baomoi/2.0.2/baomoi-light-2.0.2.woff2')
-          format('woff2'),
-      url('https://baomoi-static.zadn.vn/web/styles/fonts/baomoi/2.0.2/baomoi-light-2.0.2.woff')
-          format('woff');
+      format('woff2'),
+    url('https://baomoi-static.zadn.vn/web/styles/fonts/baomoi/2.0.2/baomoi-light-2.0.2.woff')
+      format('woff');
   font-display: swap;
 }
 
 @font-face {
   font-family: baomoi;
   src: url('https://baomoi-static.zadn.vn/web/styles/fonts/baomoi/2.0.2/baomoi-light-italic-2.0.2.woff2')
-          format('woff2'),
-      url('https://baomoi-static.zadn.vn/web/styles/fonts/baomoi/2.0.2/baomoi-light-italic-2.0.2.woff')
-          format('woff');
+      format('woff2'),
+    url('https://baomoi-static.zadn.vn/web/styles/fonts/baomoi/2.0.2/baomoi-light-italic-2.0.2.woff')
+      format('woff');
   font-style: italic;
   font-display: swap;
 }
@@ -22,9 +22,9 @@
 @font-face {
   font-family: baomoi;
   src: url('https://baomoi-static.zadn.vn/web/styles/fonts/baomoi/2.0.2/baomoi-regular-2.0.2.woff2')
-          format('woff2'),
-      url('https://baomoi-static.zadn.vn/web/styles/fonts/baomoi/2.0.2/baomoi-regular-2.0.2.woff')
-          format('woff');
+      format('woff2'),
+    url('https://baomoi-static.zadn.vn/web/styles/fonts/baomoi/2.0.2/baomoi-regular-2.0.2.woff')
+      format('woff');
   font-weight: bold;
   font-display: swap;
 }
@@ -32,9 +32,9 @@
 @font-face {
   font-family: baomoi;
   src: url('https://baomoi-static.zadn.vn/web/styles/fonts/baomoi/2.0.2/baomoi-regular-2.0.2.woff2')
-          format('woff2'),
-      url('https://baomoi-static.zadn.vn/web/styles/fonts/baomoi/2.0.2/baomoi-regular-2.0.2.woff')
-          format('woff');
+      format('woff2'),
+    url('https://baomoi-static.zadn.vn/web/styles/fonts/baomoi/2.0.2/baomoi-regular-2.0.2.woff')
+      format('woff');
   font-weight: bold;
   font-style: italic;
   font-display: swap;
@@ -45,18 +45,21 @@
   padding: 0;
   box-sizing: border-box;
 }
-html{
+html {
   font-size: 62.5%;
 }
 body {
   font-family: baomoi, serif;
   font-size: 14px;
 }
-li{
+li {
   list-style: none;
 }
-a{
+a {
   text-decoration: none;
   color: #adb5bd;
   height: 100%;
+}
+a:hover {
+  color: #2fa1b3;
 }

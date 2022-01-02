@@ -13,6 +13,7 @@ import { selectData, getPostAction } from '../postSlice'
 import { useParams } from 'react-router-dom'
 import { FullScreenImage } from '../components/FullScreenImage'
 import { IParagraphImage } from 'shared-types'
+// import '../components/HotTopic/'
 interface ImageDetail {
   id: number
   url: string
