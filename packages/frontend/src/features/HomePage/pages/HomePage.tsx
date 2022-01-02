@@ -34,7 +34,7 @@ const Home = () => {
               </div>
             </div>
             <div className="col-4 content-right">
-              <ListNewsRight />
+              <ListNewsRight data={data}/>
               <div className="section">
                 <div className="slider">
                   <div className="title-slider">
