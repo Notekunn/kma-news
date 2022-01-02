@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { AiOutlineUser, AiOutlineMenu } from 'react-icons/ai'
 import { BsPhone, BsSearch } from 'react-icons/bs'
 import { useState } from 'react'
@@ -9,51 +9,24 @@ import { CategoryGroup } from '@/features/Category/components/CategoryGroup'
 import { getTreeAction, selectData } from '@/features/Category/categorySlice'
 import { selectLoggedIn, selectProfile } from '@/features/Auth/authSlice'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { useClickOutside } from '@/hooks/useClickOutSide'
-// import Login from './Login'
-// let useClickOutside = (handler: () => {}) => {
-//   let domNode = useRef()
-//   type event = keyof GlobalEventHandlersEventMap
-//   useEffect(() => {
-//     let maybeHandler = (event: event) => {
-//       if (!domNode.current.contains(event.target)) {
-//         handler()
-//       }
-//     }
-
-//     document.addEventListener('mousedown', maybeHandler(this.event))
-
-//     return () => {
-//       document.removeEventListener('mousedown', maybeHandler)
-//     }
-//   })
-
-//   return domNode
-// }
+import { useClickOutside } from '@/hooks/useClickOutside'
 
 const Header = () => {
   const dispatch = useAppDispatch()
   const loggedIn = useAppSelector(selectLoggedIn)
   const treeCategory = useAppSelector(selectData)
-  const [activeDropMenu, setActiveDropMenu] = useState(false)
-  const [loginVisible, toggleLogin] = useState(false)
-  const [userMenuVisible, toggleUserMenu] = useState(false)
   const profile = useAppSelector(selectProfile)
-  const refUser = React.useRef(null)
-  const refDropMenu = React.useRef(null)
-  useClickOutside(() => {
-    toggleUserMenu(false)
-  }, refUser)
-  useClickOutside(() => {
-    setActiveDropMenu(false)
-  }, refDropMenu)
+  const [refUser, userMenuVisible, toggleUserMenu] = useClickOutside<HTMLDivElement>(false)
+  const [refDropMenu, activeDropMenu, setActiveDropMenu] = useClickOutside<HTMLDivElement>(false)
+  const [loginVisible, toggleLogin] = useState(false)
+
   useEffect(() => {
     // Nếu đăng nhập thành công
     if (!!loggedIn) {
       toggleLogin(false)
       toggleUserMenu(false)
     }
-  }, [loggedIn])
+  }, [loggedIn, toggleLogin, toggleUserMenu])
   useEffect(() => {
     dispatch(getTreeAction())
     // eslint-disable-next-line react-hooks/exhaustive-deps
