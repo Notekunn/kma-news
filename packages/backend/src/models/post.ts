@@ -30,6 +30,7 @@ const postSchema = new mongoose.Schema<IPostDocument>(
     slug: {
       type: String,
       unique: true,
+      index: true,
     },
     thumbnailUrl: {
       type: String,

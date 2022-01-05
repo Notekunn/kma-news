@@ -17,6 +17,9 @@ app.use(
 )
 app.use(express.json())
 app.use('/', routes)
+app.get('/zalo_verifier*', (req, res) => {
+  res.sendFile('./docs/zalo.html', { root: __dirname })
+})
 
 app.use(errorHandler)
 

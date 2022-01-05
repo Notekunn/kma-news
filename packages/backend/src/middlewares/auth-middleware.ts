@@ -1,19 +1,17 @@
 import { UserModel } from '@/models/user'
 import { Request, Response, NextFunction } from 'express'
-import jwt, { JwtPayload } from 'jsonwebtoken'
 import HttpException from '@/exceptions/HttpException'
 import client from '@/redis'
+import { parseBearerHeader, verifyToken } from '@/services/jwt'
 
 const SECRET = process.env.SECRET || 'secret_key_for_jwt'
 const CACHE_TTL = parseInt(process.env.CACHE_TTL || '60')
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization || ''
-  const [, token] = authHeader.split(' ')
-  if (!authHeader.startsWith('Bearer') || !token)
-    return next(new HttpException(403, 'Invalid token'))
+  const token = parseBearerHeader(req)
+  if (!token) return next(new HttpException(403, 'Invalid token'))
   try {
-    const { email, id } = jwt.verify(token, SECRET) as JwtPayload
+    const { email, id } = verifyToken(token)
     const cached = await client.get(`user_${id}`)
     // Cache hit
     if (cached) {
@@ -36,6 +34,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
 
     next()
   } catch (error) {
+    if (error instanceof HttpException) return next(error)
     next(new HttpException(401, 'Unauthorized access'))
   }
 }
@@ -47,11 +46,10 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
  * @returns
  */
 export const nonAuthMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization || ''
-  const [, token] = authHeader.split(' ')
-  if (!authHeader.startsWith('Bearer') || !token) return next()
+  const token = parseBearerHeader(req)
+  if (!token) return next(new HttpException(403, 'Invalid token'))
   try {
-    const { email, id } = jwt.verify(token, SECRET) as JwtPayload
+    const { email, id } = verifyToken(token)
     const cached = await client.get(`user_${id}`)
     // Cache hit
     if (cached) {
@@ -71,7 +69,6 @@ export const nonAuthMiddleware = async (req: Request, res: Response, next: NextF
     client.set(`user_${id}`, JSON.stringify(user), {
       EX: CACHE_TTL * 60,
     })
-
     next()
   } catch (error) {
     next()
