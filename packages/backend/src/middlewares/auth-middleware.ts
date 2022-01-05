@@ -1,21 +1,18 @@
 import { UserModel } from '@/models/user'
 import { Request, Response, NextFunction } from 'express'
 import HttpException from '@/exceptions/HttpException'
-import client from '@/redis'
 import { parseBearerHeader, verifyToken } from '@/services/jwt'
-
-const SECRET = process.env.SECRET || 'secret_key_for_jwt'
-const CACHE_TTL = parseInt(process.env.CACHE_TTL || '60')
+import { getUserFromCache, setUserToCache } from '@/services/cache'
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const token = parseBearerHeader(req)
   if (!token) return next(new HttpException(403, 'Invalid token'))
   try {
     const { email, id } = verifyToken(token)
-    const cached = await client.get(`user_${id}`)
+    const cachedUser = await getUserFromCache(id)
     // Cache hit
-    if (cached) {
-      req.context = new UserModel(JSON.parse(cached))
+    if (cachedUser) {
+      req.context = cachedUser
       return next()
     }
     // Cache miss
@@ -28,12 +25,11 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
     }
     req.context = user
     // Write aside
-    client.set(`user_${id}`, JSON.stringify(user), {
-      EX: CACHE_TTL * 60,
-    })
+    await setUserToCache(user)
 
     next()
-  } catch (error) {
+  } catch (error: any) {
+    console.log(error)
     if (error instanceof HttpException) return next(error)
     next(new HttpException(401, 'Unauthorized access'))
   }
@@ -50,10 +46,10 @@ export const nonAuthMiddleware = async (req: Request, res: Response, next: NextF
   if (!token) return next(new HttpException(403, 'Invalid token'))
   try {
     const { email, id } = verifyToken(token)
-    const cached = await client.get(`user_${id}`)
+    const cachedUser = await getUserFromCache(id)
     // Cache hit
-    if (cached) {
-      req.context = new UserModel(JSON.parse(cached))
+    if (cachedUser) {
+      req.context = cachedUser
       return next()
     }
     // Cache miss
@@ -66,9 +62,7 @@ export const nonAuthMiddleware = async (req: Request, res: Response, next: NextF
     }
     req.context = user
     // Write aside
-    client.set(`user_${id}`, JSON.stringify(user), {
-      EX: CACHE_TTL * 60,
-    })
+    await setUserToCache(user)
     next()
   } catch (error) {
     next()
