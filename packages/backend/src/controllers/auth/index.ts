@@ -23,54 +23,8 @@ export const login: IController<Pick<IUser, 'email' | 'password'>> = errorWrappe
   async (req, res, next) => {
     const { error, value } = loginValidator.validate(req.body)
     if (error || !value) throw error
-
     const data = loginWithEmailPassword(value.email, value.password)
-
-    // Vô hiệu hóa token cũ
-
     res.send(data)
-
-    // Vô hiệu hóa token cũ
-    // await TokenModel.updateMany(
-    //   {
-    //     user: user._id,
-    //     type: 'refresh',
-    //     $or: [
-    //       {
-    //         expiredAt: {
-    //           $lt: new Date(),
-    //         },
-    //       },
-    //       //   {
-    //       //     status: 'active',
-    //       //   },
-    //     ],
-    //   },
-    //   {
-    //     $set: {
-    //       status: 'disabled',
-    //     },
-    //   }
-    // )
-    // const tokenData = new TokenModel({
-    //   token: refreshToken,
-    //   user: user._id,
-    //   expiredAt: refreshTokenExpiration,
-    //   type: 'refresh',
-    // })
-    // await tokenData.save()
-    // res.send({
-    //   access_token: token,
-    //   tokenExpiration,
-    //   refresh_token: refreshToken,
-    //   user: {
-    //     _id: user._id,
-    //     email: user.email,
-    //     name: user.name,
-    //     role: user.role,
-    //     avatarURL: user.avatarURL,
-    //   },
-    // })
   }
 )
 
