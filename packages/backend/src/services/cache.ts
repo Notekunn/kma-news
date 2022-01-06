@@ -20,6 +20,10 @@ export const setUserToCache = (user: IUserDocument) => {
   })
 }
 
+export const deleteUserFromCache = (id: string) => {
+  return client.del(`user:${id}`)
+}
+
 export const getTokenFromCache = async (token: string) => {
   const cached = await client.get(`token:${token}`)
   if (cached) {
@@ -35,6 +39,10 @@ export const setTokenToCache = async (token: IToken) => {
     NX: true,
   })
   return data
+}
+
+export const deleteTokenFromCache = (token: string) => {
+  return client.del(`token:${token}`)
 }
 
 export const disableOldTokens = async (userId: IToken['token']) => {

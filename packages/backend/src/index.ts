@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import helmet from 'helmet'
+import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import routes from './routes'
 import errorHandler from './middlewares/error-handler'
@@ -14,6 +15,7 @@ const { PORT, BACKEND_HOST, FRONTEND_HOST, ADMIN_HOST } = load({
   FRONTEND_HOST: 'kma-news.tech',
   ADMIN_HOST: 'admin.kma-news.tech',
 })
+
 let origin = ['http://localhost:3000', 'http://localhost:3001']
 if (process.env.NODE_ENV === 'production') {
   const deployHost = [BACKEND_HOST, FRONTEND_HOST, ADMIN_HOST].map((domain) => [
@@ -31,6 +33,7 @@ app.use(
     credentials: true,
   })
 )
+app.use(cookieParser())
 app.use(express.json())
 app.use('/', routes)
 app.get('/zalo_verifier*', (req, res) => {

@@ -8,11 +8,10 @@ import { errorWrapper } from '@/services/error-wrapper'
 import HttpException from '@/exceptions/HttpException'
 import client from '@/redis'
 import { loginWithEmailPassword } from './loginWithEmailPassword'
+import { deleteTokenFromCache, getTokenFromCache } from '@/services/cache'
+import { signToken, verifyRefreshToken } from '@/services/jwt'
 
-const SECRET = process.env.SECRET || 'secret_key_for_jwt'
-const REFRESH_SECRET = process.env.REFRESH_SECRET || 'secret_key_for_refresh'
 const ACCESS_TOKEN_TTL = parseInt(process.env.ACCESS_TOKEN_TTL || '' + 30 * 60)
-const REFRESH_TOKEN_TTL = parseInt(process.env.REFRESH_TOKEN_TTL || '' + 7 * 24 * 60 * 60)
 
 const loginValidator = joi.object<Pick<IUser, 'email' | 'password'>>({
   password: joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
@@ -30,39 +29,36 @@ export const login: IController<Pick<IUser, 'email' | 'password'>> = errorWrappe
         expires: refreshTokenExpiration,
         // path: '/',
         httpOnly: true,
+        // signed: true,
       })
-      .send(data)
+      .send({
+        access_token,
+        tokenExpiration,
+        user,
+      })
   }
 )
 
 export const refreshToken: IController<{ refresh_token: string }> = errorWrapper(
   async (req, res, next) => {
-    const { refresh_token: refreshToken } = req.body
-    // Phải viết thêm hàm kiểm tra refresh token
-    // Sau này sẽ lấy từ cookie thay vì body
-    if (!refreshToken) throw new HttpException(401, 'Refresh token is required')
-    const tokenData = await TokenModel.findOne({
-      token: refreshToken,
-      status: 'active',
-      expiredAt: {
-        $gte: new Date(),
-      },
-      type: 'refresh',
-    })
-    if (!tokenData) throw new HttpException(403, 'Refresh token is invalid')
+    const refreshToken = req.cookies?.refresh_token
 
-    const { email, id } = jwt.verify(refreshToken, REFRESH_SECRET) as ITokenPayload
+    if (!refreshToken) throw new HttpException(401, 'Refresh token is required')
+
+    const tokenData = await getTokenFromCache(refreshToken)
+
+    if (!tokenData) throw new HttpException(403, 'Refresh token is expired')
+
+    const { email, _id } = verifyRefreshToken(tokenData.token)
 
     const user = await UserModel.findOne({
       email: email,
     }).select(['_id', 'email', 'name', 'role', 'avatarURL'])
 
-    if (user?.id !== id) throw new HttpException(403, 'Refresh token is invalid')
+    if (!user || user._id != _id) throw new HttpException(403, 'Refresh token is invalid')
 
     const tokenExpiration = moment().add(ACCESS_TOKEN_TTL, 'seconds').toDate()
-    const token = jwt.sign({ email, id }, SECRET, {
-      expiresIn: ACCESS_TOKEN_TTL,
-    })
+    const token = signToken(user)
     res.send({
       access_token: token,
       tokenExpiration,
@@ -79,22 +75,12 @@ export const refreshToken: IController<{ refresh_token: string }> = errorWrapper
 
 export const logout: IController<{ refresh_token: string }> = errorWrapper(
   async (req, res, next) => {
-    const { refresh_token: refreshToken } = req.body
-    // Phải viết thêm hàm kiểm tra refresh token
-    // Sau này sẽ lấy từ cookie thay vì body
+    const refreshToken = req.cookies?.refresh_token
     if (!refreshToken) throw new HttpException(401, 'Refresh token is required')
-    const token = await TokenModel.findOneAndUpdate(
-      {
-        token: refreshToken,
-      },
-      {
-        $set: {
-          status: 'disabled',
-        },
-      }
-    )
-    client.del(`user_${token?.user._id}`)
-    res.send({
+
+    const tokenData = await deleteTokenFromCache(refreshToken)
+
+    res.clearCookie('refresh_token').send({
       message: 'Logout success',
     })
   }

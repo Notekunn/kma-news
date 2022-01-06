@@ -6,6 +6,9 @@ declare global {
   namespace Express {
     interface Request {
       context?: IUserDocument
+      cookies: {
+        [key: string]: string
+      }
     }
   }
 }

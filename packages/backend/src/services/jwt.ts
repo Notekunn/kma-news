@@ -13,7 +13,7 @@ const { SECRET, REFRESH_SECRET, ACCESS_TOKEN_TTL, REFRESH_TOKEN_TTL } = load({
 
 export interface ITokenPayload extends JwtPayload {
   email: string
-  id: string
+  _id: string
 }
 
 export const parseBearerHeader = (req: Request) => {
@@ -24,30 +24,30 @@ export const parseBearerHeader = (req: Request) => {
 }
 
 export const verifyToken = (token: string): ITokenPayload => {
-  const { email, id } = jwt.verify(token, SECRET) as JwtPayload
-  return { email, id }
+  const { email, _id } = jwt.verify(token, SECRET) as JwtPayload
+  return { email, _id }
 }
 
 export const verifyRefreshToken = (token: string): ITokenPayload => {
-  const { email, id, tokenType } = jwt.verify(token, REFRESH_SECRET) as JwtPayload
+  const { email, _id, tokenType } = jwt.verify(token, REFRESH_SECRET) as JwtPayload
   if (tokenType !== 'refresh') throw new HttpException(400, 'Invalid token type')
-  return { email, id } as const
+  return { email, _id } as const
 }
 
 export const signToken = (user: IUserDocument) => {
-  const { email, id } = user
-  return jwt.sign({ email, id }, SECRET, { expiresIn: ACCESS_TOKEN_TTL })
+  const { email, _id } = user
+  return jwt.sign({ email, _id }, SECRET, { expiresIn: ACCESS_TOKEN_TTL })
 }
 
 export const signRefreshToken = (user: IUserDocument) => {
-  const { email, id } = user
+  const { email, _id } = user
   return jwt.sign(
     {
       email,
-      id,
+      _id,
       tokenType: 'refresh',
     },
-    SECRET,
+    REFRESH_SECRET,
     { expiresIn: REFRESH_TOKEN_TTL }
   )
 }
