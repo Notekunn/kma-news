@@ -23,8 +23,13 @@ export const login: IController<Pick<IUser, 'email' | 'password'>> = errorWrappe
   async (req, res, next) => {
     const { error, value } = loginValidator.validate(req.body)
     if (error || !value) throw error
-    const data = loginWithEmailPassword(value.email, value.password)
-    res.send(data)
+    const data = await loginWithEmailPassword(value.email, value.password)
+    const { access_token, tokenExpiration, user, refresh_token, refreshTokenExpiration } = data
+    res
+      .cookie('refresh_token', refresh_token, {
+        expires: refreshTokenExpiration,
+      })
+      .send(data)
   }
 )
 

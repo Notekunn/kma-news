@@ -9,7 +9,7 @@ import { load } from 'env-defaults'
 const app = express()
 
 const { PORT } = load({
-  PORT: 3000,
+  PORT: 8888,
 })
 app.use(helmet())
 app.use(
