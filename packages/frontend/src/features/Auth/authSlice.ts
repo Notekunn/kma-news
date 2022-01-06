@@ -11,14 +11,22 @@ export const loginAction = createAsyncThunk(
   }
 )
 export const profileAction = createAsyncThunk('auth/profile', async (_, thunkAPI) => {
+  const rootState = thunkAPI.getState() as RootState
+  if (!selectLoggedIn(rootState)) {
+    throw new Error('Not logged in')
+  }
   const data = await getProfile()
   return data
 })
 
 export const logoutAction = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
-  const refresh_token = localStorage.getItem('refresh_token')
-  if (!refresh_token) return null
-  const data = await logout(refresh_token)
+  const rootState = thunkAPI.getState() as RootState
+  if (!selectLoggedIn(rootState)) {
+    return {
+      message: 'You are not logged in',
+    }
+  }
+  const data = await logout()
   return data
 })
 
@@ -44,10 +52,9 @@ const authSlice = createSlice({
       .addCase(loginAction.fulfilled, (state, action) => {
         state.loading = 'done'
         state.loggedIn = true
-        const { access_token, refresh_token, user } = action.payload
+        const { access_token, user } = action.payload
         state.profile = user
         localStorage.setItem('access_token', access_token)
-        localStorage.setItem('refresh_token', refresh_token)
       })
       .addCase(loginAction.rejected, (state, action) => {
         state.loading = 'error'
@@ -73,14 +80,12 @@ const authSlice = createSlice({
         state.loggedIn = false
         state.profile = undefined
         localStorage.removeItem('access_token')
-        localStorage.removeItem('refresh_token')
       })
       .addCase(logoutAction.rejected, (state, action) => {
         state.loading = 'error'
         state.loggedIn = false
         state.profile = undefined
         localStorage.removeItem('access_token')
-        localStorage.removeItem('refresh_token')
       })
   },
 })

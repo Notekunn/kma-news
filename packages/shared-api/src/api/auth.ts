@@ -11,7 +11,7 @@ export const loginWithEmail = ({ email, password }: APIParameter.Login) => {
   ) as Promise<APIResponse.Login>
 }
 
-export const refreshToken = (refresh_token: string) => {
+export const refreshToken = () => {
   return client.request({
     url: '/auth/refresh',
     withCredentials: true,
@@ -22,7 +22,7 @@ export const getProfile = () => {
   return client.get('/users/me') as Promise<APIResponse.Profile>
 }
 
-export const logout = (refresh_token: string) => {
+export const logout = () => {
   return client.request({
     url: '/auth/logout',
     withCredentials: true,
