@@ -8,8 +8,8 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
   const token = parseBearerHeader(req)
   if (!token) return next(new HttpException(403, 'Invalid token'))
   try {
-    const { email, id } = verifyToken(token)
-    const cachedUser = await getUserFromCache(id)
+    const { email, _id } = verifyToken(token)
+    const cachedUser = await getUserFromCache(_id)
     // Cache hit
     if (cachedUser) {
       req.context = cachedUser
@@ -20,7 +20,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
       email,
     }).select(['_id', 'email', 'name', 'role', 'avatarURL'])
 
-    if (!user || id != user._id) {
+    if (!user || _id != user._id) {
       return next(new HttpException(403, 'Invalid token'))
     }
     req.context = user
@@ -45,8 +45,8 @@ export const nonAuthMiddleware = async (req: Request, res: Response, next: NextF
   const token = parseBearerHeader(req)
   if (!token) return next()
   try {
-    const { email, id } = verifyToken(token)
-    const cachedUser = await getUserFromCache(id)
+    const { email, _id } = verifyToken(token)
+    const cachedUser = await getUserFromCache(_id)
     // Cache hit
     if (cachedUser) {
       req.context = cachedUser
@@ -57,7 +57,7 @@ export const nonAuthMiddleware = async (req: Request, res: Response, next: NextF
       email,
     }).select(['_id', 'email', 'name', 'role', 'avatarURL'])
 
-    if (!user || id != user._id) {
+    if (!user || _id != user._id) {
       return next(new HttpException(403, 'Invalid token'))
     }
     req.context = user
