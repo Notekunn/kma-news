@@ -5,12 +5,14 @@ import Home from '@/features/HomePage/pages/HomePage'
 import Topic from '@/features/Topic/pages/Topic'
 import ReadingPage from '@/features/Post/pages/ReadingPage'
 import { HotTopicPage } from '@/features/Post/pages/HotTopicPage'
+import { BlankLayout } from '@/layouts/BlankLayout'
 const PersonalPage = React.lazy(() => import('@/features/Personal/pages/PersonalPage'))
 const HistoryPage = React.lazy(() => import('@/features/Personal/pages/HistoryPage'))
 const SuggestPage = React.lazy(() => import('@/features/Personal/pages/SuggestPage'))
 const FavoritePage = React.lazy(() => import('@/features/Personal/pages/FavoritePage'))
 const CategoryPage = React.lazy(() => import('@/features/Personal/pages/CategoryPage'))
 const SubscriptionPage = React.lazy(() => import('@/features/Personal/pages/SubscriptionPage'))
+const ZaloLoginPage = React.lazy(() => import('@/features/Auth/pages/ZaloLoginPage'))
 
 export const RootRouter = () => {
   return (
@@ -31,6 +33,9 @@ export const RootRouter = () => {
               <Route path="theo-doi" element={<SubscriptionPage />} />
               <Route path="*" element={<></>} />
             </Route>
+          </Route>
+          <Route path="auth/login" element={<BlankLayout />}>
+            <Route path="zalo" element={<ZaloLoginPage />} />
           </Route>
         </Routes>
       </Suspense>
