@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, MouseEvent } from 'react'
 import { useAppDispatch } from '@/app/hooks'
 import { loginAction } from '../authSlice'
 import './auth.css'
+import createZaloLoginUrl from '@/services/createZaloLoginUrl'
 export interface LoginPopupProps {
   visible: boolean
   toggleVisible: (visible: boolean) => void
 }
+const { REACT_APP_ZALO_CALLBACK_URL = '', REACT_APP_ZALO_APP_ID = '' } = process.env
 const Login: React.FC<LoginPopupProps> = React.memo((props) => {
   const dispatch = useAppDispatch()
   const { visible, toggleVisible } = props
@@ -13,6 +15,14 @@ const Login: React.FC<LoginPopupProps> = React.memo((props) => {
   const [password, setPassword] = useState('')
   const handleSubmit = () => {
     dispatch(loginAction({ email, password }))
+  }
+  const handleLoginZalo = (event: MouseEvent) => {
+    event.preventDefault()
+    window.open(
+      createZaloLoginUrl(REACT_APP_ZALO_APP_ID, REACT_APP_ZALO_CALLBACK_URL),
+      'popup',
+      'width=600,height=600'
+    )
   }
 
   return (
@@ -52,12 +62,7 @@ const Login: React.FC<LoginPopupProps> = React.memo((props) => {
               <p className="auth-form__group-forget">Bạn quên mật khẩu ?</p>
             </div>
             <div className="auth-form__btn">
-              <input
-                type="button"
-                className="auth-btn auth-btn--regis"
-                value="Đăng kí"
-                onClick={() => {}}
-              />
+              <input type="button" className="auth-btn auth-btn--regis" value="Đăng kí" />
               <input
                 type="button"
                 className="auth-btn auth-btn--login"
@@ -67,7 +72,11 @@ const Login: React.FC<LoginPopupProps> = React.memo((props) => {
             </div>
           </form>
           <div className="auth-form__socials">
-            <a href="/#" className="auth-socials__btn auth-socials__btn--zalo">
+            <a
+              href="/#"
+              className="auth-socials__btn auth-socials__btn--zalo"
+              onClick={handleLoginZalo}
+            >
               <img
                 src="https://page.widget.zalo.me/static/images/2.0/Logo.svg"
                 alt=""

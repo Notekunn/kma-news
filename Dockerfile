@@ -20,6 +20,12 @@ ARG API_URL=http//localhost:800/
 
 ENV REACT_APP_API_URL=${API_URL}
 
+ENV REACT_APP_ZALO_CALLBACK_URL=${API_URL}/auth/login/zalo
+
+ARG ZALO_APP_ID=12346
+
+ENV REACT_APP_ZALO_APP_ID=${ZALO_APP_ID}
+
 RUN echo "Api url ${API_URL}"
 
 # Link 2 shared repo
