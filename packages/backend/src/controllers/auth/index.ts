@@ -28,6 +28,8 @@ export const login: IController<Pick<IUser, 'email' | 'password'>> = errorWrappe
     res
       .cookie('refresh_token', refresh_token, {
         expires: refreshTokenExpiration,
+        // path: '/',
+        httpOnly: true,
       })
       .send(data)
   }

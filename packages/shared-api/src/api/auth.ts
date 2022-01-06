@@ -2,11 +2,20 @@ import client from '../axiosClient'
 import { APIResponse, APIParameter } from '../types'
 
 export const loginWithEmail = ({ email, password }: APIParameter.Login) => {
-  return client.post('/auth/login', { email, password }) as Promise<APIResponse.Login>
+  return client.post(
+    '/auth/login',
+    { email, password },
+    {
+      withCredentials: true,
+    }
+  ) as Promise<APIResponse.Login>
 }
 
 export const refreshToken = (refresh_token: string) => {
-  return client.post('/auth/refresh', { refresh_token }) as Promise<APIResponse.Login>
+  return client.request({
+    url: '/auth/refresh',
+    withCredentials: true,
+  }) as Promise<APIResponse.Login>
 }
 
 export const getProfile = () => {
@@ -14,5 +23,8 @@ export const getProfile = () => {
 }
 
 export const logout = (refresh_token: string) => {
-  return client.post('/auth/logout', { refresh_token }) as Promise<APIResponse.Logout>
+  return client.request({
+    url: '/auth/logout',
+    withCredentials: true,
+  }) as Promise<APIResponse.Logout>
 }

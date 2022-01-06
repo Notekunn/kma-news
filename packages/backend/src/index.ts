@@ -8,13 +8,26 @@ import client from './redis'
 import { load } from 'env-defaults'
 const app = express()
 
-const { PORT } = load({
+const { PORT, BACKEND_HOST, FRONTEND_HOST, ADMIN_HOST } = load({
   PORT: 8888,
+  BACKEND_HOST: 'api.kma-news.tech',
+  FRONTEND_HOST: 'kma-news.tech',
+  ADMIN_HOST: 'admin.kma-news.tech',
 })
+let origin = ['http://localhost:3000', 'http://localhost:3001']
+if (process.env.NODE_ENV === 'production') {
+  const deployHost = [BACKEND_HOST, FRONTEND_HOST, ADMIN_HOST].map((domain) => [
+    `http://${domain}`,
+    `https://${domain}`,
+  ])
+  origin = origin.concat(...deployHost)
+}
+console.log('Origin:', origin)
+
 app.use(helmet())
 app.use(
   cors({
-    origin: '*',
+    origin,
     credentials: true,
   })
 )

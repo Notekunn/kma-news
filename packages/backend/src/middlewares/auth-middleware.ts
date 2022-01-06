@@ -43,7 +43,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
  */
 export const nonAuthMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const token = parseBearerHeader(req)
-  if (!token) return next(new HttpException(403, 'Invalid token'))
+  if (!token) return next()
   try {
     const { email, id } = verifyToken(token)
     const cachedUser = await getUserFromCache(id)
