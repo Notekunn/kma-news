@@ -29,3 +29,12 @@ export const logout = () => {
     withCredentials: true,
   }) as Promise<APIResponse.Logout>
 }
+
+export const loginWithZalo = (code: string) => {
+  return client.request({
+    method: 'POST',
+    url: '/auth/login/zalo',
+    data: { code },
+    withCredentials: true,
+  }) as Promise<APIResponse.Login>
+}

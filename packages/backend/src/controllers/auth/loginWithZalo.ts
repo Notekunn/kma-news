@@ -6,6 +6,11 @@ import HttpException from '@/exceptions/HttpException'
 import { load } from 'env-defaults'
 import { createUserIfNotExist } from './createUser'
 import generateToken from './generateToken'
+import joi from 'joi'
+
+const loginValidator = joi.object({
+  code: joi.string().required(),
+})
 
 const { ZALO_SECRET_KEY, ZALO_APP_ID } = load({
   ZALO_SECRET_KEY: '',
@@ -53,8 +58,9 @@ export const getUserDataFromToken = async (token: string) => {
 }
 
 export const loginWithZalo: IController = errorWrapper(async (req, res, next) => {
-  const { code } = req.query
-  const { access_token: zaloAccessToken } = await getTokenFromAuthorizationCode(code)
+  const { error, value } = loginValidator.validate(req.body)
+  if (error || !value) throw error
+  const { access_token: zaloAccessToken } = await getTokenFromAuthorizationCode(value.code)
   if (!zaloAccessToken) return next(new HttpException(400, 'Login failed'))
   const { id, name, picture } = await getUserDataFromToken(zaloAccessToken)
   const email = `${id}@zalo.com.vn`

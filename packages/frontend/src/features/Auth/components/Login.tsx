@@ -18,7 +18,7 @@ const Login: React.FC<LoginPopupProps> = React.memo((props) => {
   }
   const handleLoginZalo = (event: MouseEvent) => {
     event.preventDefault()
-    window.open(
+    const popupLogin = window.open(
       createZaloLoginUrl(REACT_APP_ZALO_APP_ID, REACT_APP_ZALO_CALLBACK_URL),
       'popup',
       'width=600,height=600'
