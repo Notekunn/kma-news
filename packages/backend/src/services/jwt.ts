@@ -1,11 +1,15 @@
 import HttpException from '@/exceptions/HttpException'
 import type { Request } from 'express'
 import jwt, { JwtPayload } from 'jsonwebtoken'
+import { IUserDocument } from 'shared-types'
+import { load } from 'env-defaults'
 
-const SECRET = process.env.SECRET || 'secret_key_for_jwt'
-const REFRESH_SECRET = process.env.REFRESH_SECRET || 'secret_key_for_refresh'
-const ACCESS_TOKEN_TTL = parseInt(process.env.ACCESS_TOKEN_TTL || '' + 30 * 60)
-const REFRESH_TOKEN_TTL = parseInt(process.env.REFRESH_TOKEN_TTL || '' + 7 * 24 * 60 * 60)
+const { SECRET, REFRESH_SECRET, ACCESS_TOKEN_TTL, REFRESH_TOKEN_TTL } = load({
+  SECRET: 'secret_key_for_jwt',
+  REFRESH_SECRET: 'secret_key_for_refresh',
+  ACCESS_TOKEN_TTL: 30 * 60,
+  REFRESH_TOKEN_TTL: 7 * 24 * 60 * 60,
+})
 
 export interface ITokenPayload extends JwtPayload {
   email: string
@@ -30,11 +34,13 @@ export const verifyRefreshToken = (token: string): ITokenPayload => {
   return { email, id } as const
 }
 
-export const signToken = (email: string, id: string) => {
+export const signToken = (user: IUserDocument) => {
+  const { email, id } = user
   return jwt.sign({ email, id }, SECRET, { expiresIn: ACCESS_TOKEN_TTL })
 }
 
-export const signRefreshToken = (email: string, id: string) => {
+export const signRefreshToken = (user: IUserDocument) => {
+  const { email, id } = user
   return jwt.sign(
     {
       email,

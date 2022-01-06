@@ -2,7 +2,7 @@ FROM node:16-slim as base
 
 ARG BUILD_CONTEXT=backend
 
-ENV TIMEZONE=Asia/Ho_Chi_Minh
+ENV TZ=Asia/Ho_Chi_Minh
 
 ENV NODE_ENV development
 

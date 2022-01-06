@@ -5,9 +5,12 @@ import cors from 'cors'
 import routes from './routes'
 import errorHandler from './middlewares/error-handler'
 import client from './redis'
+import { load } from 'env-defaults'
 const app = express()
 
-const { PORT = 8888 } = process.env
+const { PORT } = load({
+  PORT: 3000,
+})
 app.use(helmet())
 app.use(
   cors({
