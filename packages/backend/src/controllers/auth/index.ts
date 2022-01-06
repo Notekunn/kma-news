@@ -3,41 +3,12 @@ import moment from 'moment-timezone'
 import joi from 'joi'
 import { IController, IUser, ITokenPayload } from 'shared-types'
 import { UserModel } from '@/models/user'
-import { TokenModel } from '@/models/token'
 import { errorWrapper } from '@/services/error-wrapper'
 import HttpException from '@/exceptions/HttpException'
-import client from '@/redis'
-import { loginWithEmailPassword } from './loginWithEmailPassword'
 import { deleteTokenFromCache, getTokenFromCache } from '@/services/cache'
 import { signToken, verifyRefreshToken } from '@/services/jwt'
 
 const ACCESS_TOKEN_TTL = parseInt(process.env.ACCESS_TOKEN_TTL || '' + 30 * 60)
-
-const loginValidator = joi.object<Pick<IUser, 'email' | 'password'>>({
-  password: joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-  email: joi.string().email().required(),
-})
-
-export const login: IController<Pick<IUser, 'email' | 'password'>> = errorWrapper(
-  async (req, res, next) => {
-    const { error, value } = loginValidator.validate(req.body)
-    if (error || !value) throw error
-    const data = await loginWithEmailPassword(value.email, value.password)
-    const { access_token, tokenExpiration, user, refresh_token, refreshTokenExpiration } = data
-    res
-      .cookie('refresh_token', refresh_token, {
-        expires: refreshTokenExpiration,
-        // path: '/',
-        httpOnly: true,
-        // signed: true,
-      })
-      .send({
-        access_token,
-        tokenExpiration,
-        user,
-      })
-  }
-)
 
 export const refreshToken: IController<{ refresh_token: string }> = errorWrapper(
   async (req, res, next) => {
