@@ -3,9 +3,6 @@ import { IController, IPost, IParagraphText, IParagraphImage } from 'shared-type
 import { PostModel } from '@/models/post'
 import { errorWrapper } from '@/services/error-wrapper'
 import NotFoundExeption from '@/exceptions/NotFoundExeption'
-import moment from 'moment-timezone'
-
-const TIMEZONE = process.env.TIMEZONE || 'Asia/Ho_Chi_Minh'
 
 const queryValidator = joi.object({
   page: joi.number().integer().min(1).default(1),
@@ -97,7 +94,7 @@ export const update: IController<IPost, 'id'> = errorWrapper(async (req, res, ne
   if (error) throw error
   // Nếu publish thì cập nhật lại publishedAt
   if (value?.status === 'publish') {
-    value.publishedAt = value.publishedAt || moment.tz(TIMEZONE).toDate()
+    value.publishedAt = value.publishedAt || new Date()
   }
 
   // Có thể thêm chức năng duyệt bài chỉ cho admin đổi status thành publish

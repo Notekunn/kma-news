@@ -1,23 +1,18 @@
 import { UserModel } from '@/models/user'
 import { Request, Response, NextFunction } from 'express'
-import jwt, { JwtPayload } from 'jsonwebtoken'
 import HttpException from '@/exceptions/HttpException'
-import client from '@/redis'
-
-const SECRET = process.env.SECRET || 'secret_key_for_jwt'
-const CACHE_TTL = parseInt(process.env.CACHE_TTL || '60')
+import { parseBearerHeader, verifyToken } from '@/services/jwt'
+import { getUserFromCache, setUserToCache } from '@/services/cache'
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization || ''
-  const [, token] = authHeader.split(' ')
-  if (!authHeader.startsWith('Bearer') || !token)
-    return next(new HttpException(403, 'Invalid token'))
+  const token = parseBearerHeader(req)
+  if (!token) return next(new HttpException(403, 'Invalid token'))
   try {
-    const { email, id } = jwt.verify(token, SECRET) as JwtPayload
-    const cached = await client.get(`user_${id}`)
+    const { email, _id } = verifyToken(token)
+    const cachedUser = await getUserFromCache(_id)
     // Cache hit
-    if (cached) {
-      req.context = new UserModel(JSON.parse(cached))
+    if (cachedUser) {
+      req.context = cachedUser
       return next()
     }
     // Cache miss
@@ -25,17 +20,17 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
       email,
     }).select(['_id', 'email', 'name', 'role', 'avatarURL'])
 
-    if (!user || id != user._id) {
+    if (!user || _id != user._id) {
       return next(new HttpException(403, 'Invalid token'))
     }
     req.context = user
     // Write aside
-    client.set(`user_${id}`, JSON.stringify(user), {
-      EX: CACHE_TTL * 60,
-    })
+    await setUserToCache(user)
 
     next()
-  } catch (error) {
+  } catch (error: any) {
+    console.log(error)
+    if (error instanceof HttpException) return next(error)
     next(new HttpException(401, 'Unauthorized access'))
   }
 }
@@ -47,15 +42,14 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
  * @returns
  */
 export const nonAuthMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization || ''
-  const [, token] = authHeader.split(' ')
-  if (!authHeader.startsWith('Bearer') || !token) return next()
+  const token = parseBearerHeader(req)
+  if (!token) return next()
   try {
-    const { email, id } = jwt.verify(token, SECRET) as JwtPayload
-    const cached = await client.get(`user_${id}`)
+    const { email, _id } = verifyToken(token)
+    const cachedUser = await getUserFromCache(_id)
     // Cache hit
-    if (cached) {
-      req.context = new UserModel(JSON.parse(cached))
+    if (cachedUser) {
+      req.context = cachedUser
       return next()
     }
     // Cache miss
@@ -63,15 +57,12 @@ export const nonAuthMiddleware = async (req: Request, res: Response, next: NextF
       email,
     }).select(['_id', 'email', 'name', 'role', 'avatarURL'])
 
-    if (!user || id != user._id) {
+    if (!user || _id != user._id) {
       return next(new HttpException(403, 'Invalid token'))
     }
     req.context = user
     // Write aside
-    client.set(`user_${id}`, JSON.stringify(user), {
-      EX: CACHE_TTL * 60,
-    })
-
+    await setUserToCache(user)
     next()
   } catch (error) {
     next()

@@ -5,9 +5,7 @@ export namespace APIResponse {
   export type GetMany<T> = ObjectWithID<T>[]
   export interface Login {
     access_token: string
-    refresh_token: string
     tokenExpiration: string
-    refreshTokenExpiration: string
     user: ObjectWithID<UserWithoutPassword>
   }
   interface paragraph {

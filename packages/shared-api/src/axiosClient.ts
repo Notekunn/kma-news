@@ -32,7 +32,7 @@ axiosClient.interceptors.response.use(
       console.log('Token expired...')
       const refresh_token = localStorage.getItem('refresh_token')
       if (!!refresh_token) {
-        refreshTokenRequest = refreshTokenRequest || refreshToken(refresh_token)
+        refreshTokenRequest = refreshTokenRequest || refreshToken()
         return refreshTokenRequest
           .then((data) => {
             localStorage.setItem('access_token', data.access_token)
@@ -41,7 +41,6 @@ axiosClient.interceptors.response.use(
           })
           .catch((err) => {
             localStorage.removeItem('access_token')
-            localStorage.removeItem('refresh_token')
             refreshTokenRequest = null
           })
       }
