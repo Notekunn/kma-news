@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { IPostDocument, IParagraph } from 'shared-types'
+import type { IPostDocument, IParagraph } from 'shared-types'
 import { stringToSlug } from '@/services/generate-slug'
 
 const ParagraphSchema = new mongoose.Schema<IParagraph>({
@@ -73,7 +73,7 @@ const postSchema = new mongoose.Schema<IPostDocument>(
     timestamps: true,
   }
 )
-postSchema.pre('save', function (next) {
+postSchema.pre<IPostDocument>('save', function (next) {
   this.slug = this.generateSlug()
   this.paragraphs = this.paragraphs.map((e) => {
     if (e.type === 'text') {

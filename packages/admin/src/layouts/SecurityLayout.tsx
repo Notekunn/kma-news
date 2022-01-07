@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import {
   profileAction,
   selectProfile,
-  selectLoadingProfile,
+  selectLoading,
   selectLoggedIn,
 } from '@/features/Auth/authSlice'
 import Result from 'antd/lib/result'
@@ -15,7 +15,7 @@ export const SecurityLayout: React.FC = (props) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const profile = useAppSelector(selectProfile)
-  const loadingProfile = useAppSelector(selectLoadingProfile)
+  const loadingProfile = useAppSelector(selectLoading)
   const loggedIn = useAppSelector(selectLoggedIn)
   const redirect_url = window.location.pathname
   useEffect(() => {

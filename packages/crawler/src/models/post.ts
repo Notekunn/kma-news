@@ -73,7 +73,7 @@ const postSchema = new mongoose.Schema<IPostDocument>(
     timestamps: true,
   }
 )
-postSchema.pre('save', function (next) {
+postSchema.pre<IPostDocument>('save', function (next) {
   this.slug = this.generateSlug()
   this.paragraphs = this.paragraphs.map((e) => {
     if (e.type === 'text') {

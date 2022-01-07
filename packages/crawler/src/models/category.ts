@@ -18,6 +18,7 @@ const categorySchema = new mongoose.Schema<ICategoryDocument>(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'category',
       default: null,
+      index: true,
     },
     isShow: {
       type: Boolean,
@@ -29,7 +30,7 @@ const categorySchema = new mongoose.Schema<ICategoryDocument>(
     timestamps: true,
   }
 )
-categorySchema.pre('save', function (next) {
+categorySchema.pre<ICategoryDocument>('save', function (next) {
   this.slug = BaseService.stringToSlug(this.title)
   next()
 })

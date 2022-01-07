@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { ICategoryDocument } from 'shared-types'
+import type { ICategoryDocument } from 'shared-types'
 import { stringToSlug } from '@/services/generate-slug'
 const categorySchema = new mongoose.Schema<ICategoryDocument>(
   {
@@ -30,7 +30,7 @@ const categorySchema = new mongoose.Schema<ICategoryDocument>(
     timestamps: true,
   }
 )
-categorySchema.pre('save', function (next) {
+categorySchema.pre<ICategoryDocument>('save', function (next) {
   this.slug = stringToSlug(this.title)
   next()
 })
