@@ -52,14 +52,14 @@ export const TopNews: React.FC<TopNewsProps> = ({ data }) => {
   return (
     <>
       <div className="section">
-        <Link to={`${data[0].slug}`}>
+        <Link to={`/bai-bao/${data[0].slug}`}>
           <div className="img-top">
             <img src={data[0].thumbnailUrl} alt="" />
           </div>
         </Link>
         <div className="description-top">
           <div className="title-top">
-            <Link to={`${data[0].slug}`}>{data[0].title}</Link>
+            <Link to={`/bai-bao/${data[0].slug}`}>{data[0].title}</Link>
           </div>
           <div className="news-source">
             <Link to="/">
