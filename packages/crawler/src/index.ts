@@ -21,16 +21,21 @@ async function main() {
   logger(`🚀 Start crawl news ....`)
   // Thêm các tác vụ crawl lasted new
   // cron tab chạy 1 phút 1 lần
-  // crawlLastedQueue.add('vnexpress', '', {
-  //   repeat: {
-  //     cron: '* * * * *',
-  //   },
-  // })
-  // crawlLastedQueue.add('baochinhphu', '', {
-  //   repeat: {
-  //     cron: '* * * * *',
-  //   },
-  // })
+  crawlLastedQueue.add('vnexpress', '', {
+    repeat: {
+      cron: '* * * * *',
+    },
+  })
+  crawlLastedQueue.add('baochinhphu', '', {
+    repeat: {
+      cron: '* * * * *',
+    },
+  })
+  crawlLastedQueue.add('vietnamnet', '', {
+    repeat: {
+      cron: '* * * * *',
+    },
+  })
   crawlLastedQueue.add('vtcnews', '', {
     repeat: {
       cron: '* * * * *',

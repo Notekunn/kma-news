@@ -4,12 +4,14 @@ import { UserRole } from 'shared-types'
 export const createUser = (
   email: string,
   password: string,
+  name: string,
   role: UserRole = 'user',
   avatarURL?: string
 ) => {
   const user = new UserModel({
     email,
     password,
+    name,
     role,
     avatarURL: avatarURL || 'https://i.pravatar.cc/300?u=' + email,
   })
@@ -19,10 +21,24 @@ export const createUser = (
 export const createUserIfNotExist = async (
   email: string,
   password: string,
+  name: string,
   role: UserRole = 'user',
   avatarURL?: string
 ) => {
-  const user = await UserModel.findOne({ email })
-  if (user) return user
-  return createUser(email, password, role, avatarURL)
+  const user = await UserModel.findOneAndUpdate(
+    {
+      email,
+    },
+    {
+      password,
+      name,
+      role,
+      avatarURL,
+    },
+    {
+      upsert: true,
+      new: true,
+    }
+  )
+  return user
 }

@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
-import { IUserDocument, UserRole } from 'shared-types'
+import type { IUserDocument, IUserModel, UserRole } from 'shared-types'
 
-const userSchema = new mongoose.Schema<IUserDocument>(
+const userSchema = new mongoose.Schema<IUserDocument, IUserModel>(
   {
     email: {
       type: String,
@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema<IUserDocument>(
   }
 )
 
-userSchema.pre('save', function (next) {
+userSchema.pre<IUserDocument>('save', function (next) {
   this.hashPassword()
   next()
 })

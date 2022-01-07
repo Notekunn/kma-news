@@ -1,4 +1,4 @@
-import { loginWithEmail, getProfile, Types, logout } from 'shared-api'
+import { loginWithEmail, loginWithZalo, getProfile, Types, logout } from 'shared-api'
 import { RootState } from '@/app/store'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { LoadingState } from 'shared-types'
@@ -30,6 +30,11 @@ export const logoutAction = createAsyncThunk('auth/logout', async (_, thunkAPI) 
   return data
 })
 
+export const loginZaloAction = createAsyncThunk('auth/login_zalo', async (_: string, thunkAPI) => {
+  const result = await loginWithZalo(_)
+  return result
+})
+
 export interface AuthState {
   loading: LoadingState
   loggedIn: boolean
@@ -45,21 +50,26 @@ const authSlice = createSlice({
   reducers: {},
   initialState,
   extraReducers: (builder) => {
+    const allLoginAction = [loginAction, loginZaloAction] as const
+    allLoginAction.forEach((act) => {
+      builder
+        .addCase(act.pending, (state) => {
+          state.loading = 'pending'
+        })
+        .addCase(act.fulfilled, (state, action) => {
+          state.loading = 'done'
+          state.loggedIn = true
+          const { access_token, user } = action.payload
+          state.profile = user
+          localStorage.setItem('access_token', access_token)
+        })
+        .addCase(act.rejected, (state, action) => {
+          state.loading = 'error'
+          state.message = action.error.message
+        })
+    })
+
     builder
-      .addCase(loginAction.pending, (state) => {
-        state.loading = 'pending'
-      })
-      .addCase(loginAction.fulfilled, (state, action) => {
-        state.loading = 'done'
-        state.loggedIn = true
-        const { access_token, user } = action.payload
-        state.profile = user
-        localStorage.setItem('access_token', access_token)
-      })
-      .addCase(loginAction.rejected, (state, action) => {
-        state.loading = 'error'
-        state.message = action.error.message
-      })
       .addCase(profileAction.pending, (state) => {
         state.loading = 'pending'
       })
@@ -71,6 +81,7 @@ const authSlice = createSlice({
         state.loading = 'error'
         state.message = action.error.message
       })
+    builder
       .addCase(logoutAction.pending, (state) => {
         state.loading = 'pending'
       })

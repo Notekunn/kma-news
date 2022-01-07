@@ -7,20 +7,6 @@ services:
       context: .
       dockerfile: Dockerfile
       target: product
-    environment:
-      NODE_ENV: development
-      PORT: 8080
-      DATABASE_URL: "mongodb://${DB_USERNAME}:${DB_PASSWORD}@db:27017/${DB_NAME}?auth\
-        Source=admin"
-      REDIS_URL: "redis://cache:6379"
-      SECRET: secret_for_token
-      REFRESH_SECRET: secret_for_refresh_token
-      CACHE_TTL: 60
-      ACCESS_TOKEN_TTL: 600
-      REFRESH_TOKEN_TTL: 86400
-      VIRTUAL_HOST: "${BACKEND_HOST}"
-      LETSENCRYPT_HOST: "${BACKEND_HOST}"
-      VIRTUAL_PORT: 8080
     expose:
       - 8080
     command: yarn backend deploy
@@ -34,13 +20,8 @@ services:
       args:
         BUILD_CONTEXT: frontend
         API_URL: "https://${BACKEND_HOST}"
-    environment:
-      REACT_APP_API_URL: "https://${BACKEND_HOST}"
-      VIRTUAL_HOST: "${FRONTEND_HOST}"
-      LETSENCRYPT_HOST: "${FRONTEND_HOST}"
-      VIRTUAL_PORT: 80
-    expose:
-      - 80
+        ZALO_APP_ID: "${ZALO_APP_ID}"
+        ZALO_CALLBACK_URL: "https://${FRONTEND_HOST}"
     command: [ "nginx", "-g", "daemon off;" ]
 
   admin:
@@ -52,20 +33,12 @@ services:
       args:
         BUILD_CONTEXT: admin
         API_URL: "https://${BACKEND_HOST}"
-    environment:
-      REACT_APP_API_URL: "https://${BACKEND_HOST}"
-      VIRTUAL_HOST: "${ADMIN_HOST}"
-      LETSENCRYPT_HOST: "${ADMIN_HOST}"
-      VIRTUAL_PORT: 80
     expose:
       - 80
     command: [ "nginx", "-g", "daemon off;" ]
   crawler:
     image: notekunn/kma-news-crawler
     container_name: kma-news-crawler
-    depends_on:
-      - db
-      - cache
     build:
       context: .
       dockerfile: Dockerfile

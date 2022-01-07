@@ -47,6 +47,7 @@ export const deleteTokenFromCache = (token: string) => {
 
 export const disableOldTokens = async (userId: IToken['token']) => {
   const tokensToDisable = await client.sMembers(`user_token:${userId}`)
+  if (tokensToDisable.length == 0) return
   await Promise.all(tokensToDisable.map((tk) => client.expire(`token:${tk}`, 0)))
   await client.sRem(`user_token:${userId}`, tokensToDisable)
 }

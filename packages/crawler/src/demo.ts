@@ -31,4 +31,9 @@ function main() {
   vnexpress
     .getNewDetail('https://vnexpress.net/viet-nam-phat-hien-ca-nhiem-omicron-dau-tien-4409186.html')
     .then(console.log)
+  // tienphong
+  //   .getNewDetail(
+  //     'https://tienphong.vn/who-omicron-it-nguy-co-gay-benh-nang-nhung-khong-the-noi-la-nhe-post1407640.tpo'
+  //   )
+  //   .then(console.log)
 }

@@ -1,46 +1,34 @@
 import HttpException from '@/exceptions/HttpException'
 import { UserModel } from '@/models/user'
-import { disableOldTokens, setTokenToCache } from '@/services/cache'
-import { signRefreshToken, signToken } from '@/services/jwt'
+import { errorWrapper } from '@/services/error-wrapper'
 import { load } from 'env-defaults'
-import moment from 'moment'
-import { IToken } from 'shared-types'
+import joi from 'joi'
+import { IUser } from 'shared-types'
+import generateToken from './generateToken'
 
-const { ACCESS_TOKEN_TTL, REFRESH_TOKEN_TTL, IS_REMOVE_OLD_TOKEN } = load({
-  REFRESH_TOKEN_TTL: 7 * 24 * 60 * 60,
-  ACCESS_TOKEN_TTL: 30 * 60,
-  IS_REMOVE_OLD_TOKEN: false,
+const loginValidator = joi.object<Pick<IUser, 'email' | 'password'>>({
+  password: joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+  email: joi.string().email().required(),
 })
 
-export const loginWithEmailPassword = async (email: string, password: string) => {
-  const user = await UserModel.findOne({ email })
-  if (!user || !user.checkPassword(password))
+const { COOKIE_DOMAIN } = load({
+  COOKIE_DOMAIN: 'kma-news.tech',
+})
+
+export const loginWithEmailPassword = errorWrapper(async (req, res, next) => {
+  const { error, value } = loginValidator.validate(req.body)
+  if (error || !value) throw error
+  const user = await UserModel.findOne({ email: value.email })
+  if (!user || !user.checkPassword(value.password))
     throw new HttpException(401, 'Email/Password is not correct')
-  if (IS_REMOVE_OLD_TOKEN) await disableOldTokens(user._id)
-  const tokenExpiration = moment().add(ACCESS_TOKEN_TTL, 'seconds').toDate()
-  const access_token = signToken(user)
-  const refreshTokenExpiration = moment().add(REFRESH_TOKEN_TTL, 'seconds').toDate()
-  const refresh_token = signRefreshToken(user)
-  const token: IToken = {
-    user: user._id,
-    token: refresh_token,
-    type: 'refresh',
-    expiredAt: refreshTokenExpiration,
-    lastTimeRefresh: new Date(),
-    status: 'active',
-  }
-  await setTokenToCache(token)
-  return {
-    tokenExpiration,
-    access_token,
-    refreshTokenExpiration,
-    refresh_token,
-    user: {
-      _id: user._id,
-      email: user.email,
-      name: user.name,
-      role: user.role,
-      avatarURL: user.avatarURL,
-    },
-  }
-}
+  const { refresh_token, refreshTokenExpiration, ...data } = await generateToken(user)
+  res
+    .cookie('refresh_token', refresh_token, {
+      expires: refreshTokenExpiration,
+      // path: '/',
+      httpOnly: true,
+      // signed: true,
+      domain: COOKIE_DOMAIN,
+    })
+    .send(data)
+})

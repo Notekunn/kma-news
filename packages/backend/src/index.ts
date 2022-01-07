@@ -16,7 +16,7 @@ const { PORT, BACKEND_HOST, FRONTEND_HOST, ADMIN_HOST } = load({
   ADMIN_HOST: 'admin.kma-news.tech',
 })
 
-let origin = ['http://localhost:3000', 'http://localhost:3001']
+let origin = ['http://localhost:3000', 'http://localhost:3001', 'https://kma-news.herokuapp.com']
 if (process.env.NODE_ENV === 'production') {
   const deployHost = [BACKEND_HOST, FRONTEND_HOST, ADMIN_HOST].map((domain) => [
     `http://${domain}`,

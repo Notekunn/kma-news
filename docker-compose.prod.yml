@@ -18,9 +18,17 @@ services:
             VIRTUAL_HOST: "${BACKEND_HOST}"
             LETSENCRYPT_HOST: "${BACKEND_HOST}"
             VIRTUAL_PORT: 8080
+            IS_REMOVE_OLD_TOKEN: "true"
+            ZALO_APP_ID: "${ZALO_APP_ID}"
+            ZALO_SECRET_KEY: "${ZALO_SECRET_KEY}"
+            BACKEND_HOST: "${BACKEND_HOST}"
+            FRONTEND_HOST: "${FRONTEND_HOST}"
+            ADMIN_HOST: "${ADMIN_HOST}"
+            COOKIE_DOMAIN: "${COOKIE_DOMAIN}"
 
         depends_on:
             - db
+            - cache
         expose:
             - 8080
         ports:

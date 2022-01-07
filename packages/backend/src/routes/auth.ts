@@ -2,13 +2,14 @@ import { Router } from 'express'
 import * as authController from '@/controllers/auth'
 import { create as register } from '@/controllers/user'
 import { loginWithZalo } from '@/controllers/auth/loginWithZalo'
+import { loginWithEmailPassword } from '@/controllers/auth/loginWithEmailPassword'
 const router = Router()
 
 router.post('/register', register)
 
-router.post('/login', authController.login)
+router.post('/login', loginWithEmailPassword)
 
-router.get('/login/zalo', loginWithZalo)
+router.post('/login/zalo', loginWithZalo)
 
 router.post('/logout', authController.logout)
 
