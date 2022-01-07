@@ -1,6 +1,7 @@
 import HttpException from '@/exceptions/HttpException'
 import { UserModel } from '@/models/user'
 import { errorWrapper } from '@/services/error-wrapper'
+import { load } from 'env-defaults'
 import joi from 'joi'
 import { IUser } from 'shared-types'
 import generateToken from './generateToken'
@@ -8,6 +9,10 @@ import generateToken from './generateToken'
 const loginValidator = joi.object<Pick<IUser, 'email' | 'password'>>({
   password: joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
   email: joi.string().email().required(),
+})
+
+const { COOKIE_DOMAIN } = load({
+  COOKIE_DOMAIN: 'kma-news.tech',
 })
 
 export const loginWithEmailPassword = errorWrapper(async (req, res, next) => {
@@ -23,6 +28,7 @@ export const loginWithEmailPassword = errorWrapper(async (req, res, next) => {
       // path: '/',
       httpOnly: true,
       // signed: true,
+      domain: COOKIE_DOMAIN,
     })
     .send(data)
 })

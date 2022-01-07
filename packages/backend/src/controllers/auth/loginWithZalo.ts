@@ -12,9 +12,10 @@ const loginValidator = joi.object({
   code: joi.string().required(),
 })
 
-const { ZALO_SECRET_KEY, ZALO_APP_ID } = load({
+const { ZALO_SECRET_KEY, ZALO_APP_ID, COOKIE_DOMAIN } = load({
   ZALO_SECRET_KEY: '',
   ZALO_APP_ID: '1234',
+  COOKIE_DOMAIN: 'kma-news.tech',
 })
 const client = axios.create({
   baseURL: 'https://oauth.zaloapp.com/v4',
@@ -74,6 +75,7 @@ export const loginWithZalo: IController = errorWrapper(async (req, res, next) =>
       // path: '/',
       httpOnly: true,
       // signed: true,
+      domain: COOKIE_DOMAIN,
     })
     .send(data)
 })

@@ -24,6 +24,7 @@ services:
             BACKEND_HOST: "${BACKEND_HOST}"
             FRONTEND_HOST: "${FRONTEND_HOST}"
             ADMIN_HOST: "${ADMIN_HOST}"
+            COOKIE_DOMAIN: "${COOKIE_DOMAIN}"
 
         depends_on:
             - db
