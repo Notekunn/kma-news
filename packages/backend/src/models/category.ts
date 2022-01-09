@@ -28,10 +28,16 @@ const categorySchema = new mongoose.Schema<ICategoryDocument>(
   {
     versionKey: false,
     timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
   }
 )
 categorySchema.pre<ICategoryDocument>('save', function (next) {
   this.slug = stringToSlug(this.title)
   next()
+})
+categorySchema.virtual('url').get(function (this: ICategoryDocument) {
+  return `/the-loai/${this.slug}`
 })
 export const CategoryModel = mongoose.model('category', categorySchema)
