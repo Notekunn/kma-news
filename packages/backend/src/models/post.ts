@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import type { IPostDocument, IParagraph } from 'shared-types'
+import type { IPostDocument, IParagraph, IPostModel } from 'shared-types'
 import { stringToSlug } from '@/services/generate-slug'
 
 const ParagraphSchema = new mongoose.Schema<IParagraph>({
@@ -22,7 +22,7 @@ const ParagraphSchema = new mongoose.Schema<IParagraph>({
   },
 })
 
-const postSchema = new mongoose.Schema<IPostDocument>(
+const postSchema = new mongoose.Schema<IPostDocument, IPostModel>(
   {
     title: {
       type: String,
@@ -71,6 +71,9 @@ const postSchema = new mongoose.Schema<IPostDocument>(
   {
     versionKey: false,
     timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
   }
 )
 postSchema.pre<IPostDocument>('save', function (next) {
@@ -99,4 +102,9 @@ postSchema.methods.generateSlug = function () {
   }
   return slug
 }
+
+postSchema.virtual('url').get(function (this: IPostDocument) {
+  return `/bai-bao/${this.slug}`
+})
+
 export const PostModel = mongoose.model('post', postSchema)

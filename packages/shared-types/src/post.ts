@@ -28,8 +28,11 @@ export interface IPost {
   publishedAt?: Date
   categories: Types.ObjectId[]
 }
+export interface IPostVirtual {
+  url: string
+}
 
-export interface IPostModel extends Model<IPost> {}
+export interface IPostModel extends Model<IPost, {}, {}, IPostVirtual> {}
 
 export interface IPostDocument extends IPost, Document {
   generateSlug: () => string
