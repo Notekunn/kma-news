@@ -30,20 +30,20 @@ axiosClient.interceptors.response.use(
     // Token hết hạn
     if (error?.response?.status === 401) {
       console.log('Token expired...')
-      const refresh_token = localStorage.getItem('refresh_token')
-      if (!!refresh_token) {
-        refreshTokenRequest = refreshTokenRequest || refreshToken()
-        return refreshTokenRequest
-          .then((data) => {
-            localStorage.setItem('access_token', data.access_token)
-            refreshTokenRequest = null
-            return axiosClient.request(error.config)
-          })
-          .catch((err) => {
-            localStorage.removeItem('access_token')
-            refreshTokenRequest = null
-          })
-      }
+      // const refresh_token = localStorage.getItem('refresh_token')
+      // if (!!refresh_token) {
+      refreshTokenRequest = refreshTokenRequest || refreshToken()
+      return refreshTokenRequest
+        .then((data) => {
+          localStorage.setItem('access_token', data.access_token)
+          refreshTokenRequest = null
+          return axiosClient.request(error.config)
+        })
+        .catch((err) => {
+          localStorage.removeItem('access_token')
+          refreshTokenRequest = null
+        })
+      // }
     }
     const status = error?.response?.status && `[${error.response.status}] `
     if (error?.response?.data?.message) {
