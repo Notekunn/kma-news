@@ -12,7 +12,7 @@ export const refreshToken: IController<{ refresh_token: string }> = errorWrapper
   async (req, res, next) => {
     const refreshToken = req.cookies?.refresh_token
 
-    if (!refreshToken) throw new HttpException(401, 'Refresh token is required')
+    if (!refreshToken) throw new HttpException(403, 'Refresh token is required')
 
     const tokenData = await getTokenFromCache(refreshToken)
 

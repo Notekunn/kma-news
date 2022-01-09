@@ -112,6 +112,7 @@ services:
             - db-network
             - redis-network
         command: yarn crawler deploy
+        restart: always
 
     nginx-proxy:
         image: nginxproxy/nginx-proxy:alpine

@@ -29,7 +29,6 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
 
     next()
   } catch (error: any) {
-    console.log(error)
     if (error instanceof HttpException) return next(error)
     next(new HttpException(401, 'Unauthorized access'))
   }
