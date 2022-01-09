@@ -1,13 +1,16 @@
 import moment from 'moment'
-import { IController, IUser, ITokenPayload } from 'shared-types'
+import { IController } from 'shared-types'
 import { UserModel } from '@/models/user'
 import { errorWrapper } from '@/services/error-wrapper'
 import HttpException from '@/exceptions/HttpException'
 import { deleteTokenFromCache, getTokenFromCache } from '@/services/cache'
 import { signToken, verifyRefreshToken } from '@/services/jwt'
+import { load } from 'env-defaults'
 
-const ACCESS_TOKEN_TTL = parseInt(process.env.ACCESS_TOKEN_TTL || '' + 30 * 60)
-
+const { COOKIE_DOMAIN, ACCESS_TOKEN_TTL } = load({
+  COOKIE_DOMAIN: 'kma-news.tech',
+  ACCESS_TOKEN_TTL: 30 * 60,
+})
 export const refreshToken: IController<{ refresh_token: string }> = errorWrapper(
   async (req, res, next) => {
     const refreshToken = req.cookies?.refresh_token
@@ -48,9 +51,12 @@ export const logout: IController<{ refresh_token: string }> = errorWrapper(
     if (!refreshToken) throw new HttpException(401, 'Refresh token is required')
 
     const tokenData = await deleteTokenFromCache(refreshToken)
-
-    res.clearCookie('refresh_token').send({
-      message: 'Logout success',
-    })
+    res
+      .clearCookie('refresh_token', {
+        domain: COOKIE_DOMAIN,
+      })
+      .send({
+        message: 'Logout success',
+      })
   }
 )
