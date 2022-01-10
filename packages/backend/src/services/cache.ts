@@ -35,8 +35,7 @@ export const getTokenFromCache = async (token: string) => {
 export const setTokenToCache = async (token: IToken) => {
   await client.sAdd(`user_token:${token.user}`, token.token)
   const data = await client.set(`token:${token.token}`, JSON.stringify(token), {
-    EX: new Date(token.expiredAt).getTime() - Date.now(),
-    NX: true,
+    EX: (new Date(token.expiredAt).getTime() - Date.now()) / 1000,
   })
   return data
 }

@@ -92,7 +92,7 @@ services:
             - appcache:/data
         networks:
             - redis-network
-        restart: unless-stopped
+        restart: always
         ports:
             - 6379:6379
     crawler:
