@@ -56,10 +56,6 @@ export default class BaoChinhPhu extends BaseService {
       return
     })
     return paragraphs
-    // if (paragraphs.length <= 1) return []
-    // const last = paragraphs.splice(-1)[0]
-    // if (last.type == 'text') return paragraphs
-    // return [...paragraphs, last]
   }
   async getCategories($: CheerioAPI): Promise<MongoObjectId[]> {
     const breadcrumbs = $('.breadcrums').find('a')

@@ -14,6 +14,7 @@ export default abstract class BaseService {
   publisherId: string = ''
   adminId: string = '61bd9533706e03a795f2a64a'
   timeFormat: string
+  hostname: string
 
   constructor(hostname: string, timeFormat: string = 'DD/MM/YYYY, HH:mm (Z)') {
     this.api = axios.create({
@@ -23,8 +24,7 @@ export default abstract class BaseService {
       },
     })
     this.timeFormat = timeFormat
-    this.initPublisher(hostname)
-    this.initAdmin()
+    this.hostname = hostname
   }
   async initPublisher(hostname: string) {
     const publisher = await PublisherModel.findOneAndUpdate(
@@ -54,6 +54,9 @@ export default abstract class BaseService {
       this.adminId = admin._id
     }
   }
+  setUp() {
+    return Promise.all([this.initAdmin(), this.initPublisher(this.hostname)])
+  }
   abstract getLastedNews(): Promise<string[]>
 
   abstract getTitle($: CheerioAPI): string
@@ -74,7 +77,7 @@ export default abstract class BaseService {
     const owner = this.getOwner($)
     const timeString = this.getTimeString($)
     const paragraphs = this.getParagraphs($)
-    const lastImageParagraph = [...paragraphs].reverse().find((e) => e.type === 'image') as
+    const lastImageParagraph = paragraphs.find((e) => e.type === 'image') as
       | IParagraphImage
       | undefined
     const thumbnailUrl = lastImageParagraph?.imageUrl[0] || ''

@@ -15,22 +15,27 @@ async function connectDatabase() {
       'mongodb+srv://notekunn:6LK7xV8nxQmC@kmabot-rfffk.azure.mongodb.net/app?retryWrites=true&w=majority'
   )
   console.log('🔥Connect database success!')
+  await setUp()
   main()
 }
 
 connectDatabase().catch((e) => {
   console.log('🤦‍♂️Connect database error:', e.message)
 })
-
+async function setUp() {
+  await Promise.all([baochinhphu.setUp(), vnexpress.setUp()])
+}
 function main() {
-  baochinhphu
+  // baochinhphu
+  //   .getNewDetail(
+  //     'https://baochinhphu.vn/Chi-dao-quyet-dinh-cua-Chinh-phu-Thu-tuong-Chinh-phu/Bo-nhiem-lai-Pho-Tong-Giam-doc-Bao-hiem-xa-hoi-Viet-Nam/458452.vgp'
+  //   )
+  //   .then(console.log)
+  vnexpress
     .getNewDetail(
-      'https://baochinhphu.vn/Chi-dao-quyet-dinh-cua-Chinh-phu-Thu-tuong-Chinh-phu/Bo-nhiem-lai-Pho-Tong-Giam-doc-Bao-hiem-xa-hoi-Viet-Nam/458452.vgp'
+      'https://vnexpress.net/tan-hoang-minh-xin-bo-coc-lo-dat-dau-gia-o-thu-thiem-4415047.html'
     )
     .then(console.log)
-  // vnexpress
-  //   .getNewDetail('https://vnexpress.net/viet-nam-phat-hien-ca-nhiem-omicron-dau-tien-4409186.html')
-  //   .then(console.log)
   // tienphong
   //   .getNewDetail(
   //     'https://tienphong.vn/who-omicron-it-nguy-co-gay-benh-nang-nhung-khong-the-noi-la-nhe-post1407640.tpo'

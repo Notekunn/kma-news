@@ -17,81 +17,58 @@ export default class VNExpress extends BaseService {
       return e.link || ''
     })
   }
-  // async getNewDetail(url: string) {
-  //   const { data: $ } = await this.api.get<CheerioAPI>(url)
-  //   const title = $('.title-detail').text()
-  //   const description = this.formatText($('.description').text())
-  //   const data = $('.fck_detail').children()
-  //   const publishedTime = this.formatTime($('span.date').text())
-
-  //   const paragraphs: IParagraph[] = []
-  //   for (const el of data) {
-  //     if (el.tagName == 'p') {
-  //       paragraphs.push({
-  //         type: 'text',
-  //         content: this.formatText($(el).text()),
-  //       })
-  //     }
-  //     if (el.tagName == 'figure') {
-  //       const elem = $(el)
-  //       const imageUrl = elem.find('meta[itemprop="url"]').attr('content') || ''
-  //       const imageDescription = elem.find('figcaption[itemprop="description"] p').text()
-  //       if (imageUrl)
-  //         paragraphs.push({
-  //           type: 'image',
-  //           imageUrl: [imageUrl],
-  //           description: this.formatText(imageDescription),
-  //         })
-  //     }
-  //   }
-  //   const thumbnailUrl =
-  //     (<IParagraphImage>paragraphs.find((e) => e.type === 'image'))?.imageUrl?.[0] || ''
-  //   const result: IPost = {
-  //     title,
-  //     slug: BaseService.stringToSlug(title),
-  //     thumbnailUrl,
-  //     categories: [],
-  //     description,
-  //     status: 'publish',
-  //     source: 'vnexpress.net',
-  //     owner: 'Đức Cường',
-  //     publishedAt: publishedTime,
-  //     sourceURL: url,
-  //     paragraphs,
-  //   }
-  //   const last = paragraphs.splice(-1)
-  //   if (last.length != 1) return result
-  //   if (last[0].type === 'text') {
-  //     result.owner = last[0].content
-  //     result.paragraphs = paragraphs
-  //   } else {
-  //     result.paragraphs = [...paragraphs, ...last]
-  //   }
-  //   const category = $('ul.breadcrumb').find('li')
-  //   const categories = [...category].map((e) => this.formatText($(e).text()))
-  //   const categoriesId = (await Promise.all(categories.map(this.getCategoryId))).filter((e) => !!e)
-  //   result.categories = categoriesId
-  //   return result
-  // }
   getTitle($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    return this.formatText($('.title-detail').text())
   }
   getDescription($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    return this.formatText($('.description').text())
   }
   getKeywords($: CheerioAPI): string[] {
-    throw new Error('Method not implemented.')
+    const keywordsRaw = $('.tags .item-tag')
+    const keywords = [...keywordsRaw].map((e) => this.formatText($(e).text()))
+    return keywords
   }
   getParagraphs($: CheerioAPI): IParagraph[] {
-    throw new Error('Method not implemented.')
+    const paragraphs: IParagraph[] = []
+    const content = [...$('.fck_detail').children()]
+    content.forEach((el) => {
+      const elem = $(el)
+      if (el.tagName == 'p' && elem.attr('class') == 'Normal' && !elem.attr('style')) {
+        const content = this.formatText(elem.text())
+        if (!content) return
+        paragraphs.push({
+          type: 'text',
+          content,
+        })
+      }
+      if (el.tagName == 'figure') {
+        const imageUrl = elem.find('meta[itemprop="url"]').attr('content')
+        const imageDescription = elem.find('figcaption[itemprop="description"] p').text()
+        if (!imageUrl) return
+        paragraphs.push({
+          type: 'image',
+          imageUrl: [imageUrl],
+          description: this.formatText(imageDescription),
+        })
+      }
+    })
+    return paragraphs
   }
-  getCategories($: CheerioAPI): Promise<MongoObjectId[]> {
-    throw new Error('Method not implemented.')
+
+  async getCategories($: CheerioAPI): Promise<MongoObjectId[]> {
+    const categoriesName = [...$('ul.breadcrumb').find('li')].map((e) =>
+      this.formatText($(e).text())
+    )
+    const categories = await Promise.all(categoriesName.map(this.getCategoryId))
+    return categories
   }
+
   getOwner($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    const owner = $('p.author_mail').text() || $('p.Normal[style="text-align:right;"]').text()
+    return this.formatText(owner)
   }
+
   getTimeString($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    return this.formatText($('span.date').text())
   }
 }
