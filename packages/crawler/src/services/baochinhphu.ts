@@ -1,78 +1,73 @@
 import BaseService from './base'
 import type { CheerioAPI } from 'cheerio'
 import RssParser from 'rss-parser'
-import { IParagraph, IParagraphImage, IPost } from 'shared-types'
-
+import { IParagraph, MongoObjectId } from 'shared-types'
 export const RSS_URL = 'https://baochinhphu.vn/Rss/Feed.aspx?EventID=115'
 
 const parser = new RssParser({})
 
 export default class BaoChinhPhu extends BaseService {
   constructor() {
-    super()
+    super('baochinhphu.vn', 'hh:mm DD/MM/YYYY')
   }
   async getLastedNews() {
     const feed = await parser.parseURL(RSS_URL)
     return feed.items.map((e) => e.link || '')
   }
-  async getNewDetail(url: string) {
-    const { data: $ } = await this.api.get<CheerioAPI>(url)
-    const title = this.formatText($('.article-header > h1').text())
-    const description = this.formatText($('.summary').text())
+  getTitle($: CheerioAPI): string {
+    return this.formatText($('.article-header > h1').text())
+  }
+  getDescription($: CheerioAPI): string {
+    return this.formatText($('.summary').text())
+  }
+  getKeywords($: CheerioAPI): string[] {
+    const keywordsRaw = $('.keywords .word').find('a')
+    const keywords = [...keywordsRaw].map((e) => this.formatText($(e).text())).filter((e) => !!e)
+    return keywords
+  }
+  getParagraphs($: CheerioAPI): IParagraph[] {
+    const content = [...$('.article-body').children()]
     const paragraphs: IParagraph[] = []
-    const content = $('.article-body').children()
-    const publishedTime = this.formatTime($('.article-header .meta').text())
-    for (const el of content) {
+    content.forEach((el) => {
+      const elem = $(el)
       if (el.tagName == 'p') {
-        if ($(el).attr('class')) {
-        } else {
-          paragraphs.push({
-            type: 'text',
-            content: this.formatText($(el).text()),
-          })
-        }
+        const content = this.formatText(elem.text())
+        if (!content) return
+        paragraphs.push({
+          type: 'text',
+          content,
+        })
       }
       if (el.tagName == 'table') {
-        const elem = $(el)
-        const srcImg = elem.find('img').attr('src')
-        const imageDescription = elem.find('.desc').text() || ''
-        if (srcImg) {
-          const imageUrl = `https://baochinhphu.vn/${srcImg}`
-          paragraphs.push({
-            type: 'image',
-            imageUrl: [imageUrl],
-            description: this.formatText(imageDescription),
-          })
-        }
+        const srcImage = elem.find('img').attr('src')
+        if (!srcImage) return
+        const imageDescription = elem.find('.caption > p').text() || ''
+        paragraphs.push({
+          type: 'image',
+          imageUrl: [`https://baochinhphu.vn/${srcImage}`],
+          description: this.formatText(imageDescription),
+        })
+        return
       }
-    }
-    const thumbnailUrl =
-      (<IParagraphImage>paragraphs.find((e) => e.type === 'image'))?.imageUrl?.[0] || ''
-    const result: IPost = {
-      title: this.formatText(title),
-      slug: BaseService.stringToSlug(title) + '-' + publishedTime.getTime().toString().slice(7),
-      thumbnailUrl,
-      categories: [],
-      description,
-      status: 'publish',
-      source: 'baochinhphu.vn',
-      owner: 'Lam Sơn',
-      publishedAt: publishedTime,
-      sourceURL: url,
-      paragraphs,
-    }
-    const last = paragraphs.splice(-1)
-    if (last.length != 1) return result
-    if (last[0].type === 'text') {
-      result.owner = last[0].content
-      result.paragraphs = paragraphs
-    } else {
-      result.paragraphs = [...paragraphs, ...last]
-    }
-    const category = $('.breadcrums').find('a')
-    const categories = [...category].map((e) => this.formatText($(e).text()))
-    const categoriesId = (await Promise.all(categories.map(this.getCategoryId))).filter((e) => !!e)
-    result.categories = categoriesId
-    return result
+      return
+    })
+    if (paragraphs.length <= 1) return []
+    const last = paragraphs.splice(-1)[0]
+    if (last.type == 'text') return paragraphs
+    return [...paragraphs, last]
+  }
+  async getCategories($: CheerioAPI): Promise<MongoObjectId[]> {
+    const breadcrumbs = $('.breadcrums').find('a')
+    if (breadcrumbs.length <= 1) return [] as MongoObjectId[]
+    const [_, ...categoriesName] = [...breadcrumbs].map((e) => this.formatText($(e).text()))
+
+    const categories = await Promise.all(categoriesName.map(this.getCategoryId))
+    return categories
+  }
+  getOwner($: CheerioAPI): string {
+    return this.formatText($('.article-body .strong')?.text())
+  }
+  getTimeString($: CheerioAPI): string {
+    return this.formatText($('.article-header .meta').text())
   }
 }

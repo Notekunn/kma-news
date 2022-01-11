@@ -29,6 +29,7 @@ export interface IPost {
   publishedAt?: Date
   categories: Types.ObjectId[]
   viewCount: number
+  keywords: string[]
 }
 export interface IPostVirtual {
   url: string

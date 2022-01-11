@@ -1,14 +1,14 @@
-import VNExpress from './services/vnexpress'
 import BaoChinhPhu from './services/baochinhphu'
-import VietNamNet from './services/vietnamnet'
-import TienPhong from './services/tienphong'
+// import VNExpress from './services/vnexpress'
+// import VietNamNet from './services/vietnamnet'
+// import TienPhong from './services/tienphong'
+// import VtcNews from './services/vtcNews'
 import mongoose from 'mongoose'
-import VtcNews from './services/vtcNews'
-const tienphong = new TienPhong()
+// const tienphong = new TienPhong()
 const baochinhphu = new BaoChinhPhu()
-const vnexpress = new VNExpress()
-const vietnamnet = new VietNamNet()
-const vtcnews = new VtcNews()
+// const vnexpress = new VNExpress()
+// const vietnamnet = new VietNamNet()
+// const vtcnews = new VtcNews()
 async function connectDatabase() {
   await mongoose.connect(
     process.env.DATABASE_URL ||
@@ -23,14 +23,14 @@ connectDatabase().catch((e) => {
 })
 
 function main() {
-  // baochinhphu
-  //   .getNewDetail(
-  //     'https://baochinhphu.vn/Tin-noi-bat/Nang-cao-hinh-anh-uy-tin-nghe-nghiep-dia-vi-cua-luat-su/457245.vgp'
-  //   )
-  //   .then(console.log)
-  vnexpress
-    .getNewDetail('https://vnexpress.net/viet-nam-phat-hien-ca-nhiem-omicron-dau-tien-4409186.html')
+  baochinhphu
+    .getNewDetail(
+      'https://baochinhphu.vn/Tin-noi-bat/TRUC-TIEP-Quoc-hoi-quyet-nghi-tang-chi-dau-tu-phat-trien-giam-thue-phan-dau-tang-truong-657nam/458432.vgp'
+    )
     .then(console.log)
+  // vnexpress
+  //   .getNewDetail('https://vnexpress.net/viet-nam-phat-hien-ca-nhiem-omicron-dau-tien-4409186.html')
+  //   .then(console.log)
   // tienphong
   //   .getNewDetail(
   //     'https://tienphong.vn/who-omicron-it-nguy-co-gay-benh-nang-nhung-khong-the-noi-la-nhe-post1407640.tpo'

@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express'
-import type { Types } from 'mongoose'
+import { Types } from 'mongoose'
 import type { IUserDocument } from './user'
 
 declare global {
@@ -54,3 +54,7 @@ export type ObjectWithID<T extends Object = {}> = {
 export type LoadingState = 'idle' | 'pending' | 'done' | 'error'
 
 export type ModalState = 'edit' | 'add' | 'none'
+
+export const ObjectId = Types.ObjectId
+
+export type MongoObjectId = Types.ObjectId
