@@ -4,7 +4,6 @@ import VNExpress from './services/vnexpress'
 import BaoChinhPhu from './services/baochinhphu'
 import VietNamNet from './services/vietnamnet'
 import TienPhong from './services/tienphong'
-import Client from './client'
 import VtcNews from './services/vtcNews'
 
 const vnexpress = new VNExpress()
@@ -15,8 +14,15 @@ const vtcnews = new VtcNews()
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379'
 
-const client = Client.getInstance().client
-
+export async function setUp() {
+  await Promise.all([
+    baochinhphu.setUp(),
+    vnexpress.setUp(),
+    tienphong.setUp(),
+    vietnamnet.setUp(),
+    vtcnews.setUp(),
+  ])
+}
 // Tạo 1 queue nhận url để xử  - 2s / 1 request
 export const crawlQueue = new Queue<string>('crawler', REDIS_URL, {
   settings: {},
@@ -25,8 +31,11 @@ export const crawlQueue = new Queue<string>('crawler', REDIS_URL, {
     duration: 2000,
   },
 })
+crawlQueue.empty()
+
 // Tạo queue lấy các tin mới nhất
 export const crawlLastedQueue = new Queue<string>('lasted', REDIS_URL)
+// crawlLastedQueue.empty()
 
 crawlQueue.process('vnexpress', function (job, done) {
   vnexpress
@@ -67,10 +76,10 @@ crawlQueue.process('tienphong', function (job, done) {
 
 crawlQueue
   .on('failed', function (job, err) {
-    logger(`Job ${job.id} in queue failed`, err, job)
+    // logger(`Job ${job.id} in queue failed`, err, job)
   })
   .on('error', function (err) {
-    logger('Queue Error:', err)
+    // logger('Queue Error:', err)
   })
   .on('completed', function (job, result) {
     logger(`${result.isNew ? 'Store' : 'Update'} post with id`, result._id)
@@ -124,18 +133,18 @@ crawlLastedQueue.process('vtcnews', function (job, done) {
     )
     .catch((e) => done(e))
 })
-crawlLastedQueue.process('tienphong', function (job, done) {
-  tienphong
-    .getLastedNews()
-    .then(tienphong.lastedLinkFilter)
-    .then((e) =>
-      done(null, {
-        host: 'tienphong',
-        data: e,
-      })
-    )
-    .catch((e) => done(e))
-})
+// crawlLastedQueue.process('tienphong', function (job, done) {
+//   tienphong
+//     .getLastedNews()
+//     .then(tienphong.lastedLinkFilter)
+//     .then((e) =>
+//       done(null, {
+//         host: 'tienphong',
+//         data: e,
+//       })
+//     )
+//     .catch((e) => done(e))
+// })
 
 crawlLastedQueue.on('completed', function (job, result) {
   // Thêm vào link mới

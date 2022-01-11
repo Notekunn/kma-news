@@ -1,13 +1,13 @@
 name: ci
 
 on:
-#   push:
-#     branches:
-#       - 'main'
+  push:
+    branches:
+      - 'main'
   workflow_dispatch:
 jobs:
   build-backend:
-    name: "Build backend"
+    name: 'Build backend'
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -15,7 +15,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -24,14 +24,14 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: notekunn/kma-news-backend:latest          
+          tags: notekunn/kma-news-backend:latest
           target: product
           secrets: |
-            GIT_AUTH_TOKEN=${{ secrets.GH_TOKEN }}   
+            GIT_AUTH_TOKEN=${{ secrets.GH_TOKEN }}
           build-args: |
             BUILD_CONTEXT=backend
   build-frontend:
-    name: "Build frontend"
+    name: 'Build frontend'
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -39,7 +39,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -58,7 +58,7 @@ jobs:
             ZALO_APP_ID=${{secrets.ZALO_APP_ID}}
             ZALO_CALLBACK_URL=https://${{secrets.FRONTEND_HOST}}
   build-admin:
-    name: "Build admin"
+    name: 'Build admin'
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -66,7 +66,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -75,15 +75,15 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: notekunn/kma-news-admin:latest          
+          tags: notekunn/kma-news-admin:latest
           target: static_product
           secrets: |
-            GIT_AUTH_TOKEN=${{ secrets.GH_TOKEN }}   
+            GIT_AUTH_TOKEN=${{ secrets.GH_TOKEN }}
           build-args: |
             BUILD_CONTEXT=admin
             API_URL=https://${{secrets.BACKEND_HOST}}
   build-crawler:
-    name: "Build crawler"
+    name: 'Build crawler'
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -91,7 +91,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -100,14 +100,14 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: notekunn/kma-news-crawler:latest          
+          tags: notekunn/kma-news-crawler:latest
           target: product
           secrets: |
-            GIT_AUTH_TOKEN=${{ secrets.GH_TOKEN }}   
+            GIT_AUTH_TOKEN=${{ secrets.GH_TOKEN }}
           build-args: |
             BUILD_CONTEXT=crawler
   deploy:
-    needs: [build-backend,build-frontend,build-admin,build-crawler]
+    needs: [build-backend, build-frontend, build-admin, build-crawler]
     name: Auto deploy to vps
     runs-on: ubuntu-latest
     steps:

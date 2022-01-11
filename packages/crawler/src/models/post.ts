@@ -31,6 +31,7 @@ const postSchema = new mongoose.Schema<IPostDocument>(
     slug: {
       type: String,
       unique: true,
+      index: true,
     },
     thumbnailUrl: {
       type: String,
@@ -39,8 +40,9 @@ const postSchema = new mongoose.Schema<IPostDocument>(
     description: {
       type: String,
     },
-    source: {
-      type: String,
+    publisher: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'publisher',
     },
     sourceURL: {
       type: String,
@@ -67,10 +69,22 @@ const postSchema = new mongoose.Schema<IPostDocument>(
         ref: 'category',
       },
     ],
+    keywords: [
+      {
+        type: String,
+        index: 'text',
+      },
+    ],
+    viewCount: {
+      type: Number,
+    },
   },
   {
     versionKey: false,
     timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
   }
 )
 postSchema.pre<IPostDocument>('save', function (next) {

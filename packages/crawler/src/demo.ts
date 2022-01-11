@@ -1,12 +1,12 @@
-import VNExpress from './services/vnexpress'
 import BaoChinhPhu from './services/baochinhphu'
-import VietNamNet from './services/vietnamnet'
+import VNExpress from './services/vnexpress'
 import TienPhong from './services/tienphong'
-import mongoose from 'mongoose'
+import VietNamNet from './services/vietnamnet'
 import VtcNews from './services/vtcNews'
-const tienphong = new TienPhong()
+import mongoose from 'mongoose'
 const baochinhphu = new BaoChinhPhu()
 const vnexpress = new VNExpress()
+const tienphong = new TienPhong()
 const vietnamnet = new VietNamNet()
 const vtcnews = new VtcNews()
 async function connectDatabase() {
@@ -15,25 +15,46 @@ async function connectDatabase() {
       'mongodb+srv://notekunn:6LK7xV8nxQmC@kmabot-rfffk.azure.mongodb.net/app?retryWrites=true&w=majority'
   )
   console.log('🔥Connect database success!')
+  await setUp()
   main()
 }
 
 connectDatabase().catch((e) => {
   console.log('🤦‍♂️Connect database error:', e.message)
 })
-
+async function setUp() {
+  await Promise.all([
+    baochinhphu.setUp(),
+    vnexpress.setUp(),
+    tienphong.setUp(),
+    vietnamnet.setUp(),
+    vtcnews.setUp(),
+  ])
+}
 function main() {
   // baochinhphu
   //   .getNewDetail(
-  //     'https://baochinhphu.vn/Tin-noi-bat/Nang-cao-hinh-anh-uy-tin-nghe-nghiep-dia-vi-cua-luat-su/457245.vgp'
+  //     'https://baochinhphu.vn/Chi-dao-quyet-dinh-cua-Chinh-phu-Thu-tuong-Chinh-phu/Bo-nhiem-lai-Pho-Tong-Giam-doc-Bao-hiem-xa-hoi-Viet-Nam/458452.vgp'
   //   )
   //   .then(console.log)
-  vnexpress
-    .getNewDetail('https://vnexpress.net/viet-nam-phat-hien-ca-nhiem-omicron-dau-tien-4409186.html')
-    .then(console.log)
+  // vnexpress
+  //   .getNewDetail(
+  //     'https://vnexpress.net/tan-hoang-minh-xin-bo-coc-lo-dat-dau-gia-o-thu-thiem-4415047.html'
+  //   )
+  //   .then(console.log)
   // tienphong
   //   .getNewDetail(
   //     'https://tienphong.vn/who-omicron-it-nguy-co-gay-benh-nang-nhung-khong-the-noi-la-nhe-post1407640.tpo'
   //   )
   //   .then(console.log)
+  // vietnamnet
+  //   .getNewDetail(
+  //     'https://vietnamnet.vn/vn/giai-tri/phim/tuoi-xe-chieu-cua-chi-tu-hau-nsnd-tra-giang-song-mot-minh-con-gai-thanh-dat-o-nuoc-ngoai-808183.html'
+  //   )
+  //   .then(console.log)
+  vtcnews
+    .getNewDetail(
+      'https://vtc.vn/tan-hoang-minh-xin-bo-coc-lo-dat-dau-gia-o-thu-thiem-ar656678.html'
+    )
+    .then(console.log)
 }

@@ -1,30 +1,111 @@
-import { createClient } from 'redis'
-import axios, { AxiosInstance } from 'axios'
-import cheerio from 'cheerio'
-import { IPost } from 'shared-types'
-import { PostModel } from '../models/post'
 import moment from 'moment'
+import axios, { AxiosInstance } from 'axios'
+import cheerio, { CheerioAPI } from 'cheerio'
+import { IPost, ObjectId, MongoObjectId, IParagraph, IParagraphImage } from 'shared-types'
+import { PostModel } from '../models/post'
+import { PublisherModel } from '../models/publisher'
 import { CategoryModel } from '../models/category'
 import Client from '../client'
+import { UserModel } from '../models/user'
 const client = Client.getInstance().client
 
 export default abstract class BaseService {
   api: AxiosInstance
-  constructor() {
+  publisherId: string = ''
+  adminId: string = '61bd9533706e03a795f2a64a'
+  timeFormat: string
+  hostname: string
+
+  constructor(hostname: string, timeFormat: string = 'DD/MM/YYYY, HH:mm (Z)') {
     this.api = axios.create({
       transformResponse: function (data, header) {
         const result = cheerio.load(data)
         return result
       },
+      responseType: 'text',
     })
+    this.timeFormat = timeFormat
+    this.hostname = hostname
+  }
+  async initPublisher(hostname: string) {
+    const publisher = await PublisherModel.findOneAndUpdate(
+      { hostname },
+      { name: hostname, logo: '', home: '' },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    )
+    if (publisher) {
+      this.publisherId = publisher._id
+    }
+  }
+  async initAdmin() {
+    const admin = await UserModel.findOneAndUpdate(
+      {
+        email: 'admin@gmail.com',
+        role: 'admin',
+      },
+      {
+        password: 'password',
+      },
+      {
+        upsert: true,
+        new: true,
+      }
+    )
+    if (admin) {
+      this.adminId = admin._id
+    }
+  }
+  setUp() {
+    return Promise.all([this.initAdmin(), this.initPublisher(this.hostname)])
   }
   abstract getLastedNews(): Promise<string[]>
-  abstract getNewDetail(url: string): Promise<IPost>
-  async updateDatabase(post: IPost) {
+
+  abstract getTitle($: CheerioAPI): string
+  abstract getDescription($: CheerioAPI): string
+  abstract getKeywords($: CheerioAPI): Array<string>
+  abstract getParagraphs($: CheerioAPI): Array<IParagraph>
+  abstract getCategories($: CheerioAPI): Promise<MongoObjectId[]>
+  abstract getOwner($: CheerioAPI): string
+  abstract getTimeString($: CheerioAPI): string
+
+  async getNewDetail(url: string): Promise<Omit<IPost, 'slug'>> {
+    const { data } = await this.api.get(url)
+    const $ = data as CheerioAPI
+    const title = this.getTitle($)
+    const description = this.getDescription($)
+    const categories = await this.getCategories($)
+    const keywords = this.getKeywords($)
+    const owner = this.getOwner($)
+    const timeString = this.getTimeString($)
+    const paragraphs = this.getParagraphs($)
+    const lastImageParagraph = paragraphs.find((e) => e.type === 'image') as
+      | IParagraphImage
+      | undefined
+    const thumbnailUrl = lastImageParagraph?.imageUrl[0] || ''
+    const post: Omit<IPost, 'slug'> = {
+      title,
+      categories,
+      description,
+      keywords,
+      paragraphs,
+      publisher: new ObjectId(this.publisherId),
+      status: 'publish',
+      sourceURL: url,
+      thumbnailUrl,
+      viewCount: 0,
+      writter: new ObjectId(this.adminId),
+      owner,
+      publishedAt: this.formatTime(timeString),
+    }
+    return post
+  }
+  async updateDatabase(post: Omit<IPost, 'slug'>) {
+    const postM = new PostModel(post)
     const postData = await PostModel.findOneAndUpdate(
       { sourceURL: post.sourceURL },
       {
         ...post,
+        slug: postM.generateSlug(),
       },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     )
@@ -34,7 +115,7 @@ export default abstract class BaseService {
     return text.replace(/\n/g, '').replace(/\s+/g, ' ').trim()
   }
   formatTime(time = 'Thứ ba, 21/12/2021, 08:32 (GMT+7)') {
-    const date = moment(time, 'DD/MM/YYYY, HH:mm (Z)')
+    const date = moment(time, this.timeFormat)
     return date.toDate()
   }
   static stringToSlug(str: string) {
@@ -57,15 +138,19 @@ export default abstract class BaseService {
     return slug
   }
   async getCategoryId(categoryName: string) {
+    const newName = categoryName
+      .split(' ')
+      .map((e) => e.charAt(0).toUpperCase() + e.slice(1).toLowerCase())
+      .join(' ')
     const category = await CategoryModel.findOneAndUpdate(
       {
         title: {
-          $regex: new RegExp(categoryName, 'i'),
+          $regex: new RegExp(newName, 'i'),
         },
       },
       {
-        slug: BaseService.stringToSlug(categoryName),
-        title: categoryName,
+        slug: BaseService.stringToSlug(newName),
+        title: newName,
       },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     )

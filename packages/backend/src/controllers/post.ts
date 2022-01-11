@@ -35,6 +35,7 @@ export const getAll: IController = errorWrapper(async (req, res, next) => {
       'thumbnailUrl',
       'source',
       'publishedAt',
+      'url',
       // 'status',
       // 'owner',
     ])

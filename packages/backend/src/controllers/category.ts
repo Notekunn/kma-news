@@ -7,12 +7,10 @@ import NotFoundExeption from '@/exceptions/NotFoundExeption'
 import client from '@/redis'
 import HttpException from '@/exceptions/HttpException'
 export const getAll: IController = errorWrapper(async (req, res, next) => {
-  const data = await CategoryModel.find({})
-    .populate('parrent', ['title', 'slug'])
-    .sort({
-      title: 1,
-    })
-    .select(['title', 'slug', 'parrent', 'level'])
+  const data = await CategoryModel.find({}).populate('parrent', ['title', 'slug']).sort({
+    title: 1,
+  })
+  // .select(['title', 'slug', 'parrent', 'level', 'url'])
 
   res.json(data)
 })
@@ -95,12 +93,26 @@ export const showCategoryByTree = errorWrapper(async (req, res, next) => {
         title: 1,
         slug: 1,
         description: 1,
+        url: {
+          $concat: ['/the-loai', '/', '$slug'],
+        },
         isShow: 1,
-        'subItems._id': 1,
-        'subItems.title': 1,
-        'subItems.slug': 1,
-        'subItems.description': 1,
-        'subItems.isShow': 1,
+        subItems: {
+          $map: {
+            input: '$subItems',
+            as: 'item',
+            in: {
+              _id: '$$item._id',
+              title: '$$item.title',
+              slug: '$$item.slug',
+              description: '$$item.description',
+              isShow: '$$item.isShow',
+              url: {
+                $concat: ['/the-loai', '/', '$slug'],
+              },
+            },
+          },
+        },
       },
     },
     {
