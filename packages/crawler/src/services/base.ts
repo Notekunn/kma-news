@@ -38,21 +38,20 @@ export default abstract class BaseService {
     }
   }
   async initAdmin() {
-    const admin = await UserModel.findOneAndUpdate(
-      {
-        email: 'admin@gmail.com',
-        role: 'admin',
-      },
-      {
-        password: 'password',
-      },
-      {
-        upsert: true,
-        new: true,
-      }
-    )
+    const admin = await UserModel.findOne({
+      role: 'admin',
+    })
     if (admin) {
       this.adminId = admin._id
+    } else {
+      this.adminId = '61bd9533706e03a795f2a64a'
+      const user = new UserModel({
+        _id: this.adminId,
+        email: 'admin@gmail.com',
+        password: 'password',
+        role: 'admin',
+      })
+      await user.save()
     }
   }
   setUp() {

@@ -25,20 +25,9 @@ export const createUserIfNotExist = async (
   role: UserRole = 'user',
   avatarURL?: string
 ) => {
-  const user = await UserModel.findOneAndUpdate(
-    {
-      email,
-    },
-    {
-      password,
-      name,
-      role,
-      avatarURL,
-    },
-    {
-      upsert: true,
-      new: true,
-    }
-  )
-  return user
+  const user = await UserModel.findOne({
+    email,
+  })
+  if (user) return user
+  return await createUser(email, password, name, role, avatarURL)
 }

@@ -34,8 +34,9 @@ export const getTokenFromCache = async (token: string) => {
 }
 export const setTokenToCache = async (token: IToken) => {
   await client.sAdd(`user_token:${token.user}`, token.token)
+  const expiredSeconds = Math.floor((new Date(token.expiredAt).getTime() - Date.now()) / 1000)
   const data = await client.set(`token:${token.token}`, JSON.stringify(token), {
-    EX: (new Date(token.expiredAt).getTime() - Date.now()) / 1000,
+    EX: expiredSeconds,
   })
   return data
 }
@@ -47,6 +48,6 @@ export const deleteTokenFromCache = (token: string) => {
 export const disableOldTokens = async (userId: IToken['token']) => {
   const tokensToDisable = await client.sMembers(`user_token:${userId}`)
   if (tokensToDisable.length == 0) return
-  await Promise.all(tokensToDisable.map((tk) => client.expire(`token:${tk}`, 0)))
+  await Promise.all(tokensToDisable.map((tk) => client.del(`token:${tk}`)))
   await client.sRem(`user_token:${userId}`, tokensToDisable)
 }
