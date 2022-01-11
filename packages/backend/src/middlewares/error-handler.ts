@@ -12,6 +12,7 @@ function errorMiddleware(
   response.status(status).send({
     status,
     message,
+    errorStack: error.stack,
   })
 }
 
