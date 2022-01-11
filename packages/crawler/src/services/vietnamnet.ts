@@ -9,7 +9,7 @@ const parser = new RssParser({})
 
 export default class VietNamNet extends BaseService {
   constructor() {
-    super('vietnamnet.vn')
+    super('vietnamnet.vn', 'DD/MM/YYYY hh:mm')
   }
   async getLastedNews() {
     const feed = await parser.parseURL(RSS_URL)
@@ -76,24 +76,57 @@ export default class VietNamNet extends BaseService {
   //   return result
   // }
   getTitle($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    return this.formatText($('.ArticleDetail > h1').text())
   }
   getDescription($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    return this.formatText($('#ArticleContent > .ArticleLead > p').text())
   }
   getKeywords($: CheerioAPI): string[] {
-    throw new Error('Method not implemented.')
+    const keywords = [...$('.tagBoxContent .clearfix li a')].map((e) =>
+      this.formatText($(e).text())
+    )
+    return keywords
   }
   getParagraphs($: CheerioAPI): IParagraph[] {
-    throw new Error('Method not implemented.')
+    const paragraphs: IParagraph[] = []
+    const content = [...$('.ArticleContent').children()]
+    content.forEach((el) => {
+      const elem = $(el)
+      if (el.tagName == 'p' && elem.attr('class') == 't-j') {
+        const content = this.formatText(elem.text())
+        if (!content) return
+        paragraphs.push({
+          type: 'text',
+          content,
+        })
+      }
+      if (el.tagName == 'figure') {
+        const imageUrl = elem.find('img').attr('src')
+        const imageDescription = elem.find('figcaption').text()
+        if (!imageUrl) return
+        paragraphs.push({
+          type: 'image',
+          imageUrl: [imageUrl],
+          description: this.formatText(imageDescription),
+        })
+      }
+    })
+    if (paragraphs.length < 1) return paragraphs
+    const last = paragraphs.splice(-1)[0]
+    if (last.type === 'text') return paragraphs
+    return [...paragraphs, last]
   }
-  getCategories($: CheerioAPI): Promise<MongoObjectId[]> {
-    throw new Error('Method not implemented.')
+  async getCategories($: CheerioAPI): Promise<MongoObjectId[]> {
+    const categoriesName = [...$('.top-cate-head-title').find('a')].map((e) =>
+      this.formatText($(e).text())
+    )
+    const categories = await Promise.all(categoriesName.map(this.getCategoryId))
+    return categories
   }
   getOwner($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    return this.formatText($('#ArticleContent p.t-j').last().text())
   }
   getTimeString($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    return this.formatText($('.ArticleDate').text())
   }
 }

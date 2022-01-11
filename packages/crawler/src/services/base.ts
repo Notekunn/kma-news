@@ -136,15 +136,19 @@ export default abstract class BaseService {
     return slug
   }
   async getCategoryId(categoryName: string) {
+    const newName = categoryName
+      .split(' ')
+      .map((e) => e.charAt(0).toUpperCase() + e.slice(1).toLowerCase())
+      .join(' ')
     const category = await CategoryModel.findOneAndUpdate(
       {
         title: {
-          $regex: new RegExp(categoryName, 'i'),
+          $regex: new RegExp(newName, 'i'),
         },
       },
       {
-        slug: BaseService.stringToSlug(categoryName),
-        title: categoryName,
+        slug: BaseService.stringToSlug(newName),
+        title: newName,
       },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     )

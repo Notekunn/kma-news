@@ -1,13 +1,13 @@
 import BaoChinhPhu from './services/baochinhphu'
 import VNExpress from './services/vnexpress'
 import TienPhong from './services/tienphong'
-// import VietNamNet from './services/vietnamnet'
+import VietNamNet from './services/vietnamnet'
 // import VtcNews from './services/vtcNews'
 import mongoose from 'mongoose'
 const baochinhphu = new BaoChinhPhu()
 const vnexpress = new VNExpress()
 const tienphong = new TienPhong()
-// const vietnamnet = new VietNamNet()
+const vietnamnet = new VietNamNet()
 // const vtcnews = new VtcNews()
 async function connectDatabase() {
   await mongoose.connect(
@@ -23,7 +23,7 @@ connectDatabase().catch((e) => {
   console.log('🤦‍♂️Connect database error:', e.message)
 })
 async function setUp() {
-  await Promise.all([baochinhphu.setUp(), vnexpress.setUp(), tienphong.setUp()])
+  await Promise.all([baochinhphu.setUp(), vnexpress.setUp(), tienphong.setUp(), vietnamnet.setUp()])
 }
 function main() {
   // baochinhphu
@@ -41,4 +41,9 @@ function main() {
   //     'https://tienphong.vn/who-omicron-it-nguy-co-gay-benh-nang-nhung-khong-the-noi-la-nhe-post1407640.tpo'
   //   )
   //   .then(console.log)
+  vietnamnet
+    .getNewDetail(
+      'https://vietnamnet.vn/vn/giai-tri/phim/tuoi-xe-chieu-cua-chi-tu-hau-nsnd-tra-giang-song-mot-minh-con-gai-thanh-dat-o-nuoc-ngoai-808183.html'
+    )
+    .then(console.log)
 }
