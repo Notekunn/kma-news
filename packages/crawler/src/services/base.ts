@@ -22,6 +22,7 @@ export default abstract class BaseService {
         const result = cheerio.load(data)
         return result
       },
+      responseType: 'text',
     })
     this.timeFormat = timeFormat
     this.hostname = hostname

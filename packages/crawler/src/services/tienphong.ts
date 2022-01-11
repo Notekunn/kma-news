@@ -9,32 +9,38 @@ const parser = new RssParser({})
 
 export default class TienPhong extends BaseService {
   constructor() {
-    super('tienphong.vn')
+    super('tienphong.vn', 'DD/MM/YYYY | hh:mm')
   }
   async getLastedNews() {
     const feed = await parser.parseURL(RSS_URL)
     return feed.items.map((e) => e.link || '')
   }
   getTitle($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    return this.formatText($('.cms-title').text())
   }
   getDescription($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    return this.formatText($('.cms-desc').text())
   }
   getKeywords($: CheerioAPI): string[] {
-    throw new Error('Method not implemented.')
+    const keywords = [...$('.article__tag .box-content a')].map((e) => this.formatText($(e).text()))
+    return keywords
   }
   getParagraphs($: CheerioAPI): IParagraph[] {
-    throw new Error('Method not implemented.')
+    return [] as IParagraph[]
   }
-  getCategories($: CheerioAPI): Promise<MongoObjectId[]> {
-    throw new Error('Method not implemented.')
+  async getCategories($: CheerioAPI): Promise<MongoObjectId[]> {
+    const breadcrumbs = $('.main-cate').find('a')
+    if (breadcrumbs.length <= 1) return [] as MongoObjectId[]
+    const [_, ...categoriesName] = [...breadcrumbs].map((e) => this.formatText($(e).text()))
+
+    const categories = await Promise.all(categoriesName.map(this.getCategoryId))
+    return categories
   }
   getOwner($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    return this.formatText($('.cms-author').text())
   }
   getTimeString($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    return this.formatText($('.article__meta time').text())
   }
   // async getNewDetail(url: string) {
   //   const { data: $ } = await this.api.get<CheerioAPI>(url)
