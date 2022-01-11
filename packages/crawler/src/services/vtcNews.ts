@@ -18,25 +18,56 @@ export default class VtcNews extends BaseService {
     })
   }
   getTitle($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    return this.formatText($('.nd-detail .mb5 .font28').text())
   }
   getDescription($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    return this.formatText($('.inline-nb').text())
   }
   getKeywords($: CheerioAPI): string[] {
-    throw new Error('Method not implemented.')
+    const keywords = [...$('.keylink li a')].map((e) => this.formatText($(e).text()))
+    return keywords
   }
   getParagraphs($: CheerioAPI): IParagraph[] {
-    throw new Error('Method not implemented.')
+    const paragraphs: IParagraph[] = []
+    const content = [...$('[itemprop="articleBody"]').children()]
+    content.forEach((el) => {
+      const elem = $(el)
+      if (el.tagName == 'p') {
+        const content = this.formatText(elem.text())
+        if (!content) return
+        paragraphs.push({
+          type: 'text',
+          content,
+        })
+      }
+      if (el.tagName == 'figure') {
+        const imageUrl = elem.find('img').attr('data-src')
+        const imageDescription = elem.find('figcaption p').text()
+        if (!imageUrl) return
+        paragraphs.push({
+          type: 'image',
+          imageUrl: [imageUrl],
+          description: this.formatText(imageDescription),
+        })
+      }
+    })
+    if (paragraphs.length < 1) return paragraphs
+    const last = paragraphs.splice(-1)[0]
+    if (last.type === 'text') return paragraphs
+    return [...paragraphs, last]
   }
-  getCategories($: CheerioAPI): Promise<MongoObjectId[]> {
-    throw new Error('Method not implemented.')
+  async getCategories($: CheerioAPI): Promise<MongoObjectId[]> {
+    const categoriesName = [...$('.nd-detail').find('.mt-category')].map((e) =>
+      this.formatText($(e).text())
+    )
+    const categories = await Promise.all(categoriesName.map(this.getCategoryId))
+    return categories
   }
   getOwner($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    return this.formatText($('.author-make a').last().text())
   }
   getTimeString($: CheerioAPI): string {
-    throw new Error('Method not implemented.')
+    return this.formatText($('.time-update').text())
   }
 
   // async getNewDetail(url: string) {
