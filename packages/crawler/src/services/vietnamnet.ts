@@ -13,7 +13,6 @@ export default class VietNamNet extends BaseService {
   }
   async getLastedNews() {
     const feed = await parser.parseURL(RSS_URL)
-    console.log(feed)
     return feed.items.map((e) => e.link || '')
   }
   // async getNewDetail(url: string) {

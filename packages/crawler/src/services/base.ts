@@ -100,10 +100,12 @@ export default abstract class BaseService {
     return post
   }
   async updateDatabase(post: Omit<IPost, 'slug'>) {
+    const postM = new PostModel(post)
     const postData = await PostModel.findOneAndUpdate(
       { sourceURL: post.sourceURL },
       {
         ...post,
+        slug: postM.generateSlug(),
       },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     )

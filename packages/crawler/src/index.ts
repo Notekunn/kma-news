@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import express from 'express'
-import { crawlQueue, crawlLastedQueue } from './queue'
+import { crawlQueue, crawlLastedQueue, setUp } from './queue'
 import { ExpressAdapter } from '@bull-board/express'
 import { createBullBoard } from '@bull-board/api'
 import { BullAdapter } from '@bull-board/api/bullAdapter'
@@ -51,9 +51,11 @@ async function main() {
 async function connectDatabase() {
   await mongoose.connect(
     process.env.DATABASE_URL ||
-      'mongodb+srv://lamson2000:lamson2000@cluster0.0xmm7.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-d8412w-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true'
+      'mongodb+srv://notekunn:6LK7xV8nxQmC@kmabot-rfffk.azure.mongodb.net/app?retryWrites=true&w=majority'
   )
   console.log('🔥Connect database success!')
+  await setUp()
+  console.log('🔥Set up success!')
   main()
 }
 
