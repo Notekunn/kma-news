@@ -42,6 +42,10 @@ const postSchema = new mongoose.Schema<IPostDocument, IPostModel>(
     source: {
       type: String,
     },
+    publisher: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'publisher',
+    },
     sourceURL: {
       type: String,
     },
@@ -67,6 +71,9 @@ const postSchema = new mongoose.Schema<IPostDocument, IPostModel>(
         ref: 'category',
       },
     ],
+    viewCount: {
+      type: Number,
+    },
   },
   {
     versionKey: false,

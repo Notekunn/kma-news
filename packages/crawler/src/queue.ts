@@ -25,6 +25,7 @@ export const crawlQueue = new Queue<string>('crawler', REDIS_URL, {
     duration: 2000,
   },
 })
+crawlQueue.empty()
 // Tạo queue lấy các tin mới nhất
 export const crawlLastedQueue = new Queue<string>('lasted', REDIS_URL)
 
@@ -67,10 +68,10 @@ crawlQueue.process('tienphong', function (job, done) {
 
 crawlQueue
   .on('failed', function (job, err) {
-    logger(`Job ${job.id} in queue failed`, err, job)
+    // logger(`Job ${job.id} in queue failed`, err, job)
   })
   .on('error', function (err) {
-    logger('Queue Error:', err)
+    // logger('Queue Error:', err)
   })
   .on('completed', function (job, result) {
     logger(`${result.isNew ? 'Store' : 'Update'} post with id`, result._id)

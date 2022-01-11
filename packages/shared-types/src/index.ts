@@ -43,6 +43,9 @@ export * from './token'
 export * from './category'
 export * from './post'
 export * from './comment'
+export * from './channel'
+export * from './publisher'
+export * from './option'
 
 export type ObjectWithID<T extends Object = {}> = {
   _id: string

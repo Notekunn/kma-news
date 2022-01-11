@@ -16,17 +16,19 @@ export type IParagraph = IParagraphText | IParagraphImage
 export type IPostStatus = 'publish' | 'pending' | 'draft' | 'trash'
 export interface IPost {
   title: string
-  slug: string
-  description: string
+  source?: string
   sourceURL: string
+  publisher: Types.ObjectId
+  description: string
+  slug: string
   paragraphs: Array<IParagraph>
   thumbnailUrl: string
-  source?: string
   owner?: string
   writter?: Types.ObjectId
   status: IPostStatus
   publishedAt?: Date
   categories: Types.ObjectId[]
+  viewCount: number
 }
 export interface IPostVirtual {
   url: string
