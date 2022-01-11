@@ -400,6 +400,10 @@
   color: #212529;
 }
 
+.description-item-news > a {
+  color: #212529;
+}
+
 .news-source {
   display: flex;
   align-items: center;
@@ -966,7 +970,6 @@ a:hover {
 }
 
 .news-photo .list-img-photo {
-  height: 135px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 2fr 1.5fr;
