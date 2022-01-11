@@ -1,7 +1,7 @@
 import moment from 'moment'
 import axios, { AxiosInstance } from 'axios'
 import cheerio, { CheerioAPI } from 'cheerio'
-import { IPost, ObjectId, MongoObjectId, IParagraph } from 'shared-types'
+import { IPost, ObjectId, MongoObjectId, IParagraph, IParagraphImage } from 'shared-types'
 import { PostModel } from '../models/post'
 import { PublisherModel } from '../models/publisher'
 import { CategoryModel } from '../models/category'
@@ -12,7 +12,7 @@ const client = Client.getInstance().client
 export default abstract class BaseService {
   api: AxiosInstance
   publisherId: string = ''
-  adminId: string = ''
+  adminId: string = '61bd9533706e03a795f2a64a'
   timeFormat: string
 
   constructor(hostname: string, timeFormat: string = 'DD/MM/YYYY, HH:mm (Z)') {
@@ -34,7 +34,7 @@ export default abstract class BaseService {
     )
     if (publisher) {
       this.publisherId = publisher._id
-    } else this.publisherId = new ObjectId().toString()
+    }
   }
   async initAdmin() {
     const admin = await UserModel.findOneAndUpdate(
@@ -52,7 +52,7 @@ export default abstract class BaseService {
     )
     if (admin) {
       this.adminId = admin._id
-    } else this.adminId = new ObjectId().toString()
+    }
   }
   abstract getLastedNews(): Promise<string[]>
 
@@ -74,6 +74,10 @@ export default abstract class BaseService {
     const owner = this.getOwner($)
     const timeString = this.getTimeString($)
     const paragraphs = this.getParagraphs($)
+    const lastImageParagraph = [...paragraphs].reverse().find((e) => e.type === 'image') as
+      | IParagraphImage
+      | undefined
+    const thumbnailUrl = lastImageParagraph?.imageUrl[0] || ''
     const post: Omit<IPost, 'slug'> = {
       title,
       categories,
@@ -83,7 +87,7 @@ export default abstract class BaseService {
       publisher: new ObjectId(this.publisherId),
       status: 'publish',
       sourceURL: url,
-      thumbnailUrl: '',
+      thumbnailUrl,
       viewCount: 0,
       writter: new ObjectId(this.adminId),
       owner,

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
-import type { IUserDocument, IUserModel } from 'shared-types'
+import bcrypt from 'bcryptjs'
+import type { IUserDocument, IUserModel, UserRole } from 'shared-types'
 
 const userSchema = new mongoose.Schema<IUserDocument, IUserModel>(
   {
@@ -32,4 +33,25 @@ const userSchema = new mongoose.Schema<IUserDocument, IUserModel>(
   }
 )
 
+userSchema.pre<IUserDocument>('save', function (next) {
+  this.hashPassword()
+  next()
+})
+
+userSchema.methods.hashPassword = function () {
+  const salt = bcrypt.genSaltSync(10)
+  const hash = bcrypt.hashSync(this.password, salt)
+  this.password = hash
+}
+
+userSchema.methods.checkPassword = function (password: string) {
+  return bcrypt.compareSync(password, this.password)
+}
+
+userSchema.methods.validRole = function (requiredRole: UserRole) {
+  if (this.role === requiredRole) return true
+  if (this.role === 'admin') return true
+  if (this.role === 'writter' && requiredRole === 'user') return true
+  return false
+}
 export const UserModel = mongoose.model('user', userSchema)

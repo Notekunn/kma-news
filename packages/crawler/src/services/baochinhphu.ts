@@ -30,7 +30,11 @@ export default class BaoChinhPhu extends BaseService {
     const paragraphs: IParagraph[] = []
     content.forEach((el) => {
       const elem = $(el)
-      if (el.tagName == 'p') {
+      if (
+        el.tagName == 'p' &&
+        !elem.attr('class') &&
+        !elem.attr('style')?.includes('text-align: right')
+      ) {
         const content = this.formatText(elem.text())
         if (!content) return
         paragraphs.push({
@@ -44,17 +48,18 @@ export default class BaoChinhPhu extends BaseService {
         const imageDescription = elem.find('.caption > p').text() || ''
         paragraphs.push({
           type: 'image',
-          imageUrl: [`https://baochinhphu.vn/${srcImage}`],
+          imageUrl: [`https://baochinhphu.vn${srcImage}`],
           description: this.formatText(imageDescription),
         })
         return
       }
       return
     })
-    if (paragraphs.length <= 1) return []
-    const last = paragraphs.splice(-1)[0]
-    if (last.type == 'text') return paragraphs
-    return [...paragraphs, last]
+    return paragraphs
+    // if (paragraphs.length <= 1) return []
+    // const last = paragraphs.splice(-1)[0]
+    // if (last.type == 'text') return paragraphs
+    // return [...paragraphs, last]
   }
   async getCategories($: CheerioAPI): Promise<MongoObjectId[]> {
     const breadcrumbs = $('.breadcrums').find('a')
@@ -65,7 +70,7 @@ export default class BaoChinhPhu extends BaseService {
     return categories
   }
   getOwner($: CheerioAPI): string {
-    return this.formatText($('.article-body .strong')?.text())
+    return this.formatText($('.article-body strong').last().text())
   }
   getTimeString($: CheerioAPI): string {
     return this.formatText($('.article-header .meta').text())

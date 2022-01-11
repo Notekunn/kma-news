@@ -1,12 +1,12 @@
 import BaoChinhPhu from './services/baochinhphu'
-// import VNExpress from './services/vnexpress'
+import VNExpress from './services/vnexpress'
 // import VietNamNet from './services/vietnamnet'
 // import TienPhong from './services/tienphong'
 // import VtcNews from './services/vtcNews'
 import mongoose from 'mongoose'
 // const tienphong = new TienPhong()
 const baochinhphu = new BaoChinhPhu()
-// const vnexpress = new VNExpress()
+const vnexpress = new VNExpress()
 // const vietnamnet = new VietNamNet()
 // const vtcnews = new VtcNews()
 async function connectDatabase() {
@@ -25,7 +25,7 @@ connectDatabase().catch((e) => {
 function main() {
   baochinhphu
     .getNewDetail(
-      'https://baochinhphu.vn/Tin-noi-bat/TRUC-TIEP-Quoc-hoi-quyet-nghi-tang-chi-dau-tu-phat-trien-giam-thue-phan-dau-tang-truong-657nam/458432.vgp'
+      'https://baochinhphu.vn/Chi-dao-quyet-dinh-cua-Chinh-phu-Thu-tuong-Chinh-phu/Bo-nhiem-lai-Pho-Tong-Giam-doc-Bao-hiem-xa-hoi-Viet-Nam/458452.vgp'
     )
     .then(console.log)
   // vnexpress
