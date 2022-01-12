@@ -7,8 +7,10 @@ import { PublisherModel } from '../models/publisher'
 import { CategoryModel } from '../models/category'
 import Client from '../client'
 import { UserModel } from '../models/user'
+import fs from 'fs'
+import path from 'path'
 const client = Client.getInstance().client
-
+const tempDir = path.join(__dirname, '../../temp')
 export default abstract class BaseService {
   api: AxiosInstance
   publisherId: string = ''
@@ -19,6 +21,7 @@ export default abstract class BaseService {
   constructor(hostname: string, timeFormat: string = 'DD/MM/YYYY, HH:mm (Z)') {
     this.api = axios.create({
       transformResponse: function (data, header) {
+        fs.writeFileSync(path.resolve(tempDir, './' + hostname + '.html'), data)
         const result = cheerio.load(data)
         return result
       },
