@@ -4,12 +4,13 @@ import { crawlQueue, crawlLastedQueue, setUp } from './queue'
 import { ExpressAdapter } from '@bull-board/express'
 import { createBullBoard } from '@bull-board/api'
 import { BullAdapter } from '@bull-board/api/bullAdapter'
+import dotenv from 'dotenv'
 import logger from './logger'
 import Client from './client'
 const client = Client.getInstance().client
 const serverAdapter = new ExpressAdapter()
 
-console.log(process.env.REDIS_URL)
+dotenv.config()
 
 createBullBoard({
   queues: [new BullAdapter(crawlQueue), new BullAdapter(crawlLastedQueue)],
@@ -47,11 +48,10 @@ async function main() {
     },
   })
 }
-// mongodb+srv://notekunn:6LK7xV8nxQmC@kmabot-rfffk.azure.mongodb.net/app?retryWrites=true&w=majority
 async function connectDatabase() {
   await mongoose.connect(
     process.env.DATABASE_URL ||
-      'mongodb://admin:admin@188.166.246.99:27017/app?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false'
+      'mongodb+srv://notekunn:6LK7xV8nxQmC@kmabot-rfffk.azure.mongodb.net/app?retryWrites=true&w=majority'
   )
   console.log('🔥Connect database success!')
   await setUp()

@@ -29,6 +29,9 @@ export const createValidator = joi.object<IPost>({
   writter: joi.string(),
   categories: joi.array().items(joi.string()).default([]),
   paragraphs: joi.array().items(textParagraph, imageParagraph).required(),
+  keywords: joi.array().items(joi.string()).default([]),
+  sourceURL: joi.string().uri().allow(''),
+  publisher: joi.string().required(),
 })
 
 export const updateValidator = joi.object<IPost>({
@@ -42,4 +45,6 @@ export const updateValidator = joi.object<IPost>({
   slug: joi.string(),
   status: joi.string().valid('publish', 'pending', 'draft', 'trash'),
   categories: joi.array().items(joi.string()),
+  sourceURL: joi.string().uri().allow(''),
+  publisher: joi.string(),
 })

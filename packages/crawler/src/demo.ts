@@ -4,6 +4,8 @@ import TienPhong from './services/tienphong'
 import VietNamNet from './services/vietnamnet'
 import VtcNews from './services/vtcNews'
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+dotenv.config()
 const baochinhphu = new BaoChinhPhu()
 const vnexpress = new VNExpress()
 const tienphong = new TienPhong()

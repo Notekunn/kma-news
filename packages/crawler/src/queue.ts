@@ -26,10 +26,10 @@ export async function setUp() {
 // Tạo 1 queue nhận url để xử  - 2s / 1 request
 export const crawlQueue = new Queue<string>('crawler', REDIS_URL, {
   settings: {},
-  limiter: {
-    max: 5,
-    duration: 2000,
-  },
+  // limiter: {
+  //   max: 5,
+  //   duration: 2000,
+  // },
 })
 crawlQueue.empty()
 
@@ -83,6 +83,7 @@ crawlQueue
   })
   .on('completed', function (job, result) {
     logger(`${result.isNew ? 'Store' : 'Update'} post with id`, result._id)
+    // job.remove()
   })
 
 crawlLastedQueue.process('vnexpress', function (job, done) {
