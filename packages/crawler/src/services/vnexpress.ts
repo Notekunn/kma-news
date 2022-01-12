@@ -2,6 +2,7 @@ import BaseService from './base'
 import type { CheerioAPI } from 'cheerio'
 import RssParser from 'rss-parser'
 import { IParagraph, IParagraphImage, IPost, MongoObjectId } from 'shared-types'
+import logger from '../logger'
 
 export const RSS_URL = 'https://vnexpress.net/rss/tin-moi-nhat.rss'
 
@@ -33,7 +34,8 @@ export default class VNExpress extends BaseService {
     const content = [...$('.fck_detail').children()]
     content.forEach((el) => {
       const elem = $(el)
-      if (el.tagName == 'p' && elem.attr('class') == 'Normal' && !elem.attr('style')) {
+      // && elem.attr('class') == 'Normal'
+      if (el.tagName == 'p' && !elem.attr('style')) {
         const content = this.formatText(elem.text())
         if (!content) return
         paragraphs.push({
@@ -42,9 +44,17 @@ export default class VNExpress extends BaseService {
         })
       }
       if (el.tagName == 'figure') {
-        const imageUrl = elem.find('meta[itemprop="url"]').attr('content')
+        let imageUrl = elem.find('meta[itemprop="url"]').attr('src')
         const imageDescription = elem.find('figcaption[itemprop="description"] p').text()
-        if (!imageUrl) return
+        if (!imageUrl) {
+          const srcSet = elem.find('source').attr('data-srcset')?.split(',') || []
+          if (srcSet.length == 0) return
+          imageUrl = srcSet[srcSet.length - 1].trim().split(' ')[0]
+        }
+        if (!imageUrl) {
+          imageUrl = elem.find('img').attr('data-src') || elem.find('img').attr('src') || ''
+        }
+        // if (!imageUrl) return
         paragraphs.push({
           type: 'image',
           imageUrl: [imageUrl],

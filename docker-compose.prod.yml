@@ -113,6 +113,8 @@ services:
             - redis-network
         command: yarn crawler deploy
         restart: always
+        profiles:
+            - donotstart
 
     nginx-proxy:
         image: nginxproxy/nginx-proxy:alpine

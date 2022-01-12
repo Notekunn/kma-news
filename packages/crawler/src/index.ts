@@ -51,7 +51,7 @@ async function main() {
 async function connectDatabase() {
   await mongoose.connect(
     process.env.DATABASE_URL ||
-      'mongodb+srv://notekunn:6LK7xV8nxQmC@kmabot-rfffk.azure.mongodb.net/app?retryWrites=true&w=majority'
+      'mongodb://admin:admin@188.166.246.99:27017/app?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false'
   )
   console.log('🔥Connect database success!')
   await setUp()

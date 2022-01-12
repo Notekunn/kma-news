@@ -37,11 +37,9 @@ function main() {
   //     'https://baochinhphu.vn/Chi-dao-quyet-dinh-cua-Chinh-phu-Thu-tuong-Chinh-phu/Bo-nhiem-lai-Pho-Tong-Giam-doc-Bao-hiem-xa-hoi-Viet-Nam/458452.vgp'
   //   )
   //   .then(console.log)
-  // vnexpress
-  //   .getNewDetail(
-  //     'https://vnexpress.net/tan-hoang-minh-xin-bo-coc-lo-dat-dau-gia-o-thu-thiem-4415047.html'
-  //   )
-  //   .then(console.log)
+  vnexpress
+    .getNewDetail('https://vnexpress.net/bidv-tang-thuong-voi-tong-gia-tri-65-ty-dong-4415096.html')
+    .then(console.log)
   // tienphong
   //   .getNewDetail(
   //     'https://tienphong.vn/who-omicron-it-nguy-co-gay-benh-nang-nhung-khong-the-noi-la-nhe-post1407640.tpo'
@@ -52,9 +50,9 @@ function main() {
   //     'https://vietnamnet.vn/vn/giai-tri/phim/tuoi-xe-chieu-cua-chi-tu-hau-nsnd-tra-giang-song-mot-minh-con-gai-thanh-dat-o-nuoc-ngoai-808183.html'
   //   )
   //   .then(console.log)
-  vtcnews
-    .getNewDetail(
-      'https://vtc.vn/tan-hoang-minh-xin-bo-coc-lo-dat-dau-gia-o-thu-thiem-ar656678.html'
-    )
-    .then(console.log)
+  // vtcnews
+  //   .getNewDetail(
+  //     'https://vtc.vn/tan-hoang-minh-xin-bo-coc-lo-dat-dau-gia-o-thu-thiem-ar656678.html'
+  //   )
+  //   .then(console.log)
 }
