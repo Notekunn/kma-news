@@ -54,7 +54,7 @@ export default class VNExpress extends BaseService {
         if (!imageUrl) {
           imageUrl = elem.find('img').attr('data-src') || elem.find('img').attr('src') || ''
         }
-        if (!imageUrl) return
+        // if (!imageUrl) return
         paragraphs.push({
           type: 'image',
           imageUrl: [imageUrl],
