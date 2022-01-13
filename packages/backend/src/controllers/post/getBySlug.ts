@@ -5,7 +5,7 @@ import { IController, IPost } from 'shared-types'
 
 const getBySlug: IController<IPost, 'slug'> = errorWrapper(async (req, res, next) => {
   const { slug } = req.params
-  const data = await PostModel.findOne({ slug })
+  const data = await PostModel.findOne({ slug }).populate('publisher').populate('categories')
   if (!data) throw new NotFoundExeption('Post not found')
   res.send(data)
 })

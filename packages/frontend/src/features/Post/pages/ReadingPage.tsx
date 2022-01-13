@@ -61,9 +61,12 @@ const ReadingPage = () => {
                   </div>
                   <div className="page-extension">
                     <img
-                      src="https://photo-baomoi.zadn.vn/a1493a27e7640e3a5775.png"
+                      src={
+                        data?.publisher?.logo ||
+                        'https://photo-baomoi.zadn.vn/a1493a27e7640e3a5775.png'
+                      }
                       className="page-extension-brand"
-                      alt="VOV"
+                      alt={data?.publisher?.name}
                     />
                     <AiOutlineStar className="page-extension-icon--like" />
                     <h3 className="page-extension-font">{data?.publishedAt}</h3>
@@ -136,7 +139,7 @@ const ReadingPage = () => {
                 </div>
               </div>
               <p className="page-source">
-                Nguồn <span className="page-source-name">{data?.source?.toUpperCase()}</span>
+                Nguồn <span className="page-source-name">{data?.publisher?.name}</span>
                 {': '}
                 <span className="page-source-link">{data?.sourceURL}</span>
               </p>
