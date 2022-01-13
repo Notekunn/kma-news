@@ -107,6 +107,7 @@ export default abstract class BaseService {
   }
   async updateDatabase(post: Omit<IPost, 'slug'>) {
     const postM = new PostModel(post)
+    if (!postM.title || postM.paragraphs.length === 0) return
     const postData = await PostModel.findOneAndUpdate(
       { sourceURL: post.sourceURL },
       {

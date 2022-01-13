@@ -16,7 +16,6 @@ export type IParagraph = IParagraphText | IParagraphImage
 export type IPostStatus = 'publish' | 'pending' | 'draft' | 'trash'
 export interface IPost {
   title: string
-  source?: string
   sourceURL: string
   publisher: Types.ObjectId
   description: string
