@@ -1,5 +1,15 @@
 import { IUser, ObjectWithID, IPost, ICategory } from 'shared-types'
-
+const fieldGetAll: Array<keyof IPost | 'url'> = [
+  'title',
+  'slug',
+  //   'status',
+  'description',
+  //   'categories',
+  'publisher',
+  'thumbnailUrl',
+  'url',
+  'publishedAt',
+]
 type UserWithoutPassword = Exclude<IUser, 'password'>
 export namespace APIResponse {
   export type GetMany<T> = ObjectWithID<T>[]
@@ -70,10 +80,9 @@ export namespace APIResponse {
   export interface DeleteUser extends ObjectWithID<UserWithoutPassword> {}
 
   export type GetAllPosts = GetMany<
-    Pick<
-      IPost,
-      'title' | 'slug' | 'description' | 'categories' | 'source' | 'thumbnailUrl' | 'publishedAt'
-    >
+    Pick<IPost, 'title' | 'slug' | 'description' | 'publisher' | 'thumbnailUrl' | 'publishedAt'> & {
+      url: string
+    }
   >
 
   export interface GetOnePost extends ObjectWithID<IPost> {}
