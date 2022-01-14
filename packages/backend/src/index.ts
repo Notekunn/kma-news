@@ -6,7 +6,11 @@ import cors from 'cors'
 import routes from './routes'
 import errorHandler from './middlewares/error-handler'
 import client from './redis'
+import dotenv from 'dotenv'
 import { load } from 'env-defaults'
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config()
+}
 const app = express()
 
 const { PORT, BACKEND_HOST, FRONTEND_HOST, ADMIN_HOST } = load({

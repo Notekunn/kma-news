@@ -6,16 +6,7 @@
   },
   "legacyWatch": true,
   "env": {
-    "TIMEZONE": "Asia/Ho_Chi_Minh",
-    "ACCESS_TOKEN_TTL": "600",
-    "REFRESH_TOKEN_TTL": "86400",
-    "REDIS_URL": "redis://localhost:6379",
-    "CACHE_TTL": "60",
-    "DATABASE_URL2": "mongodb://admin:admin@localhost:27017/app?authSource=admin",
-    "IS_REMOVE_OLD_TOKEN": "true",
-    "ZALO_APP_ID": "513056836020745485",
-    "ZALO_SECRET_KEY": "3V4SXLXX0G95EEG7ODk7",
-    "COOKIE_DOMAIN": "localhost"
+    "NODE_ENV": "development"
   },
   "delay": "2500"
 }
