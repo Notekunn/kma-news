@@ -12,10 +12,7 @@ const tienphong = new TienPhong()
 const vietnamnet = new VietNamNet()
 const vtcnews = new VtcNews()
 async function connectDatabase() {
-  await mongoose.connect(
-    process.env.DATABASE_URL ||
-      'mongodb+srv://notekunn:6LK7xV8nxQmC@kmabot-rfffk.azure.mongodb.net/app?retryWrites=true&w=majority'
-  )
+  await mongoose.connect(process.env.DATABASE_URL || 'mongodb://localhost:27017/app')
   console.log('🔥Connect database success!')
   await setUp()
   main()
