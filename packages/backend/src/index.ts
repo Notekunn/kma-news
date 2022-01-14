@@ -6,14 +6,19 @@ import cors from 'cors'
 import routes from './routes'
 import errorHandler from './middlewares/error-handler'
 import client from './redis'
+import dotenv from 'dotenv'
 import { load } from 'env-defaults'
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config()
+}
 const app = express()
 
-const { PORT, BACKEND_HOST, FRONTEND_HOST, ADMIN_HOST } = load({
+const { PORT, BACKEND_HOST, FRONTEND_HOST, ADMIN_HOST, DATABASE_URL } = load({
   PORT: 8888,
   BACKEND_HOST: 'api.kma-news.tech',
   FRONTEND_HOST: 'kma-news.tech',
   ADMIN_HOST: 'admin.kma-news.tech',
+  DATABASE_URL: 'mongodb://localhost:27017/app',
 })
 
 let origin = ['http://localhost:3000', 'http://localhost:3001', 'https://kma-news.herokuapp.com']
@@ -47,10 +52,7 @@ app.listen(PORT, () => {
 })
 
 async function connectDatabase() {
-  await mongoose.connect(
-    process.env.DATABASE_URL ||
-      'mongodb+srv://notekunn:6LK7xV8nxQmC@kmabot-rfffk.azure.mongodb.net/app?retryWrites=true&w=majority'
-  )
+  await mongoose.connect(DATABASE_URL)
   console.log('🔥Connect database success!')
 }
 async function connectRedis() {
