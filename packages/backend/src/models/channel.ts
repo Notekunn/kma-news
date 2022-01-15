@@ -9,6 +9,10 @@ const channelSchema = new mongoose.Schema<IChannelDocument>({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
   },
+  isPublic: {
+    type: Boolean,
+    default: false,
+  },
   categories: [
     {
       type: mongoose.Schema.Types.ObjectId,

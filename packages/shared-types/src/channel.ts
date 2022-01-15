@@ -3,6 +3,7 @@ import type { Types, Model, Document } from 'mongoose'
 export interface IChannel {
   name: string
   owner: Types.ObjectId
+  isPublic: boolean
   categories: Types.ObjectId[]
   keywords: Types.ObjectId[]
   publishers: Types.ObjectId[]
