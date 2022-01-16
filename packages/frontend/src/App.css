@@ -428,8 +428,6 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  align-items: center;
-  justify-content: space-between;
   padding-bottom: 13px;
   border-bottom: 1px solid #ddd;
 }
@@ -437,7 +435,6 @@
 .item-news {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   padding-left: 0 !important;
   color: #000;
   font-weight: 600;
@@ -522,6 +519,8 @@
   font-size: 18px;
   font-weight: 600;
   line-height: 26px;
+  display: flex;
+  flex-direction: column;
 }
 
 .item-news-navbar .description-item-news {
