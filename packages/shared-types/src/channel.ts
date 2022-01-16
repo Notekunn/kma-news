@@ -5,13 +5,16 @@ export interface IChannel {
   owner: Types.ObjectId
   isPublic: boolean
   categories: Types.ObjectId[]
-  keywords: Types.ObjectId[]
+  keywords: string[]
   publishers: Types.ObjectId[]
   excludedCategories: Types.ObjectId[]
-  excludedKeywords: Types.ObjectId[]
+  excludedKeywords: string[]
   excludedPublishers: Types.ObjectId[]
 }
+export interface IChannelVirtual {
+  url: string
+}
 
-export interface IChannelModel extends Model<IChannel> {}
+export interface IChannelModel extends Model<IChannel, {}, {}, IChannelVirtual> {}
 
 export interface IChannelDocument extends IChannel, Document {}

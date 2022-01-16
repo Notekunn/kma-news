@@ -103,6 +103,7 @@ postSchema.pre<IPostDocument>('save', function (next) {
   })
   next()
 })
+postSchema.index({ keywords: 'text' })
 
 postSchema.methods.generateSlug = function () {
   let slug = stringToSlug(this.title)

@@ -1,52 +1,64 @@
 import mongoose from 'mongoose'
 import { IChannelDocument } from 'shared-types'
 
-const channelSchema = new mongoose.Schema<IChannelDocument>({
-  name: {
-    type: String,
-  },
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
-  },
-  isPublic: {
-    type: Boolean,
-    default: false,
-  },
-  categories: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'category',
-    },
-  ],
-  keywords: [
-    {
+const channelSchema = new mongoose.Schema<IChannelDocument>(
+  {
+    name: {
       type: String,
     },
-  ],
-  publishers: [
-    {
+    owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'publisher',
+      ref: 'user',
     },
-  ],
-  excludedCategories: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'category',
+    isPublic: {
+      type: Boolean,
+      default: false,
     },
-  ],
-  excludedKeywords: [
-    {
-      type: String,
+    categories: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'category',
+      },
+    ],
+    keywords: [
+      {
+        type: String,
+      },
+    ],
+    publishers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'publisher',
+      },
+    ],
+    excludedCategories: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'category',
+      },
+    ],
+    excludedKeywords: [
+      {
+        type: String,
+      },
+    ],
+    excludedPublishers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'publisher',
+      },
+    ],
+  },
+  {
+    versionKey: false,
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
     },
-  ],
-  excludedPublishers: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'publisher',
-    },
-  ],
-})
+  }
+)
 
+channelSchema.virtual('url').get(function (this: IChannelDocument) {
+  return `/kenh-tin/${this._id}`
+})
 export const ChannelModel = mongoose.model('channel', channelSchema)

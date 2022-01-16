@@ -58,3 +58,5 @@ export type ModalState = 'edit' | 'add' | 'none'
 export const ObjectId = Types.ObjectId
 
 export type MongoObjectId = Types.ObjectId
+
+export type { FilterQuery } from 'mongoose'
