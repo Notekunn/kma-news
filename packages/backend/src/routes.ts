@@ -6,6 +6,7 @@ import categoryRouter from './routes/category'
 import postRouter from './routes/post'
 import publisherRouter from './routes/publisher'
 import channelRouter from './routes/channel'
+import optionRouter from './routes/option'
 const router = Router()
 
 router.use('/', docRouter)
@@ -15,5 +16,6 @@ router.use('/categories/', categoryRouter)
 router.use('/posts/', postRouter)
 router.use('/publishers/', publisherRouter)
 router.use('/channels/', channelRouter)
+router.use('/options/', optionRouter)
 
 export default router
