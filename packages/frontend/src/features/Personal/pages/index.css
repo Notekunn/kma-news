@@ -146,7 +146,7 @@
     padding: 15px;
     text-align: center;
 }
-.category-page-main > a{
+.category-page-main > div,.category-page-main > div > .create-category{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -194,6 +194,7 @@
     flex-direction: column;
     position: relative;
     border: 1px solid #eee;
+    border-radius: 4px;
 }
 .input-form > label{
     position: absolute;
@@ -203,6 +204,10 @@
     left: 12px;
     padding: 0 5px;
     background-color: #fff;
+}
+.input-form > input{
+    padding: 18px;
+    border-radius: 4px;
 }
 .input-form input{
     font-size: 18px;
