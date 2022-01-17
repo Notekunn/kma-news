@@ -2,7 +2,7 @@ import HttpException from '@/exceptions/HttpException'
 import NotFoundExeption from '@/exceptions/NotFoundExeption'
 import { ChannelModel } from '@/models/channel'
 import { errorWrapper } from '@/services/error-wrapper'
-import { updateValidator } from './validate'
+import { updateValidator } from './validator'
 
 const updateChannel = errorWrapper(async (req, res, next) => {
   const user = req.context
