@@ -1,6 +1,6 @@
 import { ChannelModel } from '@/models/channel'
 import { errorWrapper } from '@/services/error-wrapper'
-import { createValidator } from './validate'
+import { createValidator } from './validator'
 
 const createChannel = errorWrapper(async (req, res, next) => {
   const { error, value } = createValidator.validate(req.body)

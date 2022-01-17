@@ -63,7 +63,15 @@ export namespace APIParameter {
 
   export interface GetAllCategories extends Pagination {}
 
-  export interface GetTreeCategories extends Pagination {
-    show_all?: boolean
+  export interface GetTreeCategories extends Pagination {}
+
+  export interface CreateOption {
+    name: string
+    value: string
+  }
+
+  export interface UpdateOption {
+    name: string
+    value: string
   }
 }

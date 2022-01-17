@@ -1,4 +1,12 @@
-import { IUser, ObjectWithID, IPost, ICategory, IPublisherDocument, IPublisher } from 'shared-types'
+import {
+  IUser,
+  ObjectWithID,
+  IPost,
+  ICategory,
+  IPublisherDocument,
+  IPublisher,
+  IOption,
+} from 'shared-types'
 declare type UserWithoutPassword = Exclude<IUser, 'password'>
 export declare namespace APIResponse {
   export type GetMany<T> = ObjectWithID<T>[]
@@ -90,6 +98,10 @@ export declare namespace APIResponse {
     subItems: TreeCategory[]
   }
   export type GetTreeCategories = TreeCategory[]
-  export {}
+
+  export interface CreateOption extends ObjectWithID<IOption> {}
+
+  export interface UpdateOption extends ObjectWithID<IOption> {}
+
+  export interface GetOptionByName extends ObjectWithID<IOption> {}
 }
-export {}
