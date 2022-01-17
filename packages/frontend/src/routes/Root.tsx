@@ -10,7 +10,7 @@ const PersonalPage = React.lazy(() => import('@/features/Personal/pages/Personal
 const HistoryPage = React.lazy(() => import('@/features/Personal/pages/HistoryPage'))
 const SuggestPage = React.lazy(() => import('@/features/Personal/pages/SuggestPage'))
 const FavoritePage = React.lazy(() => import('@/features/Personal/pages/FavoritePage'))
-const CategoryPage = React.lazy(() => import('@/features/Personal/pages/CategoryPage'))
+const CategoryPage = React.lazy(() => import('@/features/Personal/pages/CategoryPage/CategoryPage'))
 const SubscriptionPage = React.lazy(() => import('@/features/Personal/pages/SubscriptionPage'))
 const ZaloLoginPage = React.lazy(() => import('@/features/Auth/pages/ZaloLoginPage'))
 
