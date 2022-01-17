@@ -1,4 +1,4 @@
-import { SwapOutlined, DashboardOutlined } from '@ant-design/icons'
+import { SettingOutlined, DashboardOutlined } from '@ant-design/icons'
 export interface MenuTree {
   title: string
   key: string
@@ -32,8 +32,14 @@ export const sideNavigateMenu: MenuTree[] = [
     ],
   },
   {
-    key: 'request',
-    title: 'Quản lý yêu cầu',
-    icon: <SwapOutlined />,
+    key: 'options',
+    title: 'Cấu hình hệ thống',
+    icon: <SettingOutlined />,
+    subMenu: [
+      {
+        key: 'header',
+        title: 'Cấu hình header',
+      },
+    ],
   },
 ]

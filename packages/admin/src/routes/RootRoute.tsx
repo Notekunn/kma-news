@@ -7,6 +7,7 @@ import { SecurityLayout } from '@/layouts/SecurityLayout'
 const LoginPage = React.lazy(() => import('@/features/Auth/pages/LoginPage'))
 const UserManager = React.lazy(() => import('@/features/User/pages/UserManager'))
 const CategoryManager = React.lazy(() => import('@/features/Category/pages/CategoryManager'))
+const HeaderOptionPage = React.lazy(() => import('@/features/Option/pages/HeaderOptionPage'))
 export const RootRoute = () => {
   return (
     <Suspense fallback={<LoadingGlobal />}>
@@ -14,6 +15,10 @@ export const RootRoute = () => {
         <Route path="/admin" element={<SecurityLayout />}>
           <Route path="users" element={<UserManager />} />
           <Route path="categories" element={<CategoryManager />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+        <Route path="/options" element={<SecurityLayout />}>
+          <Route path="header" element={<HeaderOptionPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
         <Route path="/auth" element={<BlankLayout />}>
