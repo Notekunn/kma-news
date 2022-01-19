@@ -1,14 +1,12 @@
 import React from 'react'
-import { IPost } from 'shared-types'
+import { Types } from 'shared-api'
 import PostFeedItem from '../PostFeedItem'
-export interface PostFeedProps {
-  name: string
-  contents: IPost[]
-  nextPageURL?: string
-  prevPageURL?: string
+export interface PostFeedProps extends Types.APIResponse.GetPostsOnTopic {
+  loadMore: () => void
 }
 const PostFeed: React.FC<PostFeedProps> = (props) => {
-  const { name, contents, nextPageURL, prevPageURL } = props
+  const { name, contents } = props
+  // Scroll to lasted -> loadMore
   return (
     <div>
       <h1>{name}</h1>
@@ -17,8 +15,6 @@ const PostFeed: React.FC<PostFeedProps> = (props) => {
           <PostFeedItem post={post} key={`feed-${name}-${i}`} />
         ))}
       </div>
-      {prevPageURL && <a href={prevPageURL}>Trang trước</a>}
-      {nextPageURL && <a href={nextPageURL}>Trang sau</a>}
     </div>
   )
 }

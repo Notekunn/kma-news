@@ -1,7 +1,7 @@
-import { IPost } from 'shared-types'
+import { Types } from 'shared-api'
 import React from 'react'
 export interface PostFeedItemProps {
-  post: IPost
+  post: Types.PostWithPublisher
 }
 const PostFeedItem: React.FC<PostFeedItemProps> = (props) => {
   const { post } = props
