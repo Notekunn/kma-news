@@ -38,7 +38,7 @@ export const RootRouter = () => {
           </Route>
           <Route path="/chu-de" element={<BasicLayout />}>
             <Route path="" element={<Topic />} />
-            <Route path=":id" element={<PostOnTopic />} />
+            <Route path=":topicId" element={<PostOnTopic />} />
           </Route>
           <Route path="auth/login" element={<BlankLayout />}>
             <Route path="zalo" element={<ZaloLoginPage />} />
