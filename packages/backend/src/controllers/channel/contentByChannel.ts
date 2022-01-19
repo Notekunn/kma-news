@@ -4,6 +4,7 @@ import { ChannelModel } from '@/models/channel'
 import { PostModel } from '@/models/post'
 import { errorWrapper } from '@/services/error-wrapper'
 import { IPostDocument, FilterQuery } from 'shared-types'
+import { getContentValidator } from './validator'
 
 const fieldGetAll: Array<keyof IPostDocument | 'url'> = [
   'title',
@@ -18,6 +19,10 @@ const fieldGetAll: Array<keyof IPostDocument | 'url'> = [
 ]
 const contentByChannel = errorWrapper(async (req, res) => {
   const { id } = req.params
+  const { error, value } = getContentValidator.validate(req.query)
+  if (error || !value) throw error
+  const { page, limit } = value
+
   const channel = await ChannelModel.findById(id)
   if (!channel) throw new NotFoundExeption('Channel not found')
 
@@ -70,12 +75,15 @@ const contentByChannel = errorWrapper(async (req, res) => {
       },
     })
   }
-
+  const query = condition.length > 0 ? { $and: condition } : {}
   const posts = await PostModel.find({
-    $and: condition,
+    ...query,
+    status: 'publish',
   })
     .populate('publisher')
     .sort({ publishedAt: -1 })
+    .skip(page * limit - limit)
+    .limit(limit)
     .select(fieldGetAll)
   const dataSend = {
     name: channel.name,

@@ -23,11 +23,12 @@ const getAll = errorWrapper(async (req, res, next) => {
       $in: status,
     },
   })
-    .skip(page * limit - limit)
-    .limit(limit)
+
     // .populate('categories', 'title slug')
     .populate('publisher')
     .sort({ publishedAt: -1 })
+    .skip(page * limit - limit)
+    .limit(limit)
     .select(fieldGetAll)
   res.json(data)
 })

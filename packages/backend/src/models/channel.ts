@@ -59,6 +59,6 @@ const channelSchema = new mongoose.Schema<IChannelDocument>(
 )
 
 channelSchema.virtual('url').get(function (this: IChannelDocument) {
-  return `/kenh-tin/${this._id}`
+  return `/chu-de/${this._id}`
 })
 export const ChannelModel = mongoose.model('channel', channelSchema)
