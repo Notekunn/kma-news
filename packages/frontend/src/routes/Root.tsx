@@ -2,11 +2,10 @@ import React, { Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { BasicLayout } from '@/layouts/BasicLayout'
 import Home from '@/features/HomePage/pages/HomePage'
-import Topic from '@/features/Topic/pages/Topic'
-import ReadingPage from '@/features/Post/pages/ReadingPage'
 import { HotTopicPage } from '@/features/Post/pages/HotTopicPage'
 import { BlankLayout } from '@/layouts/BlankLayout'
 import { SecurityLayout } from '@/layouts/SecurityLayout'
+import PostOnTopic from '@/features/Topic/pages/PostOnTopicPage'
 const PersonalPage = React.lazy(() => import('@/features/Personal/pages/PersonalPage'))
 const HistoryPage = React.lazy(() => import('@/features/Personal/pages/HistoryPage'))
 const SuggestPage = React.lazy(() => import('@/features/Personal/pages/SuggestPage'))
@@ -14,6 +13,8 @@ const FavoritePage = React.lazy(() => import('@/features/Personal/pages/Favorite
 const CategoryPage = React.lazy(() => import('@/features/Personal/pages/CategoryPage/CategoryPage'))
 const SubscriptionPage = React.lazy(() => import('@/features/Personal/pages/SubscriptionPage'))
 const ZaloLoginPage = React.lazy(() => import('@/features/Auth/pages/ZaloLoginPage'))
+const Topic = React.lazy(() => import('@/features/Topic/pages/TopicPage'))
+const ReadingPage = React.lazy(() => import('@/features/Post/pages/ReadingPage'))
 
 export const RootRouter = () => {
   return (
@@ -37,6 +38,7 @@ export const RootRouter = () => {
           </Route>
           <Route path="/chu-de" element={<BasicLayout />}>
             <Route path="" element={<Topic />} />
+            <Route path=":id" element={<PostOnTopic />} />
           </Route>
           <Route path="auth/login" element={<BlankLayout />}>
             <Route path="zalo" element={<ZaloLoginPage />} />
