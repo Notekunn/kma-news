@@ -104,4 +104,9 @@ export declare namespace APIResponse {
   export interface UpdateOption extends ObjectWithID<IOption> {}
 
   export interface GetOptionByName extends ObjectWithID<IOption> {}
+
+  export interface GetPostsOnTopic {
+    name: string,
+    contents: GetMany<IPost>
+  }
 }
