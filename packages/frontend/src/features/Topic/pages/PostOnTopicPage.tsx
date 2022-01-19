@@ -8,7 +8,6 @@ const PostOnTopic: React.FC = () => {
   const [page, setPage] = useState(1)
   const dispatch = useAppDispatch()
   const topicContents = useAppSelector(selectTopicContents)
-
   useEffect(() => {
     dispatch(
       getPostsOnTopicAction({

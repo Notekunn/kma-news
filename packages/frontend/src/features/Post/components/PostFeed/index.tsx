@@ -8,12 +8,14 @@ const PostFeed: React.FC<PostFeedProps> = (props) => {
   const { name, contents } = props
   // Scroll to lasted -> loadMore
   return (
-    <div>
-      <h1>{name}</h1>
-      <div>
-        {contents.map((post, i) => (
-          <PostFeedItem post={post} key={`feed-${name}-${i}`} />
-        ))}
+    <div className="content">
+      <div className="col-8 content-left">
+        <div className="list-news-navbar">
+          <div>{name}</div>
+          {contents.map((post, i) => (
+            <PostFeedItem post={post} key={`feed-${name}-${i}`} />
+          ))}
+        </div>
       </div>
     </div>
   )
