@@ -1,13 +1,11 @@
-import {
-  IUser,
-  ObjectWithID,
-  IPost,
-  ICategory,
-  IPublisherDocument,
-  IPublisher,
-  IOption,
-} from 'shared-types'
+import { IUser, ObjectWithID, IPost, ICategory, IPublisher, IOption } from 'shared-types'
+
 declare type UserWithoutPassword = Exclude<IUser, 'password'>
+
+export type PostWithPublisher = Omit<IPost, 'publisher'> & {
+  url: string
+  publisher: IPublisher
+}
 export declare namespace APIResponse {
   export type GetMany<T> = ObjectWithID<T>[]
   export interface Login {
@@ -70,10 +68,7 @@ export declare namespace APIResponse {
       url: string
     }
   >
-  export type GetOnePost = ObjectWithID<Omit<IPost, 'publisher'>> & {
-    url: string
-    publisher: IPublisher
-  }
+  export type GetOnePost = ObjectWithID<PostWithPublisher>
   export interface UpdatePost extends ObjectWithID<IPost> {
     url: string
   }
@@ -106,7 +101,7 @@ export declare namespace APIResponse {
   export interface GetOptionByName extends ObjectWithID<IOption> {}
 
   export interface GetPostsOnTopic {
-    name: string,
-    contents: GetMany<IPost>
+    name: string
+    contents: GetMany<PostWithPublisher>
   }
 }
