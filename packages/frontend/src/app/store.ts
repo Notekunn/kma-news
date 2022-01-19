@@ -5,6 +5,7 @@ import postSlice from '@/features/Post/postSlice'
 import categorySlice from '@/features/Category/categorySlice'
 import homeSlice from '@/features/HomePage/homeSlice'
 import optionSlice from '@/features/Option/optionSlice'
+import topicSlice from '@/features/Topic/topicSlice'
 
 console.log(process.env.REACT_APP_API_URL)
 
@@ -16,6 +17,7 @@ export const store = configureStore({
     category: categorySlice,
     home: homeSlice,
     option: optionSlice,
+    topic: topicSlice,
   },
 })
 
