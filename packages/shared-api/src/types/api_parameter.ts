@@ -74,4 +74,8 @@ export namespace APIParameter {
     name: string
     value: string
   }
+
+  export interface GetPostsOnTopic extends Pagination {
+    topicId: string
+  }
 }
