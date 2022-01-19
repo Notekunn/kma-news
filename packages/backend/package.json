@@ -7,9 +7,10 @@
     "build": "tsc && tscpaths -p tsconfig.json -s ./src -o ./build",
     "watch": "tsc -w",
     "start": "nodemon src/index.ts",
-    "seed": "node --nolazy -r ts-node/register src/seeds/index.ts",
+    "seed-dev": "node --nolazy -r ts-node/register src/seeds/index.ts",
     "dev": "node --nolazy -r ts-node/register src/index.ts",
-    "deploy": "node build/index.js"
+    "deploy": "node build/index.js",
+    "seed": "node build/index.ts"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
