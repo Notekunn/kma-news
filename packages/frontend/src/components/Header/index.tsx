@@ -5,16 +5,17 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Login from '@/features/Auth/components/Login'
 import { AuthDropDown } from '@/features/Auth/components/AuthDropDown/'
-import { CategoryGroup } from '@/features/Category/components/CategoryGroup'
-import { getTreeAction, selectData } from '@/features/Category/categorySlice'
 import { selectLoggedIn, selectProfile } from '@/features/Auth/authSlice'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { useClickOutside } from '@/hooks/useClickOutside'
+import { HeaderMenu } from './HeaderMenu'
+import { HeaderTag } from './HeaderTag'
+import { getOptionAction } from '@/features/Option/optionSlice'
+import { HeaderCategory } from './HeaderCategory'
 
 const Header = () => {
   const dispatch = useAppDispatch()
   const loggedIn = useAppSelector(selectLoggedIn)
-  const treeCategory = useAppSelector(selectData)
   const profile = useAppSelector(selectProfile)
   const [refUser, userMenuVisible, toggleUserMenu] = useClickOutside<HTMLDivElement>(false)
   const [refDropMenu, activeDropMenu, setActiveDropMenu] = useClickOutside<HTMLDivElement>(false)
@@ -28,7 +29,9 @@ const Header = () => {
     }
   }, [loggedIn, toggleLogin, toggleUserMenu])
   useEffect(() => {
-    dispatch(getTreeAction())
+    dispatch(getOptionAction('header.menu'))
+    dispatch(getOptionAction('header.tag'))
+    dispatch(getOptionAction('header.category'))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   // const domNode = useClickOutside(() => {
@@ -104,38 +107,8 @@ const Header = () => {
       <div className="header-body">
         <div className="col-9 header-navbar">
           <ul className="header-navbar-list">
-            <Link to="/">
-              <li className="header-navbar-item">NÓNG</li>
-            </Link>
-            <Link to="/tin-moi">
-              <li className="header-navbar-item">MỚI</li>
-            </Link>
-            <Link to="/tin-video">
-              <li className="header-navbar-item">VIDEO</li>
-            </Link>
-            <Link to="/chu-de">
-              <li className="header-navbar-item">CHỦ ĐỀ</li>
-            </Link>
-            <Link to="/phong-chong-dich-covid-19/top/:id">
-              <li className="header-navbar-item--hot">
-                <div className="header-navbar-item--hotC">Phòng chống dịch COVID-19</div>
-              </li>
-            </Link>
-            <Link to="/nang-luong-tich-cuc/top/:id">
-              <li className="header-navbar-item--hot">
-                <div className="header-navbar-item--hotC">Năng lượng tích cực</div>
-              </li>
-            </Link>
-            <Link to="/kham-pha-viet-nam/top/:id">
-              <li className="header-navbar-item--hot">
-                <div className="header-navbar-item--hotC">Khám phá Việt Nam</div>
-              </li>
-            </Link>
-            <Link to="/kham-pha-the-gioi/top/:id">
-              <li className="header-navbar-item--hot">
-                <div className="header-navbar-item--hotC">Khám phá thế giới</div>
-              </li>
-            </Link>
+            <HeaderMenu />
+            <HeaderTag />
             <li
               className="header-navbar-item-menu"
               onClick={() => setActiveDropMenu(!activeDropMenu)}
@@ -151,16 +124,7 @@ const Header = () => {
             className="drop-menu"
             style={activeDropMenu ? { visibility: 'visible', opacity: '1' } : {}}
           >
-            <ul className="col-9 drop-menu-list">
-              {treeCategory.map((e, i) => (
-                <CategoryGroup
-                  title={e.title}
-                  slug={e.slug}
-                  subItems={e.subItems}
-                  key={`tree-group-${i}`}
-                />
-              ))}
-            </ul>
+            <HeaderCategory />
           </div>
         </div>
       </div>

@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 export interface CategoryGroupItemProps {
-  slug: string
+  url: string
 }
 
 export const CategoryGroupItem: React.FC<CategoryGroupItemProps> = (props) => {
   return (
-    <Link to={`/the-loai/${props.slug}`}>
+    <Link to={props.url}>
       <li className="menu-sub-item">{props.children}</li>
     </Link>
   )
@@ -14,20 +14,20 @@ export const CategoryGroupItem: React.FC<CategoryGroupItemProps> = (props) => {
 
 export interface CategoryGroupProps {
   title: string
-  slug: string
+  url: string
   subItems?: Omit<CategoryGroupProps, 'subItems'>[]
 }
 
 export const CategoryGroup: React.FC<CategoryGroupProps> = React.memo(({ title, subItems }) => {
-  if (!subItems || subItems.length === 0) subItems = [{ title: '', slug: '' }]
+  if (!subItems || subItems.length === 0) subItems = [{ title: '', url: '' }]
   return (
     <li className="drop-menu-item">
       <div className="menu-item-title">
         <Link to="/">{title}</Link>
       </div>
       <ul className="drop-menu-sub-list">
-        {subItems.map((e, index) => (
-          <CategoryGroupItem key={index} slug={e.slug}>
+        {subItems.map((e, i) => (
+          <CategoryGroupItem key={`category-${title}-${i}`} url={e.url}>
             {e.title}
           </CategoryGroupItem>
         ))}
