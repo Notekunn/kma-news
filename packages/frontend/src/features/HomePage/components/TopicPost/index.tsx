@@ -18,6 +18,8 @@ export const TopicPost: React.FC<TopicPostProps> = (props) => {
               title={content.title}
               publishedAt={content.publishedAt ? new Date(content.publishedAt) : new Date()}
               thumbnailUrl={content.thumbnailUrl}
+              publisherLogo={content.publisher.logo}
+              publisherName={content.publisher.name}
             />
           ))}
         </div>

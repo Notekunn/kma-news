@@ -63,11 +63,7 @@ export declare namespace APIResponse {
   export interface CreateUser extends ObjectWithID<UserWithoutPassword> {}
   export interface UpdateUser extends ObjectWithID<UserWithoutPassword> {}
   export interface DeleteUser extends ObjectWithID<UserWithoutPassword> {}
-  export type GetAllPosts = GetMany<
-    Pick<IPost, 'title' | 'slug' | 'description' | 'publisher' | 'thumbnailUrl' | 'publishedAt'> & {
-      url: string
-    }
-  >
+  export type GetAllPosts = GetMany<PostWithPublisher>
   export type GetOnePost = ObjectWithID<PostWithPublisher>
   export interface UpdatePost extends ObjectWithID<IPost> {
     url: string

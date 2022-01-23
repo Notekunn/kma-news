@@ -2,7 +2,6 @@ import React from 'react'
 import { Covid19Feed } from '@/features/covid19/components/Covid19Feed'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import { TopNews } from '../components/NewsTop'
 import { ListNewsRight } from '../components/ListNewsRight'
 import { RiArrowDropDownLine } from 'react-icons/ri'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
@@ -13,13 +12,14 @@ import { selectHomeTopics, getHomeTopicsAction } from '@/features/Topic/topicSli
 import { LocationNews } from '../components/LocationNews'
 import { PublisherList } from '../components/PublisherList'
 import { TopicPost } from '../components/TopicPost'
+import { RecentNews } from '../components/RecentNews'
 const Home = () => {
   const [activeSelectWeather, setActiveSelectWeather] = useState(false)
   const dispatch = useAppDispatch()
   const data = useAppSelector(selectData)
   const topics = useAppSelector(selectHomeTopics)
   useEffect(() => {
-    dispatch(fetchNewFeedAction({}))
+    dispatch(fetchNewFeedAction({ limit: 4 }))
     dispatch(getHomeTopicsAction())
   }, [dispatch])
   return (
@@ -28,7 +28,7 @@ const Home = () => {
         <div className="col-9 container-main">
           <div className="content">
             <div className="col-8 content-left">
-              <TopNews data={data} />
+              <RecentNews />
               {topics.map((topic, i) => (
                 <TopicPost name={topic.name} contents={topic.contents} key={`topic-${i}`} />
               ))}
