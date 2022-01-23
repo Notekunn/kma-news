@@ -8,3 +8,7 @@ export const getPostsOnTopic = (params: APIParameter.GetPostsOnTopic) => {
     params: rest,
   }) as Promise<APIResponse.GetPostsOnTopic>
 }
+
+export const getHomeTopics = () => {
+  return axiosClient.get('/channels/homepage') as Promise<APIResponse.GetHomeTopics>
+}

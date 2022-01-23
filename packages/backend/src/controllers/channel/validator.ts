@@ -26,3 +26,8 @@ export const getContentValidator = joi.object({
   page: joi.number().integer().min(1).default(1),
   limit: joi.number().integer().min(1).default(10),
 })
+
+export const getHomeContentValidator = joi.object({
+  page: joi.number().integer().min(1).default(1),
+  limit: joi.number().integer().min(1).default(5),
+})

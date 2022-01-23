@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { Types, getPostsOnTopic } from 'shared-api'
+import { Types, getPostsOnTopic, getHomeTopics } from 'shared-api'
 import { LoadingState } from 'shared-types'
 import { RootState } from '@/app/store'
 
@@ -9,14 +9,19 @@ export const getPostsOnTopicAction = createAsyncThunk(
     return getPostsOnTopic(_)
   }
 )
+export const getHomeTopicsAction = createAsyncThunk('topic/homeTopic', () => {
+  return getHomeTopics()
+})
 
 interface TopicState {
   topicContents?: Types.APIResponse.GetPostsOnTopic
   loading: LoadingState
   message?: string
+  topics: Types.APIResponse.GetHomeTopics
 }
 const initialState: TopicState = {
   loading: 'idle',
+  topics: [],
 }
 
 const topicSlice = createSlice({
@@ -43,11 +48,24 @@ const topicSlice = createSlice({
         state.loading = 'error'
         state.message = action.error.message
       })
+    builder
+      .addCase(getHomeTopicsAction.pending, (state) => {
+        state.loading = 'pending'
+      })
+      .addCase(getHomeTopicsAction.fulfilled, (state, action) => {
+        state.loading = 'done'
+        state.topics = action.payload
+      })
+      .addCase(getHomeTopicsAction.rejected, (state, action) => {
+        state.loading = 'error'
+        state.message = action.error.message
+      })
   },
 })
 
 export const selectTopicContents = (state: RootState) => state.topic.topicContents
 export const selectLoading = (state: RootState) => state.topic.loading
 export const selectMessage = (state: RootState) => state.topic.message
+export const selectHomeTopics = (state: RootState) => state.topic.topics
 
 export default topicSlice.reducer
