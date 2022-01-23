@@ -1,3 +1,4 @@
+import { defaultThumbnail } from '@/constants/thumnail'
 import React from 'react'
 import { Link } from 'react-router-dom'
 export interface TopicPostItemProps {
@@ -14,7 +15,7 @@ export const TopicPostItem: React.FC<TopicPostItemProps> = (props) => {
     <div className="item-news-navbar">
       <div className="img-news-navbar">
         <Link to={url}>
-          <img src={thumbnailUrl} alt="" />
+          <img src={thumbnailUrl || defaultThumbnail} alt="" />
         </Link>
       </div>
 

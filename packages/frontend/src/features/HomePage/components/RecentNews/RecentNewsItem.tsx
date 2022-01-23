@@ -1,3 +1,4 @@
+import { defaultThumbnail } from '@/constants/thumnail'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -16,7 +17,7 @@ export const RecentNewsItem: React.FC<RecentNewsItemProps> = (props) => {
     <div className="col-4 item-news">
       <div className="img-item-news">
         <Link to={url}>
-          <img src={thumbnailUrl} alt={title} />
+          <img src={thumbnailUrl || defaultThumbnail} alt={title} />
         </Link>
       </div>
 
