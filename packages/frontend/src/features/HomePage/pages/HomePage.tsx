@@ -3,22 +3,24 @@ import { Covid19Feed } from '@/features/covid19/components/Covid19Feed'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { TopNews } from '../components/NewsTop'
-import { ListNavbar } from '../components/ListNavbar'
 import { ListNewsRight } from '../components/ListNewsRight'
-import { FiMapPin } from 'react-icons/fi'
 import { RiArrowDropDownLine } from 'react-icons/ri'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { fetchNewFeedAction } from '../homeSlice'
 import { useEffect } from 'react'
 import { selectData } from '@/features/HomePage/homeSlice'
+import { selectHomeTopics, getHomeTopicsAction } from '@/features/Topic/topicSlice'
 import { LocationNews } from '../components/LocationNews'
 import { PublisherList } from '../components/PublisherList'
+import { TopicPost } from '../components/TopicPost'
 const Home = () => {
   const [activeSelectWeather, setActiveSelectWeather] = useState(false)
   const dispatch = useAppDispatch()
   const data = useAppSelector(selectData)
+  const topics = useAppSelector(selectHomeTopics)
   useEffect(() => {
     dispatch(fetchNewFeedAction({}))
+    dispatch(getHomeTopicsAction())
   }, [dispatch])
   return (
     <div className="container">
@@ -27,8 +29,8 @@ const Home = () => {
           <div className="content">
             <div className="col-8 content-left">
               <TopNews data={data} />
-              {data.map((e, index) => (
-                <ListNavbar key={index} title={e.title} />
+              {topics.map((topic, i) => (
+                <TopicPost name={topic.name} contents={topic.contents} key={`topic-${i}`} />
               ))}
               <div className="btn-next-page">
                 <Link to="/">Xem thêm</Link>

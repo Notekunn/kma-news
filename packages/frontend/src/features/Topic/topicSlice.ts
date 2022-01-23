@@ -66,6 +66,6 @@ const topicSlice = createSlice({
 export const selectTopicContents = (state: RootState) => state.topic.topicContents
 export const selectLoading = (state: RootState) => state.topic.loading
 export const selectMessage = (state: RootState) => state.topic.message
-export const homeTopic = (state: RootState) => state.topic.topics
+export const selectHomeTopics = (state: RootState) => state.topic.topics
 
 export default topicSlice.reducer
