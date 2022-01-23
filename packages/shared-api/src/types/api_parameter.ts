@@ -78,4 +78,8 @@ export namespace APIParameter {
   export interface GetPostsOnTopic extends Pagination {
     topicId: string
   }
+
+  export interface GetAllTopic extends Pagination {
+    isPublic?: boolean
+  }
 }

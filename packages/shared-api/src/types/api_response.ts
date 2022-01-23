@@ -1,4 +1,4 @@
-import { IUser, ObjectWithID, IPost, ICategory, IPublisher, IOption } from 'shared-types'
+import { IUser, ObjectWithID, IPost, ICategory, IPublisher, IOption, IChannel } from 'shared-types'
 
 declare type UserWithoutPassword = Exclude<IUser, 'password'>
 
@@ -104,4 +104,6 @@ export declare namespace APIResponse {
     name: string
     contents: GetMany<PostWithPublisher>
   }
+
+  export type GetHomeTopics = GetPostsOnTopic[]
 }
