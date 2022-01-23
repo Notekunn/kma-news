@@ -3,6 +3,7 @@ import { IChannel } from 'shared-types'
 
 export const createValidator = joi.object<IChannel>({
   name: joi.string().required(),
+  isPublic: joi.boolean().default(false),
   categories: joi.array().items(joi.string()),
   keywords: joi.array().items(joi.string()),
   publishers: joi.array().items(joi.string()),
