@@ -74,6 +74,19 @@ export async function run() {
       }
     )
     if (!!headerCategoriesOption) console.log('    ✅Seeding header categories success')
+    const channelLastestOption = await OptionModel.findOneAndUpdate(
+      {
+        name: 'channel.lastest',
+      },
+      {
+        value: '61ecf85b0067100d8177dd6d',
+      },
+      {
+        new: true,
+        upsert: true,
+      }
+    )
+    if (!!channelLastestOption) console.log('    ✅Seeding channel lastest success')
     console.log('✅Seeding options success')
   } catch (error: any) {
     console.log('❌Seeding options failed: ' + error.message)

@@ -8,7 +8,7 @@ const createChannel = errorWrapper(async (req, res, next) => {
   const channel = new ChannelModel({
     ...value,
     owner: req.context?._id,
-    isPublic: req.context?.validRole('admin'),
+    isPublic: req.context?.validRole('admin') && value.isPublic,
   })
   console.log(req.context)
 
