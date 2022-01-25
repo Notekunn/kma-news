@@ -33,9 +33,6 @@ export const LastestNew: React.FC<LastestNewProps> = (props) => {
             />
           </Link>
           <span className="news-time">{publishedAt.toISOString()}</span>
-          <span className="number-news-other">
-            <Link to={url}>60 liên quan</Link>
-          </span>
         </div>
       </div>
     </div>

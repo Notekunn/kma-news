@@ -1,8 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Types } from 'shared-api'
 import { TopicPostItem } from './TopicPostItem'
 
-export interface TopicPostProps extends Types.APIResponse.GetPostsOnTopic {}
+export interface TopicPostProps extends Types.APIResponse.GetPostsOnTopic { }
 
 export const TopicPost: React.FC<TopicPostProps> = (props) => {
   const { name, contents } = props
@@ -22,6 +23,9 @@ export const TopicPost: React.FC<TopicPostProps> = (props) => {
               publisherName={content.publisher.name}
             />
           ))}
+        </div>
+        <div className="btn-list-posts">
+          <Link to="">Xem thêm</Link>
         </div>
       </div>
     </div>
