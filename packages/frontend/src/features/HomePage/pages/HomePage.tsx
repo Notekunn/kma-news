@@ -32,8 +32,13 @@ const Home = () => {
               {topics.map((topic, i) => (
                 <TopicPost name={topic.name} contents={topic.contents} key={`topic-${i}`} />
               ))}
-              <div className="btn-next-page">
-                <Link to="/">Xem thêm</Link>
+              <div className="btn-group">
+                <div className="btn-prev">
+                  <Link to="">Quay lại</Link>
+                </div>
+                <div className="btn-next">
+                  <Link to="">Xem thêm</Link>
+                </div>
               </div>
             </div>
             <div className="col-4 content-right">
