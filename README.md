@@ -1,3 +1,4 @@
+Moved to [here](https://github.com/kma-academy/kma-news)
 # Hướng dẫn sử dụng
 
 - Chạy dev front end
